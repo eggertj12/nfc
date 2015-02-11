@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="is.valitor.lokaverkefni.oturgjold.MainActivityTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2015-02-11T17:31:03" hostname="Eggert.local" time="8.503">
+  <properties/>
+  <testcase name="BasicActivityTest" classname="is.valitor.lokaverkefni.oturgjold.MainActivityTest" time="8.503"/>
+  <system-out><![CDATA[DEBUG: Loading resources for is.valitor.lokaverkefni.oturgjold from /Users/eggert/Documents/Nam/15_1/Lokaverkefni/code/Oturgjold/app/build/intermediates/res/release...
+DEBUG: Loading resources for android from jar:/Users/eggert/.m2/repository/org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar!/res...
+]]></system-out>
+  <system-err><![CDATA[WARNING: no system properties value for ro.build.date.utc
+]]></system-err>
+</testsuite>
