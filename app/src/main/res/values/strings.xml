@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Oturgjold</string>
-    <string name="hello_world">Hello worlds!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Oturgjöld</string>
+    <string name="action_settings">Stillingar</string>
+    <string name="button_register_card">Skrá kort</string>
+    <string name="title_activity_register_card">Skrá kort</string>
+    <string name="label_cardholder_name">Nafn korthafa</string>
+    <string name="label_card_number">Kortanúmer</string>
+    <string name="label_validity">Gildistími</string>
+    <string name="label_month">Mán</string>
+    <string name="label_year">Ár</string>
+    <string name="label_cvv">Öryggisnúmer</string>
+    <string name="label_next">Áfram</string>
+    <string name="error_invalid_cardholder_name">Sláðu inn nafn korthafa</string>
+    <string name="error_invalid_cardnumber">Sláðu inn gilt kortanúmer</string>
+    <string name="error_invalid_validity_month">Veldu gildan mánuð</string>
+    <string name="error_invalid_validity_year">Veldu gilt ár</string>
+    <string name="error_invalid_cvv">Sláðu inn gilt öryggisnúmerr</string>
+    <string name="title_activity_tokenize_card">Kort skráð</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

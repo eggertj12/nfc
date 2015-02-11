@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".RegisterCardActivity"
+            android:label="@string/title_activity_register_card"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="is.valitor.lokaverkefni.oturgjold.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TokenizeCardActivity"
+            android:label="@string/title_activity_tokenize_card"
+            android:parentActivityName=".RegisterCardActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />
+        </activity>
     </application>
 
 </manifest>
