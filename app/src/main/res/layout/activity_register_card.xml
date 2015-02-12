@@ -22,7 +22,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/inputblock_vertical_margin"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
+            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+            android:id="@+id/titleCardHolderName" />
 
         <EditText
             android:layout_width="match_parent"
@@ -145,7 +146,8 @@
             android:nestedScrollingEnabled="true"
             android:onClick="createCardNext"
             android:layout_marginTop="@dimen/inputblock_vertical_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
+            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+            android:id="@+id/button_register_card_next" />
 
     </LinearLayout>
 </RelativeLayout>
