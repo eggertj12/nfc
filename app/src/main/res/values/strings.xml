@@ -20,4 +20,10 @@
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
 
+
+        <string name="service_name">CardEmulation Sample</string>
+        <string name="card_title">Sample Loyalty Card</string>
+        <string name="account_number">Account Number</string>
+
+
 </resources>
