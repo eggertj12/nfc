@@ -22,9 +22,7 @@ import android.util.Log;
 
 import java.util.Arrays;
 
-//import is.valitor.lokaverkefni.logger.Log;
 
-//import com.example.android.common.logger.Log;
 
 
 /**

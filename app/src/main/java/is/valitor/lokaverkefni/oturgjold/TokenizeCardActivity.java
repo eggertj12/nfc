@@ -1,12 +1,20 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+//import android.app.FragmentTransaction;
+import android.app.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+
+
 
 
 public class TokenizeCardActivity extends Activity {
@@ -42,6 +50,9 @@ public class TokenizeCardActivity extends Activity {
         TextView vValid = new TextView(this);
         vValid.setText("valid: " + cardMonth + "/" + cardYear);
         root.addView (vValid);
+
+        AccountStorage.SetAccount(this, cardNumber);
+
     }
 
 
