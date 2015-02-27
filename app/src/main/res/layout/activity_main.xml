@@ -25,5 +25,14 @@
             android:onClick="registerCard"
             android:enabled="true" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Try to access a service!"
+            android:id="@+id/button_access_service"
+            android:layout_gravity="center_horizontal"
+            android:onClick="accessService"
+            />
+
     </LinearLayout>
 </RelativeLayout>

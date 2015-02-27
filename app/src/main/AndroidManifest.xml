@@ -32,6 +32,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />
         </activity>
+        <activity
+            android:name=".TestServiceActivity"
+            android:label="@string/title_activity_test_service" >
+        </activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 </manifest>

@@ -45,4 +45,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, RegisterCardActivity.class);
         startActivity(intent);
     }
+
+    public void accessService(View view) {
+        Intent intent = new Intent(this, TestServiceActivity.class);
+        startActivity(intent);
+    }
 }
