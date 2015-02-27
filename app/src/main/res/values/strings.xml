@@ -19,5 +19,6 @@
     <string name="error_invalid_cvv">Sláðu inn gilt öryggisnúmerr</string>
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_test_service">TestServiceActivity</string>
 
 </resources>
