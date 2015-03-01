@@ -10,5 +10,5 @@
 
 #EJ tilraun til að losna við endurtekin conflict
 #/.idea/modules.xml
-*.iml
+#*.iml
 
