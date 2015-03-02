@@ -1,7 +1,14 @@
 .gradle
 /local.properties
+
+#.idea
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
 /build
 /approbolectric/build
+
+#EJ tilraun til að losna við endurtekin conflict
+#/.idea/modules.xml
+#*.iml
+
