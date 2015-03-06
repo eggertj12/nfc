@@ -25,6 +25,7 @@
         <string name="service_name">CardEmulation Sample</string>
         <string name="card_title">Sample Loyalty Card</string>
         <string name="account_number">Account Number</string>
+    <string name="title_activity_account_management">AccountManagementActivity</string>
 
 
 </resources>

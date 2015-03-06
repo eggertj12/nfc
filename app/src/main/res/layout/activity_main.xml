@@ -13,7 +13,28 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="303dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Valið kort"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.47" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Innskráning"
+            android:id="@+id/button2"
+
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:clickable="true"
+            android:onClick="registerAccount"
+            android:enabled="true" />
 
         <Button
             android:layout_width="fill_parent"
@@ -30,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="Try to access a service!"
             android:id="@+id/button_access_service"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_gravity="center_horizontal"
             android:onClick="accessService"
             />

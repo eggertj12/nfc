@@ -53,4 +53,10 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, TestServiceActivity.class);
         startActivity(intent);
     }
+
+    /** Called when the user clicks the register account button */
+    public void registerAccount(View view) {
+        Intent intent = new Intent(this, RegisterAccountActivity.class);
+        startActivity(intent);
+    }
 }
