@@ -14,5 +14,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        </LinearLayout>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/serviceResponse"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 </RelativeLayout>
