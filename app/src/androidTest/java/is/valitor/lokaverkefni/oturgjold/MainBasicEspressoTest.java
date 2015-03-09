@@ -49,8 +49,8 @@ public class MainBasicEspressoTest extends ActivityInstrumentationTestCase2<Main
         onView(withId(R.id.editCardCvv)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.button_register_card_next)).check(matches(isClickable()));
         // This is currently not possible as the number keyboard obscures teh button.
-        //onView(withId(R.id.button_register_card_next)).perform(ViewActions.click());
-        //onView(withId(R.id.tokenize_linear)).check(matches(isDisplayed()));
+        onView(withId(R.id.button_register_card_next)).perform(ViewActions.click());
+        onView(withId(R.id.tokenize_linear)).check(matches(isDisplayed()));
     }
 
     public void testAsyncAccess() {

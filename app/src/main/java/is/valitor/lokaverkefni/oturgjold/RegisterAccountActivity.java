@@ -38,12 +38,16 @@ import java.util.List;
 public class RegisterAccountActivity extends Activity {
 
     private TextView editAccountName;
+    private TextView editAccountSSN;
+    private TextView serviceResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_account);
         editAccountName = (TextView) findViewById(R.id.editAccountName);
+        editAccountSSN = (TextView) findViewById(R.id.editAccountSSN);
+        serviceResponse = (TextView) findViewById(R.id.responseText);
     }
 
 
@@ -169,8 +173,18 @@ public class RegisterAccountActivity extends Activity {
             int rCode = result.optInt("responseCode");
 
             if(rCode == 200) {
-                editAccountName.setText("Skráning tókst!");
-                System.out.println(result.toString());
+                try {
+
+                    JSONObject outMsg = result.getJSONObject("sentMessage");
+
+                    serviceResponse.setText("Skráning tókst.");
+                    editAccountName.setText(outMsg.getString("name"));
+                    editAccountSSN.setText(outMsg.getString("ssn"));
+                }
+
+                catch (Exception e) {
+
+                }
             }
             else {
                 editAccountName.setText("Misheppnuð skráning ahahahah!");
@@ -227,6 +241,7 @@ public class RegisterAccountActivity extends Activity {
                 ret = readJSON(is, 5000);
                 try {
                     ret.put("responseCode", response);
+                    ret.put("sentMessage", msg);
                 }
                 catch(Exception e) {
                     e.printStackTrace();
