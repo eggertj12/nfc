@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -33,6 +35,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import is.valitor.lokaverkefni.oturgjold.models.User;
 
 
 public class RegisterAccountActivity extends Activity {
@@ -139,11 +143,7 @@ public class RegisterAccountActivity extends Activity {
             toast.show();
         }
 
-
-
-
-
-        }
+    }
 
     private class RegisterAccountTask extends AsyncTask<String, Void, JSONObject> {
 
@@ -171,6 +171,9 @@ public class RegisterAccountActivity extends Activity {
             if(rCode == 200) {
                 editAccountName.setText("Skráning tókst!");
                 System.out.println(result.toString());
+                Gson gson = new Gson();
+                User user = gson.fromJson(result.toString(), User.class);
+                Repository.setUser(getApplication(), user);
             }
             else {
                 editAccountName.setText("Misheppnuð skráning ahahahah!");

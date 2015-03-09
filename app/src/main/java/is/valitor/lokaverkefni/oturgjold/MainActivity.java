@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+
+import is.valitor.lokaverkefni.oturgjold.models.User;
 
 
 public class MainActivity extends Activity {
@@ -15,8 +18,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        // Check if there is a user and disable buttons if not
+        User user = Repository.getUser(getApplication());
+        if (user == null) {
+            Button registerCardButton = (Button) findViewById(R.id.button_register_card);
+            registerCardButton.setClickable(false);
+            registerCardButton.setEnabled(false);
+        } else {
+            System.out.println("Loaded user: " + user.getName());
+        }
     }
 
 
