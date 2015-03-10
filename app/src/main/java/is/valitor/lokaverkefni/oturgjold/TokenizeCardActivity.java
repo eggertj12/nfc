@@ -62,7 +62,7 @@ public class TokenizeCardActivity extends Activity {
         root.addView(vType);
 
         TextView vNumber = new TextView(this);
-        vNumber.setText("card number: " + cardNumber);
+        vNumber.setText("cardnumber: " + cardNumber);
         root.addView(vNumber);
 
         TextView vValid = new TextView(this);
@@ -76,7 +76,7 @@ public class TokenizeCardActivity extends Activity {
             // Make JSON
             JSONObject outMsg = new JSONObject();
             outMsg.put("usr_id", 6666);
-            outMsg.put("card number", cardNumber);
+            outMsg.put("cardnumber", cardNumber);
             outMsg.put("cardholder", cardHolder);
             outMsg.put("validity", cardMonth + "/" + cardYear);
             outMsg.put("cvv", cardCvv);

@@ -181,6 +181,8 @@ public class RegisterAccountActivity extends Activity {
                     serviceResponse.setText("Skráning tókst.");
                     editAccountName.setText(user.getName());
                     editAccountSSN.setText(user.getSsn());
+                    //go back to frontpage
+                    setContentView(R.layout.activity_main);
                 }
 
                 catch (Exception e) {
