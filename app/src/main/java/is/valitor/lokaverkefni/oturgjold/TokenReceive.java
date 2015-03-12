@@ -27,7 +27,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import is.valitor.lokaverkefni.oturgjold.models.Token;
-import is.valitor.lokaverkefni.oturgjold.models.User;
 
 
 public class TokenReceive extends Activity {
@@ -53,7 +52,11 @@ public class TokenReceive extends Activity {
 
         try {
             jsonAccountObject.put("usr_id", 99);
-            jsonAccountObject.put("dev_id", 65468);
+            jsonAccountObject.put("device_id", 65468);
+            // Need three empty strings to be cool
+            jsonAccountObject.put("tokenone", "party");
+            jsonAccountObject.put("tokentwo", "on");
+            jsonAccountObject.put("tokenthree", "bros");
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -63,7 +66,7 @@ public class TokenReceive extends Activity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             // fetch data
-            new RegisterAccountTask().execute("https://kortagleypir.herokuapp.com/token", jsonAccountObject.toString());
+            new FetchTokenTask().execute("https://kortagleypir.herokuapp.com/token", jsonAccountObject.toString());
         } else {
             // display error
             CharSequence message = "No network connection available.";
@@ -103,7 +106,7 @@ public class TokenReceive extends Activity {
 
     }
 
-    private class RegisterAccountTask extends AsyncTask<String, Void, JSONObject> {
+    private class FetchTokenTask extends AsyncTask<String, Void, JSONObject> {
 
         private Exception exception;
 
@@ -128,6 +131,7 @@ public class TokenReceive extends Activity {
 
             if (rCode == 200) {
                 try {
+                    System.out.println(result.toString());
                     Gson gson = new Gson();
                     Token token  = gson.fromJson(result.toString(), Token.class);
                     Repository.setToken(getApplication(), token);
