@@ -77,6 +77,11 @@ public class RegisterAccountActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Confirm and return to main view
+    public void confirmAccountRegister(View view) {
+        finish();
+    }
+
     public void registerAccount(View view) {
 
         // This has some limitations and bugs, apparently. Too bad I´m a newbie.
@@ -182,7 +187,7 @@ public class RegisterAccountActivity extends Activity {
                     editAccountName.setText(user.getName());
                     editAccountSSN.setText(user.getSsn());
                     //go back to frontpage
-                    setContentView(R.layout.activity_main);
+                    finish();
                 }
 
                 catch (Exception e) {

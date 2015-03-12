@@ -150,7 +150,7 @@ public class TokenReceive extends Activity {
             } else {
                 //editAccountName.setText("Misheppnuð skráning ahahahah!");
             }
-
+            finish();
         }
 
         private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
