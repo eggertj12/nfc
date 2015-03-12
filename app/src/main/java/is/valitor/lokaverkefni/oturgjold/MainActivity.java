@@ -69,4 +69,10 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, RegisterAccountActivity.class);
         startActivity(intent);
     }
+
+    public void getToken(View view)
+    {
+        Intent intent = new Intent(this, TokenReceive.class);
+        startActivity(intent);
+    }
 }

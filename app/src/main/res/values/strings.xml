@@ -26,6 +26,13 @@
         <string name="card_title">Sample Loyalty Card</string>
         <string name="account_number">Account Number</string>
     <string name="title_activity_account_management">AccountManagementActivity</string>
+    <string name="title_activity_token">Token</string>
+    <string name="title_activity_token_receive">TokenReceive</string>
+
+
+    <!--for testing tokenization-->
+    <string name="device_id">456</string>
+    <string name="usr_id">55</string>
 
 
 </resources>

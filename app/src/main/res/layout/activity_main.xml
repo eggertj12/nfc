@@ -26,6 +26,16 @@
             android:layout_weight="0.47" />
 
         <Button
+            android:layout_width="63dp"
+            android:layout_height="79dp"
+            android:text="GetToken"
+            android:id="@+id/getToken"
+            android:clickable="true"
+            android:onClick="getToken"
+            android:enabled="true"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Innskráning"

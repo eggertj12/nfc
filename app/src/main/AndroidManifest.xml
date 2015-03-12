@@ -75,6 +75,10 @@
             android:name=".RegisterAccountActivity"
             android:label="@string/title_activity_account_management" >
         </activity>
+        <activity
+            android:name=".TokenReceive"
+            android:label="@string/title_activity_token_receive" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,24 +1,19 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.provider.Settings;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-//import android.app.FragmentTransaction;
-import android.app.*;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -31,79 +26,50 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import is.valitor.lokaverkefni.oturgjold.models.Token;
+import is.valitor.lokaverkefni.oturgjold.models.User;
 
-public class TokenizeCardActivity extends Activity {
 
-    private TextView responseDisplay;
+public class TokenReceive extends Activity {
+    private TextView editusr_id;
+    private TextView editdevice_id;
+    private TextView edittokenone;
+    private TextView edittokentwo;
+    private TextView edittokenthree;
+    private TextView serviceResponse;
+    private static final String TAG = "CardService";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tokenize_card);
-        responseDisplay = (TextView) findViewById(R.id.serviceResponse);
+        setContentView(R.layout.activity_token_receive);
+        Log.i(TAG, "Sending account number: " );
+        editusr_id = (TextView) findViewById(R.id.editAccountName);
+        editdevice_id = (TextView) findViewById(R.id.editAccountSSN);
+        serviceResponse = (TextView) findViewById(R.id.responseText);
 
-        Intent intent = getIntent();
+        Log.i(TAG, "Sending account number: " );
+        JSONObject jsonAccountObject = new JSONObject();
 
-        String cardNumber = intent.getStringExtra(RegisterCardActivity.MSG_CARDNUMBER);
-        String cardHolder = intent.getStringExtra(RegisterCardActivity.MSG_CARDHOLDER);
-        String cardType = intent.getStringExtra(RegisterCardActivity.MSG_CARDTYPE);
-        String cardCvv = intent.getStringExtra(RegisterCardActivity.MSG_CARDCVV);
-        String cardMonth = intent.getStringExtra(RegisterCardActivity.MSG_CARDMONTH);
-        String cardYear = intent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR);
-
-        LinearLayout root = (LinearLayout) findViewById(R.id.tokenize_linear);
-
-        TextView vHolder = new TextView(this);
-        vHolder.setText("cardholder: " + cardHolder);
-        root.addView(vHolder);
-
-        TextView vType = new TextView(this);
-        vType.setText("card type: " + cardType);
-        root.addView(vType);
-
-        TextView vNumber = new TextView(this);
-        vNumber.setText("cardnumber: " + cardNumber);
-        root.addView(vNumber);
-
-        TextView vValid = new TextView(this);
-        vValid.setText("valid: " + cardMonth + "/" + cardYear);
-        root.addView(vValid);
-
-        //used to send to reader
-        AccountStorage.SetAccount(this, cardNumber);
-
-        // Communicate with the service:
         try {
-            // Make JSON
-            JSONObject outMsg = new JSONObject();
-            outMsg.put("usr_id", 6666);
-            outMsg.put("cardnumber", cardNumber);
-            outMsg.put("cardholder", cardHolder);
-            outMsg.put("validity", cardMonth + "/" + cardYear);
-            outMsg.put("cvv", cardCvv);
-            String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            outMsg.put("dev_id", android_id);
-
-
-
-            // Ensure connection
-            ConnectivityManager connMgr = (ConnectivityManager)
-                    getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()) {
-                // Communicate with service
-                new TokenizeCardTask().execute("https://kortagleypir.herokuapp.com/card", outMsg.toString());
-            } else {
-                // display error
-                CharSequence message = "No network connection available.";
-                Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-
-                toast.show();
-            }
-
-        }
-        catch (Exception e) {
+            jsonAccountObject.put("usr_id", 99);
+            jsonAccountObject.put("dev_id", 65468);
+        } catch (Exception e) {
             e.printStackTrace();
+            return;
+        }
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // fetch data
+            new RegisterAccountTask().execute("https://kortagleypir.herokuapp.com/token", jsonAccountObject.toString());
+        } else {
+            // display error
+            CharSequence message = "No network connection available.";
+            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+
+            toast.show();
         }
     }
 
@@ -111,7 +77,7 @@ public class TokenizeCardActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tokenize_card, menu);
+        getMenuInflater().inflate(R.menu.menu_token_receive, menu);
         return true;
     }
 
@@ -130,8 +96,14 @@ public class TokenizeCardActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void getToken(View view) {
 
-    private class TokenizeCardTask extends AsyncTask<String, Void, JSONObject> {
+
+
+
+    }
+
+    private class RegisterAccountTask extends AsyncTask<String, Void, JSONObject> {
 
         private Exception exception;
 
@@ -151,20 +123,28 @@ public class TokenizeCardActivity extends Activity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(JSONObject result) {
+            //textView.setText(result);
+            int rCode = result.optInt("responseCode");
 
-            if(result != null) {
-                int rCode = result.optInt("responseCode");
+            if (rCode == 200) {
+                try {
+                    Gson gson = new Gson();
+                    Token token  = gson.fromJson(result.toString(), Token.class);
+                    Repository.setToken(getApplication(), token);
 
-                if (rCode == 200) {
-                    try {
 
-                        responseDisplay.setText("Kort hefur verið skráð.");
-                    } catch (Exception e) {
+                    serviceResponse.setText("Skráning tókst.");
+                    editusr_id.setText(token.getUsr_id());
+                    editdevice_id.setText(token.getDevice_id());
+                    edittokenone.setText(token.getTokenone());
+                    edittokentwo.setText(token.getTokentwo());
+                    edittokenthree.setText(token.getTokenthree());
 
-                    }
-                } else {
-                    System.out.println(rCode);
+                } catch (Exception e) {
+
                 }
+            } else {
+                //editAccountName.setText("Misheppnuð skráning ahahahah!");
             }
 
         }
@@ -174,7 +154,7 @@ public class TokenizeCardActivity extends Activity {
 
             // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
             JSONObject msg = new JSONObject();
-            JSONObject ret = new JSONObject();
+            JSONObject ret = null;
             try {
                 msg = new JSONObject(json_accountInfo);
             } catch (Exception e) {
@@ -206,12 +186,6 @@ public class TokenizeCardActivity extends Activity {
                 int response = conn.getResponseCode();
                 //Log.d( "The response is: " + response);
                 System.out.println("The response code is: " + response);
-                try {
-                    ret.put("responseCode", response);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
                 String responseMessage = conn.getResponseMessage();
                 System.out.println("The response message is: " + responseMessage);
 
@@ -221,7 +195,7 @@ public class TokenizeCardActivity extends Activity {
                 //System.out.println(is.available());
                 ret = readJSON(is, 5000);
                 try {
-
+                    ret.put("responseCode", response);
                     ret.put("sentMessage", msg);
                 } catch (Exception e) {
                     e.printStackTrace();
