@@ -14,6 +14,10 @@ import is.valitor.lokaverkefni.oturgjold.models.User;
 
 
 public class MainActivity extends Activity {
+    public static final int RESULT_FAILURE = 0;
+    public static final int RESULT_SUCCESS = 1;
+
+    private static final int REQUEST_REGISTER_USER = 1;
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
@@ -28,16 +32,8 @@ public class MainActivity extends Activity {
         editor.putString("defaultCard", "main");
         editor.commit();
 
-        // Check if there is a user and disable buttons if not
-        User user = Repository.getUser(getApplication());
-        if (user == null) {
-            Button registerCardButton = (Button) findViewById(R.id.button_register_card);
-            registerCardButton.setClickable(false);
-            registerCardButton.setEnabled(false);
-        } else {
-            System.out.println("Loaded user: " + user.getName());
-        }
-    }
+        enableRegistration();
+}
 
 
     @Override
@@ -77,7 +73,9 @@ public class MainActivity extends Activity {
     /** Called when the user clicks the register account button */
     public void registerAccount(View view) {
         Intent intent = new Intent(this, RegisterAccountActivity.class);
-        startActivity(intent);
+
+        // Start activity for result to be able to trigger UI change on success
+        startActivityForResult(intent, REQUEST_REGISTER_USER);
     }
 
     public void getToken(View view)
@@ -86,8 +84,37 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+
     public void getDefaultName(View view) {
         Intent intent = new Intent(this, ManageCardActivity.class);
         startActivity(intent);
+    }
+
+
+    @Override
+    protected void onActivityResult(int reqCode, int resCode, Intent intent) {
+        super.onActivityResult(reqCode, resCode, intent);
+
+        System.out.println("onActivityResult");
+        if (reqCode == REQUEST_REGISTER_USER) {
+            System.out.println("Req reg usr");
+            enableRegistration();
+        }
+    }
+
+    private void enableRegistration() {
+        // Check if there is a user and disable buttons if not
+        User user = Repository.getUser(getApplication());
+        if (user == null) {
+            Button registerCardButton = (Button) findViewById(R.id.button_register_card);
+            registerCardButton.setClickable(false);
+            registerCardButton.setEnabled(false);
+        } else {
+            Button registerCardButton = (Button) findViewById(R.id.button_register_card);
+            registerCardButton.setClickable(true);
+            registerCardButton.setEnabled(true);
+        }
+
+
     }
 }
