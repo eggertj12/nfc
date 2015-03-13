@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +13,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
+import is.valitor.lokaverkefni.oturgjold.models.Card;
 import is.valitor.lokaverkefni.oturgjold.models.Token;
 import is.valitor.lokaverkefni.oturgjold.models.User;
 
@@ -22,6 +25,7 @@ import is.valitor.lokaverkefni.oturgjold.models.User;
 public class Repository {
     private static final String USER_FILE_NAME = "user.json";
     private static final String TOKEN_FILE_NAME = "user.token";
+    private static final String CARD_FILE_NAME = "cards.json";
 
     private static Gson gson = new Gson();
     private static Object lockObject = new Object();
@@ -83,6 +87,7 @@ public class Repository {
 
         return user;
     }
+
     public static void setToken(Context ctx, Token token) {
         FileOutputStream fos = null;
         try {
@@ -106,6 +111,7 @@ public class Repository {
             }
         }
     }
+
     public static Token getToken(Context ctx) {
         FileInputStream fis = null;
         Token token = null;
@@ -138,4 +144,53 @@ public class Repository {
 
         return token;
     }
+
+    public static void addCard(Context ctx, Card card) {
+        FileOutputStream fos = null;
+        FileInputStream fin = null;
+
+        ArrayList<Card> cards = new ArrayList<Card>();
+        try {
+            fin = ctx.openFileInput(CARD_FILE_NAME);
+
+            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + CARD_FILE_NAME).length();
+
+            byte[] buffer = new byte[(int) length];
+            int i = fin.read(buffer);
+            String cardJson = new String(buffer, "UTF-8");
+            cards = gson.fromJson(cardJson, new TypeToken<ArrayList<Card>>() {
+            }.getType());
+            System.out.println(cards.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fin != null) {
+                    fin.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        cards.add(card);
+
+        try {
+            fos = ctx.openFileOutput(CARD_FILE_NAME, Context.MODE_PRIVATE);
+
+            String nCardJson = gson.toJson(cards);
+            System.out.println(nCardJson);
+            fos.write(nCardJson.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

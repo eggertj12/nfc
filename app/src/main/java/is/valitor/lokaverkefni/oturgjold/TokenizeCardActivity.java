@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -30,6 +32,8 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import is.valitor.lokaverkefni.oturgjold.models.Card;
 
 
 public class TokenizeCardActivity extends Activity {
@@ -154,13 +158,28 @@ public class TokenizeCardActivity extends Activity {
 
             if(result != null) {
                 int rCode = result.optInt("responseCode");
+                System.out.println(result.toString());
+                System.out.println(rCode);
 
                 if (rCode == 200) {
                     try {
-
                         responseDisplay.setText("Kort hefur verið skráð.");
-                    } catch (Exception e) {
 
+                        Card nCard = new Card();
+                        nCard.setCard_id(5);
+                        nCard.setCard_name("Partybro");
+                        String cardNumber = result.getString("cardnumber");
+
+                        nCard.setLast_four(cardNumber.substring(cardNumber.length() - 4));
+                        nCard.setTokenized_card_number(cardNumber);
+                        nCard.setTokenized_cvv(result.getString("cvv"));
+                        nCard.setTokenized_validation(result.getString("validity"));
+
+                        Repository.addCard(getApplication(), nCard);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 } else {
                     System.out.println(rCode);
@@ -206,12 +225,7 @@ public class TokenizeCardActivity extends Activity {
                 int response = conn.getResponseCode();
                 //Log.d( "The response is: " + response);
                 System.out.println("The response code is: " + response);
-                try {
-                    ret.put("responseCode", response);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
+
                 String responseMessage = conn.getResponseMessage();
                 System.out.println("The response message is: " + responseMessage);
 
@@ -223,6 +237,7 @@ public class TokenizeCardActivity extends Activity {
                 try {
 
                     ret.put("sentMessage", msg);
+                    ret.put("responseCode", response);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
