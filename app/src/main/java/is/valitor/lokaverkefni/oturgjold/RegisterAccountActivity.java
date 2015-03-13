@@ -186,7 +186,10 @@ public class RegisterAccountActivity extends Activity {
                     serviceResponse.setText("Skráning tókst.");
                     editAccountName.setText(user.getName());
                     editAccountSSN.setText(user.getSsn());
+
                     //go back to frontpage
+                    // Set result to trigger action in mainActivity
+                    setResult(MainActivity.RESULT_SUCCESS);
                     finish();
                 }
 
