@@ -2,7 +2,9 @@ package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +15,18 @@ import is.valitor.lokaverkefni.oturgjold.models.User;
 
 public class MainActivity extends Activity {
 
+    SharedPreferences sharedPreferences;
+    public static final String prefsFile = "oturgjoldPrefs";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // initialize shared preferences file, give default value default - improve when refactoring
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.putString("defaultCard", "main");
+        editor.commit();
 
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
@@ -73,6 +83,11 @@ public class MainActivity extends Activity {
     public void getToken(View view)
     {
         Intent intent = new Intent(this, TokenReceive.class);
+        startActivity(intent);
+    }
+
+    public void getDefaultName(View view) {
+        Intent intent = new Intent(this, ManageCardActivity.class);
         startActivity(intent);
     }
 }

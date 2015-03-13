@@ -20,5 +20,21 @@
             android:text=""
             android:id="@+id/serviceResponse"
             android:layout_gravity="center_horizontal" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tokCardProgressBar"
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finish"
+            android:id="@+id/button_finish_default_card"
+            android:layout_gravity="bottom"
+            android:onClick="defaultFinish"/>
     </LinearLayout>
 </RelativeLayout>

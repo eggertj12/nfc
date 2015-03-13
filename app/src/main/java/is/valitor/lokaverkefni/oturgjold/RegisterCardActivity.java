@@ -145,6 +145,7 @@ public class RegisterCardActivity extends Activity {
         intent.putExtra(MSG_CARDYEAR, cardYear);
 
         startActivity(intent);
+        finish();
     }
 
     /** Validator methods for the input */

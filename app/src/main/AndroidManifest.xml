@@ -79,6 +79,10 @@
             android:name=".TokenReceive"
             android:label="@string/title_activity_token_receive" >
         </activity>
+        <activity
+            android:name=".ManageCardActivity"
+            android:label="@string/title_activity_manage_card" >
+        </activity>
     </application>
 
 </manifest>

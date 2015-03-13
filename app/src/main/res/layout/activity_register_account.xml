@@ -86,4 +86,13 @@
         android:layout_above="@+id/labeleditName"
         android:layout_centerHorizontal="true" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_above="@+id/responseText"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"/>
+
 </RelativeLayout>

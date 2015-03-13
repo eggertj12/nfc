@@ -57,14 +57,15 @@
             android:enabled="true" />
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Try to access a service!"
-            android:id="@+id/button_access_service"
+            android:text="Velja aðalkort"
+            android:id="@+id/button_default_card"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_gravity="center_horizontal"
-            android:onClick="accessService"
-            />
+            android:clickable="true"
+            android:onClick="getDefaultName"
+            android:enabled="true" />
+
 
     </LinearLayout>
 </RelativeLayout>
