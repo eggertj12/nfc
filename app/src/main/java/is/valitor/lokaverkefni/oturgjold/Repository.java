@@ -2,6 +2,8 @@ package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -191,6 +193,69 @@ public class Repository {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static ArrayList<Card> getCards(Context ctx) {
+        FileInputStream fin = null;
+        Card card = null;
+        ArrayList<Card> cards = new ArrayList<Card>();
+
+        try{
+            fin = ctx.openFileInput(CARD_FILE_NAME);
+        }
+        catch (IOException e) {
+
+        }
+        try {
+            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + CARD_FILE_NAME).length();
+            byte[] buffer = new byte[(int) length];
+            int i = fin.read(buffer);
+            String cardJson = new String(buffer, "UTF-8");
+            cards = gson.fromJson(cardJson, new TypeToken<ArrayList<Card>>() {}.getType());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return cards;
+    }
+
+    public static Card getCardByName(Context ctx, String name) {
+        ArrayList<Card> cards = getCards(ctx);
+
+        for(Card c : cards) {
+            if (c.getCard_name().contentEquals(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    private static Card getFirstCard(Context ctx) {
+        ArrayList<Card> cards = getCards(ctx);
+
+        for(Card c : cards) {
+            return c;
+        }
+        return null;
+    }
+
+    /**
+     * Returns the selected default card
+     * @param ctx
+     * @return
+     */
+    public static Card getDefaultCard(Context ctx) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        // Second string in function call is value used if no value found in preferences
+        String defaultCardName = sp.getString("defaultCard", "main");
+
+        Card rCard = getCardByName(ctx, defaultCardName);
+        if(rCard != null) {
+            return rCard;
+        }
+        return getFirstCard(ctx);
     }
 
 }

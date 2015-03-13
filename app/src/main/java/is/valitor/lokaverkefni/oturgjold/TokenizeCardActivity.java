@@ -3,9 +3,11 @@ package is.valitor.lokaverkefni.oturgjold;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -15,8 +17,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +44,17 @@ import is.valitor.lokaverkefni.oturgjold.models.Card;
 public class TokenizeCardActivity extends Activity {
 
     private TextView responseDisplay;
+    private ProgressBar loadingThings;
+    private Button defaultFinishButton;
+
+    private String cardName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tokenize_card);
         responseDisplay = (TextView) findViewById(R.id.serviceResponse);
+        loadingThings = (ProgressBar) findViewById(R.id.tokCardProgressBar);
 
         Intent intent = getIntent();
 
@@ -72,6 +82,10 @@ public class TokenizeCardActivity extends Activity {
         TextView vValid = new TextView(this);
         vValid.setText("valid: " + cardMonth + "/" + cardYear);
         root.addView(vValid);
+
+        //
+        defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
+        defaultFinishButton.setVisibility(View.INVISIBLE);
 
         //used to send to reader
         AccountStorage.SetAccount(this, cardNumber);
@@ -134,6 +148,15 @@ public class TokenizeCardActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void defaultFinish(View view){
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+
+        editor.putString("defaultCard", cardName);
+        editor.commit();
+
+        finish();
+    }
+
 
     private class TokenizeCardTask extends AsyncTask<String, Void, JSONObject> {
 
@@ -155,7 +178,8 @@ public class TokenizeCardActivity extends Activity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(JSONObject result) {
-
+            loadingThings.setVisibility(View.INVISIBLE);
+            defaultFinishButton.setVisibility(View.VISIBLE);
             if(result != null) {
                 int rCode = result.optInt("responseCode");
                 System.out.println(result.toString());
@@ -168,6 +192,7 @@ public class TokenizeCardActivity extends Activity {
                         Card nCard = new Card();
                         nCard.setCard_id(5);
                         nCard.setCard_name("Partybro");
+                        cardName = "Partybro";
                         String cardNumber = result.getString("cardnumber");
 
                         nCard.setLast_four(cardNumber.substring(cardNumber.length() - 4));

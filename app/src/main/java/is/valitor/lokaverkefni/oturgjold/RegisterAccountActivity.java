@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class RegisterAccountActivity extends Activity {
     private TextView editAccountName;
     private TextView editAccountSSN;
     private TextView serviceResponse;
-
+    private ProgressBar loadingThings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,9 @@ public class RegisterAccountActivity extends Activity {
         editAccountName = (TextView) findViewById(R.id.editAccountName);
         editAccountSSN = (TextView) findViewById(R.id.editAccountSSN);
         serviceResponse = (TextView) findViewById(R.id.responseText);
+        loadingThings = (ProgressBar) findViewById(R.id.progressBar);
+
+        loadingThings.setVisibility(View.INVISIBLE);
     }
 
 
@@ -143,6 +147,7 @@ public class RegisterAccountActivity extends Activity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             // fetch data
+            loadingThings.setVisibility(View.VISIBLE);
             new RegisterAccountTask().execute("https://kortagleypir.herokuapp.com/user", jsonAccountObject.toString());
         } else {
             // display error
@@ -176,7 +181,7 @@ public class RegisterAccountActivity extends Activity {
         protected void onPostExecute(JSONObject result) {
             //textView.setText(result);
             int rCode = result.optInt("responseCode");
-
+            loadingThings.setVisibility(View.INVISIBLE);
             if(rCode == 200) {
                 try {
                     Gson gson = new Gson();

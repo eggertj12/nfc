@@ -33,6 +33,7 @@
     <!--for testing tokenization-->
     <string name="device_id">456</string>
     <string name="usr_id">55</string>
+    <string name="title_activity_manage_card">ManageCardActivity</string>
 
 
 </resources>
