@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        enableRegistration();
+        enableRegistrationUI();
     }
 
 
@@ -79,22 +79,19 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {
         super.onActivityResult(reqCode, resCode, intent);
 
-        System.out.println("onActivityResult");
         if (reqCode == REQUEST_REGISTER_USER) {
-            System.out.println("Req reg usr");
-            enableRegistration();
+            enableRegistrationUI();
         }
     }
 
-    private void enableRegistration() {
+    private void enableRegistrationUI() {
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
+        Button registerCardButton = (Button) findViewById(R.id.button_register_card);
         if (user == null) {
-            Button registerCardButton = (Button) findViewById(R.id.button_register_card);
             registerCardButton.setClickable(false);
             registerCardButton.setEnabled(false);
         } else {
-            Button registerCardButton = (Button) findViewById(R.id.button_register_card);
             registerCardButton.setClickable(true);
             registerCardButton.setEnabled(true);
         }
