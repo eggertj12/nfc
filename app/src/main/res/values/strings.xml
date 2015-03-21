@@ -22,9 +22,9 @@
     <string name="title_activity_test_service">TestServiceActivity</string>
 
 
-        <string name="service_name">CardEmulation Sample</string>
-        <string name="card_title">Sample Loyalty Card</string>
-        <string name="account_number">Account Number</string>
+    <string name="service_name">CardEmulation Sample</string>
+    <string name="card_title">Sample Loyalty Card</string>
+    <string name="account_number">Account Number</string>
     <string name="title_activity_account_management">AccountManagementActivity</string>
     <string name="title_activity_token">Token</string>
     <string name="title_activity_token_receive">TokenReceive</string>
@@ -35,5 +35,9 @@
     <string name="usr_id">55</string>
     <string name="title_activity_manage_card">ManageCardActivity</string>
 
+    <!--web service urls-->
+    <string name="service_account_url">https://kortagleypir.herokuapp.com/user</string>
+    <string name="service_card_url">https://kortagleypir.herokuapp.com/card</string>
+    <string name="service_token_url">https://kortagleypir.herokuapp.com/token</string>
 
 </resources>

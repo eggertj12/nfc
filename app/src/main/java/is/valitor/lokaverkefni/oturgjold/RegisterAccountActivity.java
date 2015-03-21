@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.JsonReader;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,26 +17,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import is.valitor.lokaverkefni.oturgjold.models.User;
+import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
+import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
+import is.valitor.lokaverkefni.oturgjold.service.RegisterAccountTask;
 
 
 public class RegisterAccountActivity extends Activity {
@@ -99,21 +86,12 @@ public class RegisterAccountActivity extends Activity {
         EditText editAccountName = (EditText) findViewById(R.id.editAccountName);
         String name = editAccountName.getText().toString();
 
-        String firstName = "John";
-        String lastName = "Doe";
-
         if (!v.validateCardholderName(name)) {
             CharSequence message = getResources().getString(R.string.error_invalid_cardholder_name);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
             editAccountName.requestFocus();
             return;
-        }
-        // Consider doing this in an adult, sophisticated manner.
-        String[] nameSplit = name.split(" ");
-        if(nameSplit.length == 2) {
-            firstName = nameSplit[0];
-            lastName = nameSplit[1];
         }
         EditText editAccountSSN = (EditText) findViewById(R.id.editAccountSSN);
         String ssn = editAccountSSN.getText().toString();
@@ -131,8 +109,6 @@ public class RegisterAccountActivity extends Activity {
         JSONObject jsonAccountObject = new JSONObject();
 
         try {
-            //jsonAccountObject.put("firstName", firstName);
-            //jsonAccountObject.put("lastName", lastName);
             jsonAccountObject.put("name", name);
             jsonAccountObject.put("ssn", ssn);
             jsonAccountObject.put("dev_id", android_id);
@@ -143,12 +119,19 @@ public class RegisterAccountActivity extends Activity {
         }
 
         ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
+            getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            // fetch data
+
+            // Update UI
             loadingThings.setVisibility(View.VISIBLE);
-            new RegisterAccountTask().execute("https://kortagleypir.herokuapp.com/user", jsonAccountObject.toString());
+            Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
+            registerAccountButton.setClickable(false);
+            registerAccountButton.setEnabled(false);
+
+            // fetch data
+            new RegisterAccountTask(this, new RegisterAccountListener())
+                    .execute(getString(R.string.service_account_url), jsonAccountObject.toString());
         } else {
             // display error
             CharSequence message = "No network connection available.";
@@ -159,38 +142,39 @@ public class RegisterAccountActivity extends Activity {
 
     }
 
-    private class RegisterAccountTask extends AsyncTask<String, Void, JSONObject> {
+    private class RegisterAccountListener implements AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> {
 
-        private Exception exception;
-
+        // onTaskComplete is called once the task has completed.
         @Override
-        protected JSONObject doInBackground(String... params) {
-            try {
-                // params comes from the execute() call: params[0] is the url.
-                return postUrl(params[0], params[1]);
-            } catch (IOException e) {
-                return null;
-            } catch (Exception e) {
-                this.exception = e;
+        public void onTaskComplete(AsyncTaskResult<JSONObject> result)
+        {
+            if (result.getError() != null) {
+                // display error
+                CharSequence message;
+                if (result.getError() instanceof IOException) {
+                    message = "Network error, try again.";
+                    Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
+                    registerAccountButton.setClickable(true);
+                    registerAccountButton.setEnabled(true);
+
+                } else {
+                    message = "Unknown error, contact service.";
+                }
+                Toast toast = Toast.makeText(RegisterAccountActivity.this, message, Toast.LENGTH_LONG);
+                toast.show();
+
+                return;
             }
-            return null;
-        }
 
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(JSONObject result) {
+            JSONObject response = result.getResult();
             //textView.setText(result);
-            int rCode = result.optInt("responseCode");
+            int rCode = response.optInt("responseCode");
             loadingThings.setVisibility(View.INVISIBLE);
             if(rCode == 200) {
                 try {
                     Gson gson = new Gson();
-                    User user = gson.fromJson(result.toString(), User.class);
+                    User user = gson.fromJson(response.toString(), User.class);
                     Repository.setUser(getApplication(), user);
-
-                    serviceResponse.setText("Skráning tókst.");
-                    editAccountName.setText(user.getName());
-                    editAccountSSN.setText(user.getSsn());
 
                     //go back to frontpage
                     // Set result to trigger action in mainActivity
@@ -208,87 +192,6 @@ public class RegisterAccountActivity extends Activity {
 
         }
 
-        private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
-            InputStream is = null;
-
-            // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
-            JSONObject msg = new JSONObject();
-            JSONObject ret = null;
-            try {
-                msg = new JSONObject(json_accountInfo);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
-            try {
-                URL url = new URL(serviceURL);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setUseCaches(false);
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
-                // Establish connection
-                conn.connect();
-                // Get ready to write data
-                OutputStream os = conn.getOutputStream();
-                OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-
-                osw.write(msg.toString());
-                System.out.println(msg.toString());
-                osw.flush();
-                osw.close();
-                // The service will respond with a JSON string of its own.
-                int response = conn.getResponseCode();
-                //Log.d( "The response is: " + response);
-                System.out.println("The response code is: " + response);
-                String responseMessage = conn.getResponseMessage();
-                System.out.println("The response message is: " + responseMessage);
-
-
-
-                // Convert the InputStream into a string
-                is = conn.getInputStream();
-                //System.out.println(is.available());
-                ret = readJSON(is, 5000);
-                try {
-                    ret.put("responseCode", response);
-                    ret.put("sentMessage", msg);
-                }
-                catch(Exception e) {
-                    e.printStackTrace();
-                }
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
-            } finally {
-                if (is != null) {
-                    is.close();
-                }
-            }
-            return ret;
-        }
-
-        // Reads an InputStream and converts it to a JSONObject.
-        public JSONObject readJSON(InputStream stream, int len) throws IOException {
-            Reader reader = null;
-            reader = new InputStreamReader(stream, "UTF-8");
-            char[] buffer = new char[len];
-            reader.read(buffer);
-
-            String msg = new String(buffer);
-            JSONObject ret = new JSONObject();
-            try {
-                ret = new JSONObject(msg);
-            }
-            catch(Exception e) {
-                e.printStackTrace();
-            }
-            return ret;
-        }
     }
 }
 
