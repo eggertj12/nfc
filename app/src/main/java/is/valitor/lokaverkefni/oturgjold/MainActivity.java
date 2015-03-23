@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import is.valitor.lokaverkefni.oturgjold.models.Token;
 import is.valitor.lokaverkefni.oturgjold.models.User;
 
 
@@ -18,6 +20,7 @@ public class MainActivity extends Activity {
     public static final int RESULT_SUCCESS = 1;
 
     private static final int REQUEST_REGISTER_USER = 1;
+    private static final int REQUEST_REGISTER_CARD = 2;
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
@@ -62,13 +65,10 @@ public class MainActivity extends Activity {
     public void registerCard(View view) {
         // Create intent for opening new activity
         Intent intent = new Intent(this, RegisterCardActivity.class);
-        startActivity(intent);
+        //startActivity(intent);
+        startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }
 
-    public void accessService(View view) {
-        Intent intent = new Intent(this, TestServiceActivity.class);
-        startActivity(intent);
-    }
 
     /** Called when the user clicks the register account button */
     public void registerAccount(View view) {
@@ -78,11 +78,7 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, REQUEST_REGISTER_USER);
     }
 
-    public void getToken(View view)
-    {
-        Intent intent = new Intent(this, TokenReceive.class);
-        startActivity(intent);
-    }
+
 
 
     public void getDefaultName(View view) {
@@ -95,7 +91,7 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {
         super.onActivityResult(reqCode, resCode, intent);
 
-        if (reqCode == REQUEST_REGISTER_USER) {
+        if (reqCode == REQUEST_REGISTER_USER || reqCode == REQUEST_REGISTER_CARD) {
             enableRegistrationUI();
         }
     }
@@ -103,15 +99,49 @@ public class MainActivity extends Activity {
     private void enableRegistrationUI() {
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
+        Token token = Repository.getToken(getApplication());
         Button registerCardButton = (Button) findViewById(R.id.button_register_card);
+        Button registerUserButton = (Button) findViewById(R.id.button_register_account);
+        Button paymentButton = (Button) findViewById(R.id.button_payment);
+
+        registerCardButton.setVisibility(View.INVISIBLE);
+        paymentButton.setVisibility(View.INVISIBLE);
+        registerUserButton.setVisibility(View.VISIBLE);
         if (user == null) {
-            registerCardButton.setClickable(false);
-            registerCardButton.setEnabled(false);
-        } else {
-            registerCardButton.setClickable(true);
-            registerCardButton.setEnabled(true);
+            Log.d("jo", "user null");
+            registerCardButton.setVisibility(View.INVISIBLE);
+            paymentButton.setVisibility(View.INVISIBLE);
+            //registerCardButton.setClickable(false);
+            //registerCardButton.setEnabled(false);
+        } else if(user != null && token == null){
+            registerCardButton.setVisibility(View.VISIBLE);
+            paymentButton.setVisibility(View.INVISIBLE);
+            registerUserButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            Log.d("hello","user not null");
+            paymentButton.setVisibility(View.VISIBLE);
+            registerCardButton.setVisibility(View.INVISIBLE);
+            registerUserButton.setVisibility(View.INVISIBLE);
+
+            //registerCardButton.setClickable(true);
+            //registerCardButton.setEnabled(true);
         }
 
 
+    }
+
+
+    //to be deleted
+    public void accessService(View view) {
+        Intent intent = new Intent(this, TestServiceActivity.class);
+        startActivity(intent);
+    }
+
+    /*to be removed*/
+    public void getToken(View view)
+    {
+        Intent intent = new Intent(this, TokenReceive.class);
+        startActivity(intent);
     }
 }

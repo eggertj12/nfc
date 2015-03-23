@@ -36,5 +36,12 @@
             android:id="@+id/button_finish_default_card"
             android:layout_gravity="bottom"
             android:onClick="defaultFinish"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Viltu skrá annað kort?"
+            android:id="@+id/radioButton"
+            android:layout_gravity="right" />
     </LinearLayout>
 </RelativeLayout>

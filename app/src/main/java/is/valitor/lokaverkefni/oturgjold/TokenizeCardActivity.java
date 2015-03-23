@@ -39,6 +39,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import is.valitor.lokaverkefni.oturgjold.models.Card;
+import is.valitor.lokaverkefni.oturgjold.models.Token;
+import is.valitor.lokaverkefni.oturgjold.models.User;
 
 
 public class TokenizeCardActivity extends Activity {
@@ -95,11 +97,12 @@ public class TokenizeCardActivity extends Activity {
         //used to send to reader
         AccountStorage.SetAccount(this, cardNumber);
 
+        User u = new User();
         // Communicate with the service:
         try {
             // Make JSON
             JSONObject outMsg = new JSONObject();
-            outMsg.put("usr_id", 6666);
+            outMsg.put("usr_id", Repository.getUser(this).getUsr_id());
             outMsg.put("cardnumber", cardNumber);
             outMsg.put("cardholder", cardHolder);
             outMsg.put("validity", cardMonth + "/" + cardYear);
@@ -117,6 +120,7 @@ public class TokenizeCardActivity extends Activity {
             if (networkInfo != null && networkInfo.isConnected()) {
                 // Communicate with service
                 new TokenizeCardTask().execute("https://kortagleypir.herokuapp.com/card", outMsg.toString());
+
             } else {
                 // display error
                 CharSequence message = "No network connection available.";
@@ -207,6 +211,17 @@ public class TokenizeCardActivity extends Activity {
                         nCard.setTokenized_validation(result.getString("validity"));
 
                         Repository.addCard(getApplication(), nCard);
+
+                        User theUser = Repository.getUser(getApplicationContext());
+
+                        Token token = new Token();
+                        token.setUsr_id(String.valueOf(theUser.getUsr_id()));
+                        token.setDevice_id(theUser.getDevice_id());
+
+                        Gson gson = new Gson();
+                        String tokenJson = gson.toJson(token, Token.class);
+
+                    new GetTokenTask(getApplicationContext()).execute("https://kortagleypir.herokuapp.com/token", tokenJson);
 
 
                     } catch (Exception e) {
