@@ -135,7 +135,7 @@ public class RegisterAccountActivity extends Activity {
             //jsonAccountObject.put("lastName", lastName);
             jsonAccountObject.put("name", name);
             jsonAccountObject.put("ssn", ssn);
-            jsonAccountObject.put("dev_id", android_id);
+            jsonAccountObject.put("device_id", android_id);
         }
         catch(Exception e) {
             e.printStackTrace();

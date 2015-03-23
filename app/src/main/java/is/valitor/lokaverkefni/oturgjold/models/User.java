@@ -11,16 +11,16 @@ public class User {
     private String ssn;
     private String name;
     //device id
-    private String dev_id;
+    private String device_id;
     //from data table
-    private int id;
+    private int usr_id;
 
-    public String getDev_id() {
-        return dev_id;
+    public String getDevice_id() {
+        return device_id;
     }
 
-    public void setDev_id(String dev_id) {
-        this.dev_id = dev_id;
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
     }
 
 
@@ -40,12 +40,12 @@ public class User {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public int getUsr_id() {
+        return usr_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUsr_id(int usr_id) {
+        this.usr_id = usr_id;
     }
 
 

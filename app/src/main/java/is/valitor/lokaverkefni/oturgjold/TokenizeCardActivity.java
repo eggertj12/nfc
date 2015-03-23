@@ -100,7 +100,7 @@ public class TokenizeCardActivity extends Activity {
             outMsg.put("validity", cardMonth + "/" + cardYear);
             outMsg.put("cvv", cardCvv);
             String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            outMsg.put("dev_id", android_id);
+            outMsg.put("device_id", android_id);
 
 
 
