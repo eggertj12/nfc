@@ -34,6 +34,7 @@
     <string name="device_id">456</string>
     <string name="usr_id">55</string>
     <string name="title_activity_manage_card">ManageCardActivity</string>
+    <string name="action_reset">Reset</string>
 
 
 </resources>
