@@ -64,6 +64,7 @@ public class TokenizeCardActivity extends Activity {
         String cardCvv = intent.getStringExtra(RegisterCardActivity.MSG_CARDCVV);
         String cardMonth = intent.getStringExtra(RegisterCardActivity.MSG_CARDMONTH);
         String cardYear = intent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR);
+        String cardPin = intent.getStringExtra(RegisterCardActivity.MSG_CARDPIN);
 
         LinearLayout root = (LinearLayout) findViewById(R.id.tokenize_linear);
 
@@ -83,6 +84,10 @@ public class TokenizeCardActivity extends Activity {
         vValid.setText("valid: " + cardMonth + "/" + cardYear);
         root.addView(vValid);
 
+        TextView vPin = new TextView(this);
+        vPin.setText("pin: " + cardPin);
+        root.addView(vPin);
+
         //
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
         defaultFinishButton.setVisibility(View.INVISIBLE);
@@ -99,6 +104,7 @@ public class TokenizeCardActivity extends Activity {
             outMsg.put("cardholder", cardHolder);
             outMsg.put("validity", cardMonth + "/" + cardYear);
             outMsg.put("cvv", cardCvv);
+            outMsg.put("pin", cardPin);
             String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             outMsg.put("device_id", android_id);
 

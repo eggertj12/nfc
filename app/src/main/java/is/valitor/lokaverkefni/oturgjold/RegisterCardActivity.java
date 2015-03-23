@@ -21,6 +21,7 @@ public class RegisterCardActivity extends Activity {
     public final static String MSG_CARDCVV = "is.valitor.oturgjold.MSG_CARDCVV";
     public final static String MSG_CARDMONTH = "is.valitor.oturgjold.MSG_CARDMONTH";
     public final static String MSG_CARDYEAR = "is.valitor.oturgjold.MSG_CARDYEAR";
+    public final static String MSG_CARDPIN = "is.valitor.otugjold.MSG_CARDPIN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,16 @@ public class RegisterCardActivity extends Activity {
             return;
         }
 
+        // PIN Number
+        EditText editPin = (EditText) findViewById(R.id.editPIN);
+        String cardPin = editPin.getText().toString();
+       /* if (!v.validatePin(cardPin)) {
+            CharSequence message = getResources().getString(R.string.error_invalid_pin);
+            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+            toast.show();
+            editCardPin.requestFocus();
+            return;
+        }*/
         // Validity year
         Spinner spinnerYear = (Spinner) findViewById(R.id.spinnerValidityYear);
         String cardYear = spinnerYear.getSelectedItem().toString();
@@ -143,6 +154,7 @@ public class RegisterCardActivity extends Activity {
         intent.putExtra(MSG_CARDCVV, cardCvv);
         intent.putExtra(MSG_CARDMONTH, cardMonth);
         intent.putExtra(MSG_CARDYEAR, cardYear);
+        intent.putExtra(MSG_CARDPIN,cardPin);
 
         startActivity(intent);
         finish();
