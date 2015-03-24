@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //Register new card
         if (id == R.id.register_card) {
             registerCard(item.getActionView());
             return true;

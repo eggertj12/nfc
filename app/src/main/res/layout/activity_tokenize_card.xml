@@ -37,11 +37,13 @@
             android:layout_gravity="bottom"
             android:onClick="defaultFinish"/>
 
-        <RadioButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Viltu skrá annað kort?"
-            android:id="@+id/radioButton"
-            android:layout_gravity="right" />
+            android:text="Skrá annað kort"
+            android:id="@+id/reg_new_card"
+            android:layout_gravity="bottom"
+            android:onClick="registerCard"/>
+
     </LinearLayout>
 </RelativeLayout>

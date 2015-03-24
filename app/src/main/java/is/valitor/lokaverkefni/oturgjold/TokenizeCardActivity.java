@@ -48,6 +48,8 @@ public class TokenizeCardActivity extends Activity {
     private TextView responseDisplay;
     private ProgressBar loadingThings;
     private Button defaultFinishButton;
+    private Button continueRegisterCard;
+    private static final int REQUEST_REGISTER_CARD = 2;
 
     private String cardName;
 
@@ -94,10 +96,15 @@ public class TokenizeCardActivity extends Activity {
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
         defaultFinishButton.setVisibility(View.INVISIBLE);
 
+        //Register new card (another card)
+        continueRegisterCard = (Button)findViewById(R.id.reg_new_card);
+        continueRegisterCard.setVisibility(View.INVISIBLE);
+
+
         //used to send to reader
         AccountStorage.SetAccount(this, cardNumber);
 
-        User u = new User();
+
         // Communicate with the service:
         try {
             // Make JSON
@@ -167,7 +174,13 @@ public class TokenizeCardActivity extends Activity {
         finish();
     }
 
-
+    /** Called when the user clicks the reg_new_card button */
+    public void registerCard(View view) {
+        // Create intent for opening new activity
+        Intent intent = new Intent(this, RegisterCardActivity.class);
+        //startActivity(intent);
+        startActivityForResult(intent, REQUEST_REGISTER_CARD);
+    }
     private class TokenizeCardTask extends AsyncTask<String, Void, JSONObject> {
 
         private Exception exception;
@@ -190,6 +203,8 @@ public class TokenizeCardActivity extends Activity {
         protected void onPostExecute(JSONObject result) {
             loadingThings.setVisibility(View.INVISIBLE);
             defaultFinishButton.setVisibility(View.VISIBLE);
+            continueRegisterCard.setVisibility(View.VISIBLE);
+
             if(result != null) {
                 int rCode = result.optInt("responseCode");
                 System.out.println(result.toString());
@@ -221,7 +236,7 @@ public class TokenizeCardActivity extends Activity {
                         Gson gson = new Gson();
                         String tokenJson = gson.toJson(token, Token.class);
 
-                    new GetTokenTask(getApplicationContext()).execute("https://kortagleypir.herokuapp.com/token", tokenJson);
+                        new GetTokenTask(getApplicationContext()).execute("https://kortagleypir.herokuapp.com/token", tokenJson);
 
 
                     } catch (Exception e) {
