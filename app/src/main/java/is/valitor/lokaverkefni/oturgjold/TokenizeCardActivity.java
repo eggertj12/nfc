@@ -229,6 +229,7 @@ public class TokenizeCardActivity extends Activity {
 
                         User theUser = Repository.getUser(getApplicationContext());
 
+                        //getting token from webservice
                         Token token = new Token();
                         token.setUsr_id(String.valueOf(theUser.getUsr_id()));
                         token.setDevice_id(theUser.getDevice_id());

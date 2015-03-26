@@ -83,6 +83,10 @@
             android:name=".ManageCardActivity"
             android:label="@string/title_activity_manage_card" >
         </activity>
+        <activity
+            android:name=".Payment"
+            android:label="@string/title_activity_payment" >
+        </activity>
     </application>
 
 </manifest>

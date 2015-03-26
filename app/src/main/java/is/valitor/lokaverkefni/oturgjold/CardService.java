@@ -16,9 +16,11 @@ package is.valitor.lokaverkefni.oturgjold;
  * limitations under the License.
  */
 
+import android.content.Intent;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import java.util.Arrays;
 
@@ -90,6 +92,9 @@ public class CardService extends HostApduService {
         // If the APDU matches the SELECT AID command for this service,
         // send the loyalty card account number, followed by a SELECT_OK status trailer (0x9000).
         if (Arrays.equals(SELECT_APDU, commandApdu)) {
+
+            getPin();
+
             String account = AccountStorage.GetAccount(this);
             byte[] accountBytes = account.getBytes();
             Log.i(TAG, "Sending account number: " + account);
@@ -172,6 +177,10 @@ public class CardService extends HostApduService {
             offset += array.length;
         }
         return result;
+    }
+    private void getPin()
+    {
+
     }
 }
 

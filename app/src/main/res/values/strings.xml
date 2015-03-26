@@ -20,6 +20,7 @@
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_test_service">TestServiceActivity</string>
+     <string name="enter_pin">Sláðu inn öryggisnúmer</string>
 
 
         <string name="service_name">CardEmulation Sample</string>
@@ -35,6 +36,10 @@
     <string name="usr_id">55</string>
     <string name="title_activity_manage_card">ManageCardActivity</string>
     <string name="action_reset">Reset</string>
+    <string name="title_activity_payment">Payment</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
