@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
 
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;
+    private static final int REQUEST_PAYMENT = 3;
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
@@ -34,6 +35,8 @@ public class MainActivity extends Activity {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putString("defaultCard", "main");
         editor.commit();
+
+
 
         enableRegistrationUI();
     }
@@ -80,7 +83,13 @@ public class MainActivity extends Activity {
     }
 
 
-
+    /** Called when the user clicks the Register card button */
+    public void payment(View view) {
+        // Create intent for opening new activity
+        Intent intent = new Intent(this, Payment.class);
+        //startActivity(intent);
+        startActivityForResult(intent, REQUEST_PAYMENT);
+    }
 
     public void getDefaultName(View view) {
         Intent intent = new Intent(this, ManageCardActivity.class);
@@ -108,12 +117,12 @@ public class MainActivity extends Activity {
         registerCardButton.setVisibility(View.INVISIBLE);
         paymentButton.setVisibility(View.INVISIBLE);
         registerUserButton.setVisibility(View.VISIBLE);
+
         if (user == null) {
             Log.d("jo", "user null");
             registerCardButton.setVisibility(View.INVISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
-            //registerCardButton.setClickable(false);
-            //registerCardButton.setEnabled(false);
+
         } else if(user != null && token == null){
             registerCardButton.setVisibility(View.VISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
@@ -124,9 +133,6 @@ public class MainActivity extends Activity {
             paymentButton.setVisibility(View.VISIBLE);
             registerCardButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
-
-            //registerCardButton.setClickable(true);
-            //registerCardButton.setEnabled(true);
         }
 
 
@@ -134,15 +140,15 @@ public class MainActivity extends Activity {
 
 
     //to be deleted
-    public void accessService(View view) {
+    /*public void accessService(View view) {
         Intent intent = new Intent(this, TestServiceActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     /*to be removed*/
-    public void getToken(View view)
+    /*public void getToken(View view)
     {
         Intent intent = new Intent(this, TokenReceive.class);
         startActivity(intent);
-    }
+    }*/
 }

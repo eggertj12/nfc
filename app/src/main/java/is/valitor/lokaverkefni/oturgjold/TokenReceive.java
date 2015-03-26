@@ -27,15 +27,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import is.valitor.lokaverkefni.oturgjold.models.Token;
+import is.valitor.lokaverkefni.oturgjold.models.User;
 
 
 public class TokenReceive extends Activity {
-    private TextView editusr_id;
-    private TextView editdevice_id;
-    private TextView edittokenone;
-    private TextView edittokentwo;
-    private TextView edittokenthree;
-    private TextView serviceResponse;
+    //private TextView editusr_id;
+    //private TextView editdevice_id;
+    //private TextView serviceResponse;
     private static final String TAG = "CardService";
 
     @Override
@@ -43,20 +41,22 @@ public class TokenReceive extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_token_receive);
         Log.i(TAG, "Sending account number: " );
-        editusr_id = (TextView) findViewById(R.id.editAccountName);
-        editdevice_id = (TextView) findViewById(R.id.editAccountSSN);
-        serviceResponse = (TextView) findViewById(R.id.responseText);
+    //    editusr_id = (TextView) findViewById(R.id.editAccountName);
+      //  editdevice_id = (TextView) findViewById(R.id.editAccountSSN);
+        //serviceResponse = (TextView) findViewById(R.id.responseText);
 
         Log.i(TAG, "Sending account number: " );
         JSONObject jsonAccountObject = new JSONObject();
+        Token token = new Token();
 
         try {
-            jsonAccountObject.put("usr_id", 99);
-            jsonAccountObject.put("device_id", 65468);
-            // Need three empty strings to be cool
-            jsonAccountObject.put("tokenone", "party");
-            jsonAccountObject.put("tokentwo", "on");
-            jsonAccountObject.put("tokenthree", "bros");
+
+            User theUser = Repository.getUser(getApplicationContext());
+
+            token.setUsr_id(String.valueOf(theUser.getUsr_id()));
+            token.setDevice_id(theUser.getDevice_id());
+            jsonAccountObject.put("usr_id", theUser.getUsr_id());
+            jsonAccountObject.put("device_id", theUser.getDevice_id());
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -64,7 +64,7 @@ public class TokenReceive extends Activity {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (networkInfo != null && networkInfo.isConnected() && token.getTokenone().isEmpty()) {
             // fetch data
             new FetchTokenTask().execute("https://kortagleypir.herokuapp.com/token", jsonAccountObject.toString());
         } else {
@@ -99,12 +99,7 @@ public class TokenReceive extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getToken(View view) {
 
-
-
-
-    }
 
     private class FetchTokenTask extends AsyncTask<String, Void, JSONObject> {
 
@@ -137,12 +132,12 @@ public class TokenReceive extends Activity {
                     Repository.setToken(getApplication(), token);
 
 
-                    serviceResponse.setText("Skráning tókst.");
+                   /* serviceResponse.setText("Skráning tókst.");
                     editusr_id.setText(token.getUsr_id());
                     editdevice_id.setText(token.getDevice_id());
                     edittokenone.setText(token.getTokenone());
                     edittokentwo.setText(token.getTokentwo());
-                    edittokenthree.setText(token.getTokenthree());
+                    edittokenthree.setText(token.getTokenthree());*/
 
                 } catch (Exception e) {
 
