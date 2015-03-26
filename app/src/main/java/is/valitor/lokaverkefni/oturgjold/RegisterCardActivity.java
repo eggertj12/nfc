@@ -81,7 +81,8 @@ public class RegisterCardActivity extends Activity {
         // Cardholder name
         EditText editCardholder = (EditText) findViewById(R.id.editCardholderName);
         String cardholder = editCardholder.getText().toString();
-        if (!v.validateCardholderName(cardholder)) {
+        //if (!v.validateCardholderName(cardholder)) {
+        if(false) {
             CharSequence message = getResources().getString(R.string.error_invalid_cardholder_name);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
@@ -93,7 +94,8 @@ public class RegisterCardActivity extends Activity {
         EditText editCardNumber = (EditText) findViewById(R.id.editCardNumber);
         String cardNumber = v.cleanupCardNumber(editCardNumber.getText().toString());
         String cardType = v.validateCardNumber(cardNumber);
-        if (!(cardType == "visa" ||cardType == "mastercard" )) {
+        //if (!(cardType == "visa" ||cardType == "mastercard" )) {
+        if(false){
             CharSequence message = getResources().getString(R.string.error_invalid_cardnumber);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
@@ -104,7 +106,8 @@ public class RegisterCardActivity extends Activity {
         // Cvv Number
         EditText editCardCvv = (EditText) findViewById(R.id.editCardCvv);
         String cardCvv = editCardCvv.getText().toString();
-        if (!v.validateCvv(cardCvv)) {
+        //if (!v.validateCvv(cardCvv)) {
+        if(false) {
             CharSequence message = getResources().getString(R.string.error_invalid_cvv);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
@@ -125,7 +128,8 @@ public class RegisterCardActivity extends Activity {
         // Validity year
         Spinner spinnerYear = (Spinner) findViewById(R.id.spinnerValidityYear);
         String cardYear = spinnerYear.getSelectedItem().toString();
-        if (!v.validateYear(cardYear)) {
+        //if (!v.validateYear(cardYear)) {
+        if(false) {
             CharSequence message = getResources().getString(R.string.error_invalid_validity_year);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
@@ -136,7 +140,8 @@ public class RegisterCardActivity extends Activity {
         // Validity month
         Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerValidityMonth);
         String cardMonth = spinnerMonth.getSelectedItem().toString();
-        if (!v.validateMonth(cardMonth)) {
+        //if (!v.validateMonth(cardMonth)) {
+        if(false) {
             CharSequence message = getResources().getString(R.string.error_invalid_validity_month);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
@@ -145,7 +150,7 @@ public class RegisterCardActivity extends Activity {
         }
 
         // Create intent for opening new activity
-        Intent intent = new Intent(this, TokenizeCardActivity.class);
+        Intent intent = new Intent(this, FinalizeRegisterCardActivity.class);
 
         // Populate intent with data
         intent.putExtra(MSG_CARDNUMBER, cardNumber);

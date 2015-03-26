@@ -37,7 +37,7 @@
                 android:value="is.valitor.lokaverkefni.oturgjold.MainActivity" />
         </activity>
         <activity
-            android:name=".TokenizeCardActivity"
+            android:name=".FinalizeRegisterCardActivity"
             android:label="@string/title_activity_tokenize_card"
             android:parentActivityName=".RegisterCardActivity" >
             <meta-data

@@ -118,42 +118,48 @@
                 </LinearLayout>
             </TableRow>
         </TableLayout>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_cvv"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/inputblock_vertical_margin"
-            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_cvv"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/inputblock_vertical_margin"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editCardCvv"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:inputType="number" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PIN"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/inputblock_vertical_margin"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
 
-        <TextView
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PIN"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/inputblock_vertical_margin"
-            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editPIN"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:inputType="number"/>
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editCardCvv"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:inputType="number" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editPIN"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:inputType="number"/>
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
