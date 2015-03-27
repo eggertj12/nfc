@@ -36,8 +36,6 @@ public class MainActivity extends Activity {
         editor.putString("defaultCard", "main");
         editor.commit();
 
-
-
         enableRegistrationUI();
     }
 
@@ -86,7 +84,7 @@ public class MainActivity extends Activity {
     /** Called when the user clicks the Register card button */
     public void payment(View view) {
         // Create intent for opening new activity
-        Intent intent = new Intent(this, Payment.class);
+        Intent intent = new Intent(this, PaymentActivity.class);
         //startActivity(intent);
         startActivityForResult(intent, REQUEST_PAYMENT);
     }
@@ -134,21 +132,5 @@ public class MainActivity extends Activity {
             registerCardButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
         }
-
-
     }
-
-
-    //to be deleted
-    /*public void accessService(View view) {
-        Intent intent = new Intent(this, TestServiceActivity.class);
-        startActivity(intent);
-    }*/
-
-    /*to be removed*/
-    /*public void getToken(View view)
-    {
-        Intent intent = new Intent(this, TokenReceive.class);
-        startActivity(intent);
-    }*/
 }

@@ -94,13 +94,11 @@ public class RegisterCardTask extends AsyncTask<String, Void, AsyncTaskResult<JS
             String responseMessage = conn.getResponseMessage();
             System.out.println("The response message is: " + responseMessage);
 
-
             // Convert the InputStream into a string
             is = conn.getInputStream();
             //System.out.println(is.available());
             ret = readJSON(is, 5000);
             try {
-
                 ret.put("sentMessage", msg);
                 ret.put("responseCode", response);
             } catch (Exception e) {

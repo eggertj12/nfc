@@ -4,39 +4,180 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="is.valitor.lokaverkefni.oturgjold.Payment">
+    tools:context="is.valitor.lokaverkefni.oturgjold.PaymentActivity">
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/enter_pin"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/inputblock_vertical_margin"
-        android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-        android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-        android:id="@+id/textView" />
+        android:id="@+id/pin_seekBar">
 
-    <EditText
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton_1"
+            android:layout_weight="1">
+            <RadioButton
+                android:id="@+id/pin_radio_1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:clickable="false"/>
+        </RadioGroup>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton_2"
+            android:layout_weight="1">
+            <RadioButton
+                android:id="@+id/pin_radio_2"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:clickable="false"/>
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton_3"
+            android:layout_weight="1">
+            <RadioButton
+                android:id="@+id/pin_radio_3"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:clickable="false"/>
+        </RadioGroup>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiobutton_4"
+            android:layout_weight="1">
+                <RadioButton
+                android:id="@+id/pin_radio_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:clickable="false"/>
+        </RadioGroup>
+        <RadioButton
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pin_row1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editCardPin"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-        android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-        android:inputType="number"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="119dp" />
-
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_below="@id/pin_seekBar">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/button_pin_1"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:id="@+id/button_pin_2"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:id="@+id/button_pin_3"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pin_row2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/ok_pin"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
-        android:onClick="createString"/>
+        android:layout_below="@id/pin_row1">
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:id="@+id/button_pin_4"
+            android:layout_weight="1" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:id="@+id/button_pin_5"
+            android:layout_weight="1" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:id="@+id/button_pin_6"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pin_row3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pin_row2">
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:id="@+id/button_pin_7"
+            android:layout_weight="1" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:id="@+id/button_pin_8"
+            android:layout_weight="1" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:id="@+id/button_pin_9"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pin_row4"
+        android:layout_below="@id/pin_row3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/button_pin_back"
+            android:text="\u2190"/>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/button_pin_0"
+            android:layout_weight="1"/>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/button_pin_forward"
+            android:text="\u2713"
+            android:visibility="invisible"
+            />
+    </LinearLayout>
 </RelativeLayout>

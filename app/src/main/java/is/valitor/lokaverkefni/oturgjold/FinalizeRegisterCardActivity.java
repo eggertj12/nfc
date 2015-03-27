@@ -65,7 +65,6 @@ public class FinalizeRegisterCardActivity extends Activity {
 
         LinearLayout root = (LinearLayout) findViewById(R.id.finalize_register_linear);
 
-
         // Having registered a card, you are now happy to return to main view
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
         defaultFinishButton.setVisibility(View.INVISIBLE);
@@ -73,7 +72,6 @@ public class FinalizeRegisterCardActivity extends Activity {
         //Register new card (another card)
         continueRegisterCard = (Button)findViewById(R.id.reg_new_card);
         continueRegisterCard.setVisibility(View.INVISIBLE);
-
 
         //used to send to reader
         AccountStorage.SetAccount(this, cardNumber);
@@ -158,12 +156,10 @@ public class FinalizeRegisterCardActivity extends Activity {
         dialog.setTitle("Kortið þitt vill gælunafn!");
         dialog.setCancelable(false);
 
-
         Button button1 = (Button) dialog.findViewById(R.id.button_dialog_button68);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EditText ed = (EditText) dialog.findViewById(R.id.dialogTextEdit1);
                 if(ed != null) {
                     cardName = ed.getText().toString();

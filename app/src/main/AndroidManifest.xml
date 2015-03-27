@@ -44,10 +44,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />
         </activity>
-        <activity
-            android:name=".TestServiceActivity"
-            android:label="@string/title_activity_test_service" >
-        </activity>
 
         <!-- BEGIN_INCLUDE(CardEmulationManifest) -->
         <!-- Service for handling communication with NFC terminal. -->
@@ -84,8 +80,9 @@
             android:label="@string/title_activity_manage_card" >
         </activity>
         <activity
-            android:name=".Payment"
+            android:name=".PaymentActivity"
             android:label="@string/title_activity_payment" >
+            <!-- android:screenOrientation="portrait" -->
         </activity>
     </application>
 
