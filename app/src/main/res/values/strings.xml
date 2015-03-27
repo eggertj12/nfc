@@ -5,13 +5,13 @@
     <string name="action_settings">Stillingar</string>
     <string name="button_register_card">Skrá kort</string>
     <string name="title_activity_register_card">Skrá kort</string>
-    <string name="label_cardholder_name">Nafn korthafa</string>
+    <string name="label_cardholder_name">Fullt nafn korthafa</string>
     <string name="label_card_number">Kortanúmer</string>
     <string name="label_validity">Gildistími</string>
     <string name="label_month">Mán</string>
     <string name="label_year">Ár</string>
     <string name="label_cvv">Öryggisnúmer</string>
-    <string name="label_next">Áfram</string>
+    <string name="label_next">Skrá</string>
     <string name="error_invalid_cardholder_name">Sláðu inn nafn korthafa</string>
     <string name="error_invalid_cardnumber">Sláðu inn gilt kortanúmer</string>
     <string name="error_invalid_validity_month">Veldu gildan mánuð</string>
@@ -21,13 +21,14 @@
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_test_service">TestServiceActivity</string>
-     <string name="enter_pin">Sláðu inn öryggisnúmer</string>
+     <string name="enter_pin">Sláðu inn PIN</string>
+    <string name="title_activity_account_management">Innskráning</string>
+    <string name="title_activity_payment">PIN</string>
 
 
     <string name="service_name">CardEmulation Sample</string>
     <string name="card_title">Sample Loyalty Card</string>
     <string name="account_number">Account Number</string>
-    <string name="title_activity_account_management">AccountManagementActivity</string>
     <string name="title_activity_token">Token</string>
     <string name="title_activity_token_receive">TokenReceive</string>
 
@@ -37,7 +38,7 @@
     <string name="usr_id">55</string>
     <string name="title_activity_manage_card">ManageCardActivity</string>
     <string name="action_reset">Reset</string>
-    <string name="title_activity_payment">Payment</string>
+
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
