@@ -1,10 +1,7 @@
-package is.valitor.lokaverkefni.oturgjold;
+package is.valitor.lokaverkefni.oturgjold.service;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -17,57 +14,43 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import is.valitor.lokaverkefni.oturgjold.models.Token;
-
 /**
- * Created by kla on 23.3.2015.
+ * Created by eggert on 27/03/15.
  */
-public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
-    private Exception exception;
-    final private Context appContext;
+public class RegisterCardTask extends AsyncTask<String, Void, AsyncTaskResult<JSONObject>> {
 
-    public GetTokenTask(Context appContext) {
-        this.appContext = appContext;
+    private Context context;
+    private AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> listener;
+
+    public RegisterCardTask(Context ctx, AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> listener)
+    {
+        this.context = ctx;
+        this.listener = listener;
     }
 
-
+    protected void onPreExecute()
+    {
+        super.onPreExecute();
+    }
 
     @Override
-    protected JSONObject doInBackground(String... params) {
+    protected AsyncTaskResult<JSONObject> doInBackground(String... params)
+    {
         try {
             // params comes from the execute() call: params[0] is the url.
-            return postUrl(params[0], params[1]);
+            return new AsyncTaskResult<JSONObject>(postUrl(params[0], params[1]));
         } catch (IOException e) {
-            return null;
+            return new AsyncTaskResult<JSONObject>(e);
         } catch (Exception e) {
-            this.exception = e;
+            return new AsyncTaskResult<JSONObject>(e);
         }
-        return null;
     }
 
-    // onPostExecute displays the results of the AsyncTask.
     @Override
-    protected void onPostExecute(JSONObject result) {
-        //textView.setText(result);
-        int rCode = result.optInt("responseCode");
-
-        if (rCode == 200) {
-            try {
-                System.out.println(result.toString());
-                Gson gson = new Gson();
-                Token token  = gson.fromJson(result.toString(), Token.class);
-                Log.d("response",result.toString());
-
-
-                Repository.setToken(this.appContext, token);
-
-            } catch (Exception e) {
-
-            }
-        } else {
-            //editAccountName.setText("Misheppnuð skráning ahahahah!");
-        }
-
+    protected void onPostExecute(AsyncTaskResult<JSONObject> result)
+    {
+        super.onPostExecute(result);
+        listener.onTaskComplete(result);
     }
 
     private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
@@ -75,7 +58,7 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
 
         // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
         JSONObject msg = new JSONObject();
-        JSONObject ret = null;
+        JSONObject ret = new JSONObject();
         try {
             msg = new JSONObject(json_accountInfo);
         } catch (Exception e) {
@@ -107,6 +90,7 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
             int response = conn.getResponseCode();
             //Log.d( "The response is: " + response);
             System.out.println("The response code is: " + response);
+
             String responseMessage = conn.getResponseMessage();
             System.out.println("The response message is: " + responseMessage);
 
@@ -116,8 +100,9 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
             //System.out.println(is.available());
             ret = readJSON(is, 5000);
             try {
-                ret.put("responseCode", response);
+
                 ret.put("sentMessage", msg);
+                ret.put("responseCode", response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -132,7 +117,7 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
     }
 
     // Reads an InputStream and converts it to a JSONObject.
-    public JSONObject readJSON(InputStream stream, int len) throws IOException {
+    private JSONObject readJSON(InputStream stream, int len) throws IOException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
         char[] buffer = new char[len];
@@ -147,4 +132,5 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
         }
         return ret;
     }
+
 }

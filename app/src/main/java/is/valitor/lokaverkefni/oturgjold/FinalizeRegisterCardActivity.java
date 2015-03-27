@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 //import android.app.FragmentTransaction;
@@ -27,17 +26,14 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import is.valitor.lokaverkefni.oturgjold.models.Card;
 import is.valitor.lokaverkefni.oturgjold.models.Token;
 import is.valitor.lokaverkefni.oturgjold.models.User;
+import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
+import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
+import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
+import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 
 
 public class FinalizeRegisterCardActivity extends Activity {
@@ -102,7 +98,8 @@ public class FinalizeRegisterCardActivity extends Activity {
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
                 // Communicate with service
-                new TokenizeCardTask().execute("https://kortagleypir.herokuapp.com/card", outMsg.toString());
+                new RegisterCardTask(this, new RegisterCardListener())
+                        .execute(getString(R.string.service_card_url), outMsg.toString());
 
             } else {
                 // display error
@@ -186,156 +183,80 @@ public class FinalizeRegisterCardActivity extends Activity {
         dialog.show();
     }
 
-    private class TokenizeCardTask extends AsyncTask<String, Void, JSONObject> {
+    private class RegisterCardListener implements AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> {
 
-        private Exception exception;
-
+        // onTaskComplete is called once the task has completed.
         @Override
-        protected JSONObject doInBackground(String... params) {
-            try {
-                // params comes from the execute() call: params[0] is the url.
-                return postUrl(params[0], params[1]);
-            } catch (IOException e) {
-                return null;
-            } catch (Exception e) {
-                this.exception = e;
+        public void onTaskComplete(AsyncTaskResult<JSONObject> result)
+        {
+            if (result.getError() != null) {
+                // display error
+                CharSequence message;
+                if (result.getError() instanceof IOException) {
+                    message = "Network error, try again.";
+                    Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
+                    registerAccountButton.setClickable(true);
+                    registerAccountButton.setEnabled(true);
+
+                } else {
+                    message = "Unknown error, contact service.";
+                }
+                Toast toast = Toast.makeText(FinalizeRegisterCardActivity.this, message, Toast.LENGTH_LONG);
+                toast.show();
+
+                return;
             }
-            return null;
-        }
 
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(JSONObject result) {
+            JSONObject response = result.getResult();
+            //textView.setText(result);
+            int rCode = response.optInt("responseCode");
             loadingThings.setVisibility(View.INVISIBLE);
             defaultFinishButton.setVisibility(View.VISIBLE);
             continueRegisterCard.setVisibility(View.VISIBLE);
 
-            if(result != null) {
-                int rCode = result.optInt("responseCode");
-                System.out.println(result.toString());
-                System.out.println(rCode);
-
-                if (rCode == 200) {
-                    try {
-                        responseDisplay.setText("Kort hefur verið skráð.");
-
-                        // Have some fun with nicknames and dialogs
-                        startDialog();
-
-
-                        Card nCard = new Card();
-                        nCard.setCard_id(5);
-                        nCard.setCard_name("Partybro");
-                        cardName = "Partybro";
-                        String cardNumber = result.getString("cardnumber");
-
-                        nCard.setLast_four(cardNumber.substring(cardNumber.length() - 4));
-                        nCard.setTokenized_card_number(cardNumber);
-                        nCard.setTokenized_cvv(result.getString("cvv"));
-                        nCard.setTokenized_validation(result.getString("validity"));
-
-                        Repository.addCard(getApplication(), nCard);
-
-                        User theUser = Repository.getUser(getApplicationContext());
-
-                        Token token = new Token();
-                        token.setUsr_id(String.valueOf(theUser.getUsr_id()));
-                        token.setDevice_id(theUser.getDevice_id());
-
-                        Gson gson = new Gson();
-                        String tokenJson = gson.toJson(token, Token.class);
-
-                        new GetTokenTask(getApplicationContext()).execute("https://kortagleypir.herokuapp.com/token", tokenJson);
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    System.out.println(rCode);
-                }
-            }
-
-        }
-
-        private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
-            InputStream is = null;
-
-            // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
-            JSONObject msg = new JSONObject();
-            JSONObject ret = new JSONObject();
-            try {
-                msg = new JSONObject(json_accountInfo);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-                URL url = new URL(serviceURL);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setUseCaches(false);
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
-                // Establish connection
-                conn.connect();
-                // Get ready to write data
-                OutputStream os = conn.getOutputStream();
-                OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-
-                osw.write(msg.toString());
-                System.out.println(msg.toString());
-                osw.flush();
-                osw.close();
-                // The service will respond with a JSON string of its own.
-                int response = conn.getResponseCode();
-                //Log.d( "The response is: " + response);
-                System.out.println("The response code is: " + response);
-
-                String responseMessage = conn.getResponseMessage();
-                System.out.println("The response message is: " + responseMessage);
-
-
-                // Convert the InputStream into a string
-                is = conn.getInputStream();
-                //System.out.println(is.available());
-                ret = readJSON(is, 5000);
+            if(rCode == 200) {
                 try {
+                    responseDisplay.setText("Kort hefur verið skráð.");
 
-                    ret.put("sentMessage", msg);
-                    ret.put("responseCode", response);
+                    // Have some fun with nicknames and dialogs
+                    startDialog();
+
+
+                    Card nCard = new Card();
+                    nCard.setCard_id(5);
+                    nCard.setCard_name("Partybro");
+                    cardName = "Partybro";
+                    String cardNumber = response.getString("cardnumber");
+
+                    nCard.setLast_four(cardNumber.substring(cardNumber.length() - 4));
+                    nCard.setTokenized_card_number(cardNumber);
+                    nCard.setTokenized_cvv(response.getString("cvv"));
+                    nCard.setTokenized_validation(response.getString("validity"));
+
+                    Repository.addCard(getApplication(), nCard);
+
+                    User theUser = Repository.getUser(getApplicationContext());
+
+                    Token token = new Token();
+                    token.setUsr_id(String.valueOf(theUser.getUsr_id()));
+                    token.setDevice_id(theUser.getDevice_id());
+
+                    Gson gson = new Gson();
+                    String tokenJson = gson.toJson(token, Token.class);
+
+                    new GetTokenTask(getApplicationContext()).execute(getString(R.string.service_token_url), tokenJson);
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
-            } finally {
-                if (is != null) {
-                    is.close();
-                }
             }
-            return ret;
+            else {
+                System.out.println(rCode);
+            }
+
         }
 
-        // Reads an InputStream and converts it to a JSONObject.
-        public JSONObject readJSON(InputStream stream, int len) throws IOException {
-            Reader reader = null;
-            reader = new InputStreamReader(stream, "UTF-8");
-            char[] buffer = new char[len];
-            reader.read(buffer);
-
-            String msg = new String(buffer);
-            JSONObject ret = new JSONObject();
-            try {
-                ret = new JSONObject(msg);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return ret;
-        }
     }
+
 }
