@@ -87,7 +87,7 @@ public class RegisterAccountActivity extends Activity {
         String name = editAccountName.getText().toString();
 
         if (!v.validateCardholderName(name)) {
-            CharSequence message = getResources().getString(R.string.error_invalid_cardholder_name);
+            CharSequence message = getString(R.string.error_invalid_cardholder_name);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
             editAccountName.requestFocus();
@@ -97,8 +97,8 @@ public class RegisterAccountActivity extends Activity {
         String ssn = editAccountSSN.getText().toString();
 
         // Proper validation might be in order
-        if (ssn.length() != 10 && ssn.endsWith("9")) {
-            CharSequence message = "Improper kennitala motherfucker!";
+        if (ssn.length() != 10 || !(ssn.endsWith("9") || ssn.endsWith("0"))) {
+            CharSequence message = getString(R.string.error_invalid_ssn);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
             editAccountSSN.requestFocus();

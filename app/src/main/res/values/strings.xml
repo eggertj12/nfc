@@ -16,7 +16,8 @@
     <string name="error_invalid_cardnumber">Sláðu inn gilt kortanúmer</string>
     <string name="error_invalid_validity_month">Veldu gildan mánuð</string>
     <string name="error_invalid_validity_year">Veldu gilt ár</string>
-    <string name="error_invalid_cvv">Sláðu inn gilt öryggisnúmerr</string>
+    <string name="error_invalid_cvv">Sláðu inn gilt öryggisnúmer</string>
+    <string name="error_invalid_ssn">Improper kennitala motherfucker!</string>
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_test_service">TestServiceActivity</string>
