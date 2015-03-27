@@ -60,7 +60,7 @@
         android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
         android:layout_marginRight="@dimen/inputblock_horzontal_margin"
         android:inputType="number"
-        android:layout_above="@+id/button3"
+        android:layout_above="@+id/button_register_account"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="116dp" />
 
@@ -74,7 +74,7 @@
         android:nestedScrollingEnabled="true"
         android:onClick="registerAccount"
         android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-        android:id="@+id/button3"
+        android:id="@+id/button_register_account"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
