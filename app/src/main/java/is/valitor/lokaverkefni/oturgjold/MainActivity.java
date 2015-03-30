@@ -31,6 +31,23 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // In case this is being called from HCE. getBooleanExtra is just funky this way
+        if(getIntent().getStringExtra("MSG_REQUEST_PIN") != null) {
+            // Extra layer of insulation:
+            if(getIntent().getStringExtra("MSG_REQUEST_PIN").contentEquals("true")) {
+                // Clear last entered pin shared prefence
+                System.out.println("MAIN ACTIVITY BEING CALLED AFTER HCE");
+                SharedPreferences.Editor clearPin = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                clearPin.putString("lastPIN", "");
+                clearPin.commit();
+                // Go straight to pin
+                Intent intent = new Intent(this, PaymentActivity.class);
+                startActivityForResult(intent, REQUEST_PAYMENT);
+                // Rest is handled in the listener downstairs
+
+            }
+        }
+
         // initialize shared preferences file, give default value default - improve when refactoring
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putString("defaultCard", "main");
@@ -101,6 +118,19 @@ public class MainActivity extends Activity {
 
         if (reqCode == REQUEST_REGISTER_USER || reqCode == REQUEST_REGISTER_CARD) {
             enableRegistrationUI();
+        }
+
+        if(reqCode == REQUEST_PAYMENT) {
+            if(resCode == RESULT_OK) {
+                String pin = intent.getStringExtra("PIN");
+                // This might not be most intelligent manner to pass data
+                SharedPreferences.Editor clearPin = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                clearPin.putString("lastPIN", pin);
+                clearPin.commit();
+            }
+            else if(resCode == RESULT_FAILURE) {
+
+            }
         }
     }
 

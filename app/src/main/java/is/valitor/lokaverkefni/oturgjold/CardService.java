@@ -17,14 +17,16 @@ package is.valitor.lokaverkefni.oturgjold;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
 import java.util.Arrays;
-
-
+import java.util.logging.Handler;
 
 
 /**
@@ -93,8 +95,15 @@ public class CardService extends HostApduService {
         // send the loyalty card account number, followed by a SELECT_OK status trailer (0x9000).
         if (Arrays.equals(SELECT_APDU, commandApdu)) {
 
-            getPin();
+            // Get the last input PIN
+            String pin = getPin();
+            if(pin.length() != 4) {
+                // PIN is not ready, just be quiet
+                return null;
+            }
+            // String pin should now contain the input PIN
 
+            
             String account = AccountStorage.GetAccount(this);
             byte[] accountBytes = account.getBytes();
             Log.i(TAG, "Sending account number: " + account);
@@ -178,9 +187,27 @@ public class CardService extends HostApduService {
         }
         return result;
     }
-    private void getPin()
+    private String getPin()
     {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String pin = sp.getString("lastPIN","");
 
+        // No last entered PIN
+        if(pin.length() != 4) {
+            // Trigger PIN input
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("MSG_REQUEST_PIN", "true");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            pin = "";
+        }
+        else {
+            SharedPreferences.Editor clearPIN = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            clearPIN.putString("lastPIN", "");
+            clearPIN.commit();
+        }
+        // Last entered PIN is present
+        return pin;
     }
 }
 

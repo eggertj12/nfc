@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -110,7 +111,10 @@ public class PaymentActivity extends Activity {
         button12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(pin);
+                System.out.println("wrote into extra intent");
+                Intent intent = getIntent();
+                intent.putExtra("PIN", pin);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
