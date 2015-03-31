@@ -16,17 +16,26 @@ package is.valitor.lokaverkefni.oturgjold;
  * limitations under the License.
  */
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.logging.Handler;
+
+import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 
 
 /**
@@ -101,17 +110,56 @@ public class CardService extends HostApduService {
                 // PIN is not ready, just be quiet
                 return null;
             }
-            // String pin should now contain the input PIN
-
-            
+            // String pin should now conta in the input PIN
             String account = AccountStorage.GetAccount(this);
-            byte[] accountBytes = account.getBytes();
-            Log.i(TAG, "Sending account number: " + account);
-            return ConcatArrays(accountBytes, SELECT_OK_SW);
+            //hard coding string to send
+            String toSend = toSend();
+            byte [] accountBytes = toSend.getBytes();
+            return ConcatArrays(accountBytes,SELECT_OK_SW);
+            //byte[] accountBytes = account.getBytes();
+            //Log.i(TAG, "Sending account number: " + account);
+            //return ConcatArrays(accountBytes, SELECT_OK_SW);
         } else {
             return UNKNOWN_CMD_SW;
         }
     }
+
+    private String toSend()
+    {
+        JSONObject outMsg = new JSONObject();
+        // Communicate with the service:
+        try {
+            // Make JSON
+
+            outMsg.put("usr_id", Repository.getUser(this).getUsr_id());
+            outMsg.put("token","6eb06fe3-1b09-421b-a272-a11cc2eba914");
+            outMsg.put("pin", "45852147");
+            String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+            outMsg.put("device_id", android_id);
+
+            // Ensure connection
+            //ConnectivityManager connMgr = (ConnectivityManager)
+              //      getSystemService(Context.CONNECTIVITY_SERVICE);
+           // NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            //if (networkInfo != null && networkInfo.isConnected()) {
+                // Communicate with service
+            //    new RegisterCardTask(this, new RegisterCardListener())
+              //          .execute(getString(R.string.service_card_url), outMsg.toString());
+
+            //} else {
+                // display error
+              //  CharSequence message = "No network connection available.";
+                //Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+                //toast.show();
+            //}
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return outMsg.toString();
+    }
+
+
     // END_INCLUDE(processCommandApdu)
 
     /**

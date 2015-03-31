@@ -64,7 +64,7 @@ public class TokenReceive extends Activity {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected() && token.getTokenone().isEmpty()) {
+        if (networkInfo != null && networkInfo.isConnected() && token.getToken().isEmpty()) {
             // fetch data
             new FetchTokenTask().execute("https://kortagleypir.herokuapp.com/token", jsonAccountObject.toString());
         } else {

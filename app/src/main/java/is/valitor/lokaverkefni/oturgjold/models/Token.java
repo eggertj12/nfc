@@ -13,29 +13,15 @@ public class Token {
         this.device_id = device_id;
     }
 
-    public String getTokenone() {
-        return tokenone;
+    public String getToken() {
+        return token;
     }
 
-    public void setTokenone(String tokenone) {
-        this.tokenone = tokenone;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public String getTokentwo() {
-        return tokentwo;
-    }
 
-    public void setTokentwo(String tokentwo) {
-        this.tokentwo = tokentwo;
-    }
-
-    public String getTokenthree() {
-        return tokenthree;
-    }
-
-    public void setTokenthree(String tokenthree) {
-        this.tokenthree = tokenthree;
-    }
 
     public String getUsr_id() {
         return usr_id;
@@ -47,9 +33,7 @@ public class Token {
 
     private String usr_id;
     private String device_id;
-    private String tokenone;
-    private String tokentwo;
-    private String tokenthree;
+    private String token;
 
 
 }
