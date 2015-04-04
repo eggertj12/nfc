@@ -217,6 +217,8 @@ public class FinalizeRegisterCardActivity extends Activity {
                     // Have some fun with nicknames and dialogs
                     startDialog();
 
+                    Gson gson = new Gson();
+                    Card card = gson.fromJson(response.toString(), Card.class);
 
                     Card nCard = new Card();
                     nCard.setCard_id(5);
@@ -234,10 +236,11 @@ public class FinalizeRegisterCardActivity extends Activity {
                     User theUser = Repository.getUser(getApplicationContext());
 
                     Token token = new Token();
-                    token.setUsr_id(String.valueOf(theUser.getUsr_id()));
+                    token.setUsr_id(theUser.getUsr_id());
                     token.setDevice_id(theUser.getDevice_id());
+                    token.setCard_id(card.getCard_id());
 
-                    Gson gson = new Gson();
+
                     String tokenJson = gson.toJson(token, Token.class);
 
                     new GetTokenTask(getApplicationContext()).execute(getString(R.string.service_token_url), tokenJson);

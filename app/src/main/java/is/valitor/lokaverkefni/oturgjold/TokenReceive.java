@@ -25,7 +25,9 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
+import is.valitor.lokaverkefni.oturgjold.models.Card;
 import is.valitor.lokaverkefni.oturgjold.models.Token;
 import is.valitor.lokaverkefni.oturgjold.models.User;
 
@@ -52,11 +54,17 @@ public class TokenReceive extends Activity {
         try {
 
             User theUser = Repository.getUser(getApplicationContext());
+            List<Card> theCards = Repository.getCards(getApplicationContext());
+            if(!theCards.isEmpty()) {
+                token.setUsr_id(theUser.getUsr_id());
+                token.setDevice_id(theUser.getDevice_id());
+                jsonAccountObject.put("usr_id", theUser.getUsr_id());
+                jsonAccountObject.put("device_id", theUser.getDevice_id());
+                jsonAccountObject.put("card_id",theCards.get(0).getCard_id());
+            }else{
+                return;
+            }
 
-            token.setUsr_id(String.valueOf(theUser.getUsr_id()));
-            token.setDevice_id(theUser.getDevice_id());
-            jsonAccountObject.put("usr_id", theUser.getUsr_id());
-            jsonAccountObject.put("device_id", theUser.getDevice_id());
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -64,7 +72,7 @@ public class TokenReceive extends Activity {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected() && token.getToken().isEmpty()) {
+        if (networkInfo != null && networkInfo.isConnected() && token.getTokenitem().isEmpty()) {
             // fetch data
             new FetchTokenTask().execute("https://kortagleypir.herokuapp.com/token", jsonAccountObject.toString());
         } else {

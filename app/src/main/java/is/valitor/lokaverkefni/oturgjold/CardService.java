@@ -131,11 +131,11 @@ public class CardService extends HostApduService {
         try {
             // Make JSON
 
-            outMsg.put("usr_id", Repository.getUser(this).getUsr_id());
+            //outMsg.put("usr_id", Repository.getUser(this).getUsr_id());
             outMsg.put("token","6eb06fe3-1b09-421b-a272-a11cc2eba914");
-            outMsg.put("pin", "45852147");
-            String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            outMsg.put("device_id", android_id);
+            //outMsg.put("pin", "45852147");
+            //String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+            //outMsg.put("device_id", android_id);
 
             // Ensure connection
             //ConnectivityManager connMgr = (ConnectivityManager)

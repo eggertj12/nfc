@@ -145,6 +145,7 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
             ret = new JSONObject(msg);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("GETTOKEN", "Error reading token "+msg);
         }
         return ret;
     }
