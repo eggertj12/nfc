@@ -9,8 +9,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import is.valitor.lokaverkefni.oturgjold.models.Token;
-import is.valitor.lokaverkefni.oturgjold.models.User;
+import is.valitor.lokaverkefni.oturgjold.repository.Token;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

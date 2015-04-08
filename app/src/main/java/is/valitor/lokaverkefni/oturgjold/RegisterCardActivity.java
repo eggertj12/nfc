@@ -13,6 +13,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import is.valitor.lokaverkefni.oturgjold.utils.Validator;
+
 
 public class RegisterCardActivity extends Activity {
     public final static String MSG_CARDHOLDER = "is.valitor.oturgjold.MSG_CARDHOLDER";

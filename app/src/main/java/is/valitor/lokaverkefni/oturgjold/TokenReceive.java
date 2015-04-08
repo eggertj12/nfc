@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -27,9 +25,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import is.valitor.lokaverkefni.oturgjold.models.Card;
-import is.valitor.lokaverkefni.oturgjold.models.Token;
-import is.valitor.lokaverkefni.oturgjold.models.User;
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
+import is.valitor.lokaverkefni.oturgjold.repository.Token;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 
 public class TokenReceive extends Activity {

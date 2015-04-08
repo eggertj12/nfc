@@ -21,10 +21,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import is.valitor.lokaverkefni.oturgjold.models.User;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterAccountTask;
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
 
 public class RegisterAccountActivity extends Activity {

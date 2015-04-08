@@ -17,8 +17,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import is.valitor.lokaverkefni.oturgjold.Repository;
-import is.valitor.lokaverkefni.oturgjold.models.Token;
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.repository.Token;
 
 /**
  * Created by kla on 23.3.2015.
@@ -145,7 +145,7 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
             ret = new JSONObject(msg);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("GETTOKEN", "Error reading token "+msg);
+            Log.d("GETTOKEN", "Error reading token " + msg);
         }
         return ret;
     }

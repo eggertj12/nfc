@@ -8,8 +8,6 @@ import org.robolectric.shadows.ShadowAsyncTask;
 
 import java.io.IOException;
 
-import is.valitor.lokaverkefni.oturgjold.Validator;
-
 /**
  * Created by eggert on 24/03/15.
  */

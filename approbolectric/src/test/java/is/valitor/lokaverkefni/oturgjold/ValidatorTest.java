@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
+import is.valitor.lokaverkefni.oturgjold.utils.Validator;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;

@@ -27,13 +27,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import is.valitor.lokaverkefni.oturgjold.models.Card;
-import is.valitor.lokaverkefni.oturgjold.models.Token;
-import is.valitor.lokaverkefni.oturgjold.models.User;
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
+import is.valitor.lokaverkefni.oturgjold.repository.Token;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 
 public class FinalizeRegisterCardActivity extends Activity {

@@ -11,11 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-import is.valitor.lokaverkefni.oturgjold.models.Token;
-import is.valitor.lokaverkefni.oturgjold.models.User;
+import is.valitor.lokaverkefni.oturgjold.repository.Token;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 
 public class MainActivity extends Activity {

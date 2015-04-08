@@ -20,8 +20,7 @@
     <string name="error_invalid_ssn">Improper kennitala motherfucker!</string>
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_test_service">TestServiceActivity</string>
-     <string name="enter_pin">Sláðu inn PIN</string>
+    <string name="enter_pin">Sláðu inn PIN</string>
     <string name="title_activity_account_management">Innskráning</string>
     <string name="title_activity_payment">PIN</string>
 
