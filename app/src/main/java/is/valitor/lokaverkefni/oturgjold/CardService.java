@@ -110,8 +110,6 @@ public class CardService extends HostApduService {
                 // PIN is not ready, just be quiet
                 return null;
             }
-            // String pin should now contain the input PIN
-            String account = AccountStorage.GetAccount(this);
             //hard coding string to send
             String toSend = toSend();
             byte [] accountBytes = toSend.getBytes();

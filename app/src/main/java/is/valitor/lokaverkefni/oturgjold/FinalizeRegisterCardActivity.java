@@ -73,10 +73,6 @@ public class FinalizeRegisterCardActivity extends Activity {
         continueRegisterCard = (Button)findViewById(R.id.reg_new_card);
         continueRegisterCard.setVisibility(View.INVISIBLE);
 
-        //used to send to reader
-        AccountStorage.SetAccount(this, cardNumber);
-
-
         // Communicate with the service:
         try {
             // Make JSON
