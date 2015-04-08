@@ -1,6 +1,5 @@
 package is.valitor.lokaverkefni.oturgjold;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -13,12 +12,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Type;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import is.valitor.lokaverkefni.oturgjold.models.Card;
 import is.valitor.lokaverkefni.oturgjold.models.Token;
@@ -35,6 +30,14 @@ public class Repository {
     private static Gson gson = new Gson();
     private static Object lockObject = new Object();
 
+    private static ArrayDeque<Token> tokenQueue = null;
+
+    /**
+     * Set the current user object of the app.
+     * There can be only one user, it will be overwritten if called again
+     * @param ctx   Application context
+     * @param user
+     */
     public static void setUser(Context ctx, User user) {
         FileOutputStream fos = null;
         try {
@@ -59,7 +62,12 @@ public class Repository {
         }
     }
 
-
+    /**
+     * Get the current registered user.
+     *
+     * @param ctx
+     * @return User object or null if no user set
+     */
     public static User getUser(Context ctx) {
         FileInputStream fis = null;
         User user = null;
@@ -93,17 +101,85 @@ public class Repository {
         return user;
     }
 
-    public static void setToken(Context ctx, Token token) {
-        FileOutputStream fos = null;
-        try {
-            fos = ctx.openFileOutput(TOKEN_FILE_NAME, Context.MODE_PRIVATE);
-            String tokenJson = gson.toJson(token);
-            fos.write(tokenJson.getBytes());
 
-        } catch (FileNotFoundException e) {
-            // Should never happen since it is just created if not found
+    /**
+     * Add a token to the current token queue.
+     * @param ctx
+     * @param token
+     */
+    public static void addToken(Context ctx, Token token) {
+        ArrayDeque<Token> tokens = loadQueue(ctx);
+        tokens.add(token);
+        saveQueue(ctx, tokens);
+    }
+
+    /**
+     * Get the next token from token queue
+     * @param ctx
+     * @return Token or null if empty
+     */
+    public static Token getToken(Context ctx) {
+        ArrayDeque<Token> tokens = loadQueue(ctx);
+        Token token = tokens.poll();
+        saveQueue(ctx, tokens);
+        return token;
+    }
+
+    /**
+     * Get the number of available tokens in the queue
+     * @param ctx
+     * @return  int number of tokens
+     */
+    public static int getTokenCount(Context ctx) {
+        ArrayDeque<Token> tokens = loadQueue(ctx);
+        return tokens.size();
+    }
+
+    /**
+     * Load the queue from internal storage
+     * @param ctx
+     * @return
+     */
+    private static ArrayDeque<Token> loadQueue(Context ctx) {
+// Disabled to test that file saving is for sure working
+//        if (tokenQueue != null) {
+//            return tokenQueue;
+//        }
+        FileInputStream fin = null;
+
+        ArrayDeque<Token> tokenQueue = new ArrayDeque<Token>();
+        try {
+            fin = ctx.openFileInput(CARD_FILE_NAME);
+
+            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + CARD_FILE_NAME).length();
+
+            byte[] buffer = new byte[(int) length];
+            int i = fin.read(buffer);
+            String cardJson = new String(buffer, "UTF-8");
+            tokenQueue = gson.fromJson(cardJson, new TypeToken<ArrayDeque<Token>>() {}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fin != null) {
+                    fin.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return tokenQueue;
+    }
+
+    private static void saveQueue(Context ctx, ArrayDeque<Token> tokens) {
+        FileOutputStream fos = null;
+
+        try {
+            fos = ctx.openFileOutput(CARD_FILE_NAME, Context.MODE_PRIVATE);
+
+            String nTokenJson = gson.toJson(tokens);
+            fos.write(nTokenJson.getBytes());
         } catch (IOException e) {
-            // TODO:
             e.printStackTrace();
         } finally {
             try {
@@ -111,45 +187,10 @@ public class Repository {
                     fos.close();
                 }
             } catch (IOException e) {
-                // TODO:
                 e.printStackTrace();
             }
         }
     }
-
-    public static Token getToken(Context ctx) {
-        FileInputStream fis = null;
-        Token token = null;
-
-        try {
-            fis = ctx.openFileInput(TOKEN_FILE_NAME);
-            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + TOKEN_FILE_NAME).length();
-
-            byte[] buffer = new byte[(int) length];
-            int i = fis.read(buffer);
-            String tokenJson = new String(buffer, "UTF-8");
-            token = gson.fromJson(tokenJson, Token.class);
-
-        } catch (FileNotFoundException e) {
-            // Nothing found
-            return null;
-        } catch (IOException e) {
-            // TODO:
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-            } catch (IOException e) {
-                // TODO:
-                e.printStackTrace();
-            }
-        }
-
-        return token;
-    }
-
 
     public static void addCard(Context ctx, Card card) {
         FileOutputStream fos = null;

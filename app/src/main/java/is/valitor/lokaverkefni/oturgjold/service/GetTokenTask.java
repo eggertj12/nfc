@@ -60,7 +60,7 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
                 Log.d("response",result.toString());
 
 
-                Repository.setToken(this.appContext, token);
+                Repository.addToken(this.appContext, token);
 
             } catch (Exception e) {
 
