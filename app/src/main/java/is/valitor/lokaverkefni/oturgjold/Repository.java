@@ -15,7 +15,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import is.valitor.lokaverkefni.oturgjold.models.Card;
 import is.valitor.lokaverkefni.oturgjold.models.Token;
@@ -147,6 +150,7 @@ public class Repository {
         return token;
     }
 
+
     public static void addCard(Context ctx, Card card) {
         FileOutputStream fos = null;
         FileInputStream fin = null;
@@ -220,6 +224,7 @@ public class Repository {
         return cards;
     }
 
+   
     public static Card getCardByName(Context ctx, String name) {
         ArrayList<Card> cards = getCards(ctx);
 

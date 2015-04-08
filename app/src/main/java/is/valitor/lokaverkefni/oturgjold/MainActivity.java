@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import is.valitor.lokaverkefni.oturgjold.models.Token;
 import is.valitor.lokaverkefni.oturgjold.models.User;
 
@@ -22,6 +25,8 @@ public class MainActivity extends Activity {
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;
     private static final int REQUEST_PAYMENT = 3;
+
+
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";

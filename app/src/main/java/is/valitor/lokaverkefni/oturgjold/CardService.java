@@ -110,7 +110,7 @@ public class CardService extends HostApduService {
                 // PIN is not ready, just be quiet
                 return null;
             }
-            // String pin should now conta in the input PIN
+            // String pin should now contain the input PIN
             String account = AccountStorage.GetAccount(this);
             //hard coding string to send
             String toSend = toSend();
@@ -132,10 +132,10 @@ public class CardService extends HostApduService {
             // Make JSON
 
             //outMsg.put("usr_id", Repository.getUser(this).getUsr_id());
-            outMsg.put("token","6eb06fe3-1b09-421b-a272-a11cc2eba914");
-            //outMsg.put("pin", "45852147");
-            //String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            //outMsg.put("device_id", android_id);
+            outMsg.put("tokenitem","25135a5a-5a8c-440c-94f5-b9649b07398f");
+            outMsg.put("appPin", "4567");
+            String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+            outMsg.put("device_id", android_id);
 
             // Ensure connection
             //ConnectivityManager connMgr = (ConnectivityManager)
