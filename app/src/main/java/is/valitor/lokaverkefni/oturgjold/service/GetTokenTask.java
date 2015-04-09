@@ -17,8 +17,11 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import is.valitor.lokaverkefni.oturgjold.R;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
+
+import static android.provider.Settings.Global.getString;
 
 /**
  * Created by kla on 23.3.2015.
@@ -30,8 +33,6 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
     public GetTokenTask(Context appContext) {
         this.appContext = appContext;
     }
-
-
 
     @Override
     protected JSONObject doInBackground(String... params) {
@@ -46,7 +47,7 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
         return null;
     }
 
-    // onPostExecute displays the results of the AsyncTask.
+    // onPostExecute runs after the AsyncTask finishes.
     @Override
     protected void onPostExecute(JSONObject result) {
         //textView.setText(result);
@@ -59,8 +60,16 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
                 Token token  = gson.fromJson(result.toString(), Token.class);
                 Log.d("response",result.toString());
 
+                // TODO: get actual current card
+                int currentCard = 1;
+                Repository.addToken(this.appContext, currentCard, token);
 
-                Repository.addToken(this.appContext, token);
+                if (Repository.getTokenCount(this.appContext, currentCard) < 3) {
+                    token.setTokenitem("");
+                    String tokenJson = gson.toJson(token, Token.class);
+                    new GetTokenTask(this.appContext)
+                            .execute(this.appContext.getString(R.string.service_token_url), tokenJson);
+                }
 
             } catch (Exception e) {
 

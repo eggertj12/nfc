@@ -24,13 +24,11 @@ import is.valitor.lokaverkefni.oturgjold.repository.User;
  */
 public class Repository {
     private static final String USER_FILE_NAME = "user.json";
-    private static final String TOKEN_FILE_NAME = "user.token";
+    private static final String TOKEN_FILE_NAME = "token.json";
     private static final String CARD_FILE_NAME = "cards.json";
 
     private static Gson gson = new Gson();
     private static Object lockObject = new Object();
-
-    private static ArrayDeque<Token> tokenQueue = null;
 
     /**
      * Set the current user object of the app.
@@ -107,10 +105,10 @@ public class Repository {
      * @param ctx
      * @param token
      */
-    public static void addToken(Context ctx, Token token) {
-        ArrayDeque<Token> tokens = loadQueue(ctx);
+    public static void addToken(Context ctx, int card_id, Token token) {
+        ArrayDeque<Token> tokens = loadQueue(ctx, card_id);
         tokens.add(token);
-        saveQueue(ctx, tokens);
+        saveQueue(ctx, card_id, tokens);
     }
 
     /**
@@ -118,10 +116,10 @@ public class Repository {
      * @param ctx
      * @return Token or null if empty
      */
-    public static Token getToken(Context ctx) {
-        ArrayDeque<Token> tokens = loadQueue(ctx);
+    public static Token getToken(Context ctx, int card_id) {
+        ArrayDeque<Token> tokens = loadQueue(ctx, card_id);
         Token token = tokens.poll();
-        saveQueue(ctx, tokens);
+        saveQueue(ctx, card_id, tokens);
         return token;
     }
 
@@ -130,8 +128,8 @@ public class Repository {
      * @param ctx
      * @return  int number of tokens
      */
-    public static int getTokenCount(Context ctx) {
-        ArrayDeque<Token> tokens = loadQueue(ctx);
+    public static int getTokenCount(Context ctx, int card_id) {
+        ArrayDeque<Token> tokens = loadQueue(ctx, card_id);
         return tokens.size();
     }
 
@@ -140,18 +138,16 @@ public class Repository {
      * @param ctx
      * @return
      */
-    private static ArrayDeque<Token> loadQueue(Context ctx) {
-// Disabled to test that file saving is for sure working
-//        if (tokenQueue != null) {
-//            return tokenQueue;
-//        }
+    private static ArrayDeque<Token> loadQueue(Context ctx, int card_id) {
+        // TODO: store in memory to avoid constant loading from file
+
         FileInputStream fin = null;
 
         ArrayDeque<Token> tokenQueue = new ArrayDeque<Token>();
         try {
-            fin = ctx.openFileInput(CARD_FILE_NAME);
+            fin = ctx.openFileInput(TOKEN_FILE_NAME);
 
-            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + CARD_FILE_NAME).length();
+            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + TOKEN_FILE_NAME).length();
 
             byte[] buffer = new byte[(int) length];
             int i = fin.read(buffer);
@@ -171,11 +167,11 @@ public class Repository {
         return tokenQueue;
     }
 
-    private static void saveQueue(Context ctx, ArrayDeque<Token> tokens) {
+    private static void saveQueue(Context ctx, int card_id, ArrayDeque<Token> tokens) {
         FileOutputStream fos = null;
 
         try {
-            fos = ctx.openFileOutput(CARD_FILE_NAME, Context.MODE_PRIVATE);
+            fos = ctx.openFileOutput(TOKEN_FILE_NAME, Context.MODE_PRIVATE);
 
             String nTokenJson = gson.toJson(tokens);
             fos.write(nTokenJson.getBytes());

@@ -35,6 +35,8 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.logging.Handler;
 
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.repository.Token;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 
 
@@ -110,13 +112,10 @@ public class CardService extends HostApduService {
                 // PIN is not ready, just be quiet
                 return null;
             }
-            //hard coding string to send
+
             String toSend = toSend();
             byte [] accountBytes = toSend.getBytes();
             return ConcatArrays(accountBytes,SELECT_OK_SW);
-            //byte[] accountBytes = account.getBytes();
-            //Log.i(TAG, "Sending account number: " + account);
-            //return ConcatArrays(accountBytes, SELECT_OK_SW);
         } else {
             return UNKNOWN_CMD_SW;
         }
@@ -127,29 +126,14 @@ public class CardService extends HostApduService {
         JSONObject outMsg = new JSONObject();
         // Communicate with the service:
         try {
+            // TODO: get actual current card
+            int currentCard = 1;
             // Make JSON
-
-            //outMsg.put("usr_id", Repository.getUser(this).getUsr_id());
-            outMsg.put("tokenitem","25135a5a-5a8c-440c-94f5-b9649b07398f");
+            Token ct = Repository.getToken(getApplication(), currentCard);
+            outMsg.put("tokenitem",ct.getTokenitem());
             outMsg.put("appPin", "4567");
             String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             outMsg.put("device_id", android_id);
-
-            // Ensure connection
-            //ConnectivityManager connMgr = (ConnectivityManager)
-              //      getSystemService(Context.CONNECTIVITY_SERVICE);
-           // NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            //if (networkInfo != null && networkInfo.isConnected()) {
-                // Communicate with service
-            //    new RegisterCardTask(this, new RegisterCardListener())
-              //          .execute(getString(R.string.service_card_url), outMsg.toString());
-
-            //} else {
-                // display error
-              //  CharSequence message = "No network connection available.";
-                //Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-                //toast.show();
-            //}
         }
         catch (Exception e) {
             e.printStackTrace();

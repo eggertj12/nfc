@@ -136,7 +136,11 @@ public class TokenReceive extends Activity {
                     System.out.println(result.toString());
                     Gson gson = new Gson();
                     Token token  = gson.fromJson(result.toString(), Token.class);
-                    Repository.addToken(getApplication(), token);
+
+                    // TODO: get actual current card
+                    int currentCard = 1;
+
+                    Repository.addToken(getApplication(), currentCard, token);
 
 
                    /* serviceResponse.setText("Skráning tókst.");

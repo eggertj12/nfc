@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
@@ -140,7 +143,7 @@ public class MainActivity extends Activity {
     private void enableRegistrationUI() {
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
-        Token token = Repository.getToken(getApplication());
+        ArrayList<Card> cards = Repository.getCards(getApplication());
         Button registerCardButton = (Button) findViewById(R.id.button_register_card);
         Button registerUserButton = (Button) findViewById(R.id.button_register_account);
         Button paymentButton = (Button) findViewById(R.id.button_payment);
@@ -154,7 +157,7 @@ public class MainActivity extends Activity {
             registerCardButton.setVisibility(View.INVISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
 
-        } else if(user != null && token == null){
+        } else if(user != null && cards.size() == 0){
             registerCardButton.setVisibility(View.VISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
