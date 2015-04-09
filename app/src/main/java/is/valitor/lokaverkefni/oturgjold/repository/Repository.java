@@ -143,11 +143,13 @@ public class Repository {
 
         FileInputStream fin = null;
 
+        String filename = Integer.toString(card_id) + TOKEN_FILE_NAME;
+
         ArrayDeque<Token> tokenQueue = new ArrayDeque<Token>();
         try {
-            fin = ctx.openFileInput(TOKEN_FILE_NAME);
+            fin = ctx.openFileInput(filename);
 
-            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + TOKEN_FILE_NAME).length();
+            long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + filename).length();
 
             byte[] buffer = new byte[(int) length];
             int i = fin.read(buffer);
@@ -170,8 +172,10 @@ public class Repository {
     private static void saveQueue(Context ctx, int card_id, ArrayDeque<Token> tokens) {
         FileOutputStream fos = null;
 
+        String filename = Integer.toString(card_id) + TOKEN_FILE_NAME;
+
         try {
-            fos = ctx.openFileOutput(TOKEN_FILE_NAME, Context.MODE_PRIVATE);
+            fos = ctx.openFileOutput(filename, Context.MODE_PRIVATE);
 
             String nTokenJson = gson.toJson(tokens);
             fos.write(nTokenJson.getBytes());

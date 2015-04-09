@@ -61,18 +61,48 @@ public class RepositoryTest {
     }
 
     @Test
-    public void SaveTokenTest()
+    public void CountTokensForCardTest()
     {
         Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
         Context ctx = activity.getApplication();
+
         int card_id = 1;
 
         Token token = new Token();
         token.setTokenitem("Blabla");
         Repository.addToken(ctx, card_id, token);
 
+        card_id = 2;
+        Repository.addToken(ctx, card_id, token);
+
+        int count = Repository.getTokenCount(ctx, card_id);
+        assertEquals(1, count);
+    }
+
+    @Test
+    public void SaveTokenTest()
+    {
+        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        Context ctx = activity.getApplication();
+
+        int card_id = 1;
+        Token token = new Token();
+        token.setTokenitem("Card1token");
+        Repository.addToken(ctx, card_id, token);
+
+        card_id = 2;
+        token = new Token();
+        token.setTokenitem("Card2token1");
+        Repository.addToken(ctx, card_id, token);
+        token.setTokenitem("Card2token2");
+        Repository.addToken(ctx, card_id, token);
+
         token = Repository.getToken(ctx, card_id);
-        assertEquals("Blabla", token.getTokenitem());
+        assertEquals("Card2token1", token.getTokenitem());
+
+        card_id = 1;
+        token = Repository.getToken(ctx, card_id);
+        assertEquals("Card1token", token.getTokenitem());
     }
 
     @Test
@@ -94,5 +124,8 @@ public class RepositoryTest {
 
         token = Repository.getToken(ctx, card_id);
         assertEquals("Token2", token.getTokenitem());
+
+        token = Repository.getToken(ctx, card_id);
+        assertTrue(token == null);
     }
 }
