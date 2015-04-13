@@ -25,6 +25,8 @@ public class RegisterCardActivity extends Activity {
     public final static String MSG_CARDYEAR = "is.valitor.oturgjold.MSG_CARDYEAR";
     public final static String MSG_CARDPIN = "is.valitor.otugjold.MSG_CARDPIN";
 
+    private static final int REQUEST_REGISTER_CARD = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,8 +165,19 @@ public class RegisterCardActivity extends Activity {
         intent.putExtra(MSG_CARDYEAR, cardYear);
         intent.putExtra(MSG_CARDPIN,cardPin);
 
-        startActivity(intent);
-        finish();
+        startActivityForResult(intent, REQUEST_REGISTER_CARD);
+//        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resCode, Intent intent) {
+        super.onActivityResult(reqCode, resCode, intent);
+
+        if (reqCode == REQUEST_REGISTER_CARD) {
+            if(resCode == RESULT_OK) {
+                finish();
+            }
+        }
     }
 
     /** Validator methods for the input */

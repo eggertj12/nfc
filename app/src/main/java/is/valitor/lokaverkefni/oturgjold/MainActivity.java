@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
 public class MainActivity extends Activity {
@@ -26,8 +29,6 @@ public class MainActivity extends Activity {
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;
     private static final int REQUEST_PAYMENT = 3;
-
-
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
@@ -60,6 +61,8 @@ public class MainActivity extends Activity {
         editor.commit();
 
         enableRegistrationUI();
+
+        NetworkUtil.enableNetworkMonitoring(getApplication());
     }
 
 
@@ -81,6 +84,20 @@ public class MainActivity extends Activity {
         if (id == R.id.register_card) {
             registerCard(item.getActionView());
             return true;
+        }
+
+        else if(id == R.id.show_token_count) {
+            String message = "";
+            Context ctx = getApplication();
+            ArrayList<Card> cards = Repository.getCards(ctx);
+            for(Card card : cards) {
+                message = message
+                        + "CardId: " + Integer.toString(card.getCard_id())
+                        + ", tokens: " + Integer.toString(Repository.getTokenCount(ctx, card.getCard_id()))
+                        + "\n";
+            }
+            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+            toast.show();
         }
 
         return super.onOptionsItemSelected(item);

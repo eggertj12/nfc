@@ -1,9 +1,6 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
@@ -26,6 +23,7 @@ import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterAccountTask;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
 
@@ -120,10 +118,7 @@ public class RegisterAccountActivity extends Activity {
             return;
         }
 
-        ConnectivityManager connMgr = (ConnectivityManager)
-            getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (NetworkUtil.isConnected(getApplication())) {
 
             // Update UI
             loadingThings.setVisibility(View.VISIBLE);
@@ -136,7 +131,7 @@ public class RegisterAccountActivity extends Activity {
                     .execute(getString(R.string.service_account_url), jsonAccountObject.toString());
         } else {
             // display error
-            CharSequence message = "No network connection available.";
+            CharSequence message = "Nettenging ekki virk.";
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 
             toast.show();

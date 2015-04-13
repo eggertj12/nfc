@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 //import android.app.FragmentTransaction;
@@ -35,6 +33,7 @@ import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
 public class FinalizeRegisterCardActivity extends Activity {
@@ -88,20 +87,21 @@ public class FinalizeRegisterCardActivity extends Activity {
             outMsg.put("device_id", android_id);
 
             // Ensure connection
-            ConnectivityManager connMgr = (ConnectivityManager)
-                    getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()) {
+            if (NetworkUtil.isConnected(getApplication())) {
                 // Communicate with service
                 new RegisterCardTask(this, new RegisterCardListener())
                         .execute(getString(R.string.service_card_url), outMsg.toString());
 
             } else {
                 // display error
-                CharSequence message = "No network connection available.";
+                CharSequence message = "Nettenging ekki virk.";
                 Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
                 toast.show();
+
+                setResult(RESULT_CANCELED);
+                finish();
             }
+
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -134,6 +134,7 @@ public class FinalizeRegisterCardActivity extends Activity {
         editor.putString("defaultCard", cardName);
         editor.commit();
 
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -187,9 +188,6 @@ public class FinalizeRegisterCardActivity extends Activity {
                 CharSequence message;
                 if (result.getError() instanceof IOException) {
                     message = "Network error, try again.";
-                    Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
-                    registerAccountButton.setClickable(true);
-                    registerAccountButton.setEnabled(true);
 
                 } else {
                     message = "Unknown error, contact service.";
@@ -217,18 +215,19 @@ public class FinalizeRegisterCardActivity extends Activity {
                     Gson gson = new Gson();
                     Card card = gson.fromJson(response.toString(), Card.class);
 
-                    Card nCard = new Card();
+/*                    Card nCard = new Card();
                     nCard.setCard_id(5);
                     nCard.setCard_name("Partybro");
                     cardName = "Partybro";
                     String cardNumber = response.getString("cardnumber");
+*/
+                    String cardNumber = response.getString("cardnumber");
+                    card.setLast_four(cardNumber.substring(cardNumber.length() - 4));
+                    card.setTokenized_card_number(cardNumber);
+                    card.setTokenized_cvv(response.getString("cvv"));
+                    card.setTokenized_validation(response.getString("validity"));
 
-                    nCard.setLast_four(cardNumber.substring(cardNumber.length() - 4));
-                    nCard.setTokenized_card_number(cardNumber);
-                    nCard.setTokenized_cvv(response.getString("cvv"));
-                    nCard.setTokenized_validation(response.getString("validity"));
-
-                    Repository.addCard(getApplication(), nCard);
+                    Repository.addCard(getApplication(), card);
 
                     User theUser = Repository.getUser(getApplicationContext());
 
@@ -237,9 +236,7 @@ public class FinalizeRegisterCardActivity extends Activity {
                     token.setDevice_id(theUser.getDevice_id());
                     token.setCard_id(card.getCard_id());
 
-
                     String tokenJson = gson.toJson(token, Token.class);
-
                     new GetTokenTask(getApplicationContext()).execute(getString(R.string.service_token_url), tokenJson);
 
 

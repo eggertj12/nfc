@@ -16,28 +16,32 @@ package is.valitor.lokaverkefni.oturgjold;
  * limitations under the License.
  */
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Handler;
 
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
+import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
+import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
 /**
@@ -114,6 +118,13 @@ public class CardService extends HostApduService {
             }
 
             String toSend = toSend();
+
+            if (toSend == null) {
+                Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
+                toast.show();
+                return null;
+            }
+
             byte [] accountBytes = toSend.getBytes();
             return ConcatArrays(accountBytes,SELECT_OK_SW);
         } else {
@@ -127,13 +138,34 @@ public class CardService extends HostApduService {
         // Communicate with the service:
         try {
             // TODO: get actual current card
-            int currentCard = 1;
+            ArrayList<Card> cards = Repository.getCards(getApplication());
+            int currentCard = cards.get(0).getCard_id();
+
             // Make JSON
             Token ct = Repository.getToken(getApplication(), currentCard);
-            outMsg.put("tokenitem",ct.getTokenitem());
-            outMsg.put("appPin", "4567");
-            String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            outMsg.put("device_id", android_id);
+            if (ct != null) {
+                outMsg.put("tokenitem", ct.getTokenitem());
+                outMsg.put("appPin", "4567");
+                String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                outMsg.put("device_id", android_id);
+            }
+
+            // Get a new token if there is connectivity
+            Context ctx = getApplication();
+            if (NetworkUtil.isConnected(ctx)) {
+                Gson gson = new Gson();
+                String tokenJson = gson.toJson(ct, Token.class);
+                new GetTokenTask(getApplication()).execute(getString(R.string.service_token_url), tokenJson);
+            }
+
+            // Setup network monitoring if not connected
+            else {
+                NetworkUtil.enableNetworkMonitoring(ctx);
+            }
+
+            if (ct == null) {
+                return null;
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -217,6 +249,7 @@ public class CardService extends HostApduService {
         }
         return result;
     }
+
     private String getPin()
     {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -233,7 +266,7 @@ public class CardService extends HostApduService {
         }
         else {
             SharedPreferences.Editor clearPIN = PreferenceManager.getDefaultSharedPreferences(this).edit();
-            clearPIN.putString("lastPIN", "");
+            clearPIN.putString("lastPIN", "used");
             clearPIN.commit();
         }
         // Last entered PIN is present

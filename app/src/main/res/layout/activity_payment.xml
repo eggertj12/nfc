@@ -180,4 +180,33 @@
             android:visibility="invisible"
             />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pin_row5"
+        android:layout_below="@id/pin_row4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/button_pin_cancel"
+            android:text="@string/label_cancel"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sláðu inn PIN"
+        android:id="@+id/textView_pin_message"
+        android:layout_below="@+id/pin_row5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
 </RelativeLayout>

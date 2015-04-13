@@ -9,6 +9,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
+
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
@@ -119,13 +122,54 @@ public class RepositoryTest {
         token.setTokenitem("Token2");
         Repository.addToken(ctx, card_id, token);
 
-        token = Repository.getToken(ctx, card_id);
-        assertEquals("Token1", token.getTokenitem());
+        Token readToken = Repository.getToken(ctx, card_id);
+        assertEquals("Token1", readToken.getTokenitem());
 
-        token = Repository.getToken(ctx, card_id);
-        assertEquals("Token2", token.getTokenitem());
+        readToken = Repository.getToken(ctx, card_id);
+        assertEquals("Token2", readToken.getTokenitem());
 
-        token = Repository.getToken(ctx, card_id);
-        assertTrue(token == null);
+        readToken = Repository.getToken(ctx, card_id);
+        assertTrue(readToken == null);
+    }
+
+    @Test
+    public void getCardByNameTest() {
+        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        Context ctx = activity.getApplication();
+
+        Card card = new Card();
+        card.setCard_name("Card1");
+        card.setLast_four("1234");
+        Repository.addCard(ctx, card);
+
+        card = null;
+
+        card = Repository.getCardByName(ctx, "Card1");
+        assertTrue(card != null);
+        assertEquals(card.getLast_four(), "1234");
+    }
+
+    @Test
+    public void getCardsTest() {
+        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        Context ctx = activity.getApplication();
+
+        Card card = new Card();
+        card.setCard_name("Card1");
+        Repository.addCard(ctx, card);
+
+        card = new Card();
+        card.setCard_name("Card2");
+        Repository.addCard(ctx, card);
+
+        ArrayList<Card> cards = Repository.getCards(ctx);
+
+        assertEquals(2, cards.size());
+
+        String names = "";
+        for(Card c : cards) {
+            names = names + c.getCard_name();
+        }
+        assertEquals("Card1Card2", names);
     }
 }

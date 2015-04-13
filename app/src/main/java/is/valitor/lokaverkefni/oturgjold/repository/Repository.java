@@ -3,6 +3,7 @@ package is.valitor.lokaverkefni.oturgjold.repository;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
@@ -154,7 +156,11 @@ public class Repository {
             byte[] buffer = new byte[(int) length];
             int i = fin.read(buffer);
             String cardJson = new String(buffer, "UTF-8");
-            tokenQueue = gson.fromJson(cardJson, new TypeToken<ArrayDeque<Token>>() {}.getType());
+            Type tokenDequeType =  new TypeToken<ArrayDeque<Token>>() {}.getType();
+
+            // TODO: For some reason this code returns a ArrayDeque<LinkedTreeMap> on some devices
+            // (The hacked S3 at least) Need to handle that somehow
+            tokenQueue = gson.fromJson(cardJson, tokenDequeType);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -177,7 +183,8 @@ public class Repository {
         try {
             fos = ctx.openFileOutput(filename, Context.MODE_PRIVATE);
 
-            String nTokenJson = gson.toJson(tokens);
+            String nTokenJson = gson.toJson(tokens, new TypeToken<ArrayDeque<Token>>() {}.getType());
+
             fos.write(nTokenJson.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
@@ -256,7 +263,8 @@ public class Repository {
             byte[] buffer = new byte[(int) length];
             int i = fin.read(buffer);
             String cardJson = new String(buffer, "UTF-8");
-            cards = gson.fromJson(cardJson, new TypeToken<ArrayList<Card>>() {}.getType());
+            Type cardArrayType =  new TypeToken<ArrayList<Card>>() {}.getType();
+            cards = gson.fromJson(cardJson, cardArrayType);
         }
         catch (Exception e) {
             e.printStackTrace();

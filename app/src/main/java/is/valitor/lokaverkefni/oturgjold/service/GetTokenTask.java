@@ -51,6 +51,12 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject result) {
         //textView.setText(result);
+
+        // TODO: Handle failed connections attempts somehow more elegantly than ignoring them
+        if (result == null) {
+            return;
+        }
+
         int rCode = result.optInt("responseCode");
 
         if (rCode == 200) {
@@ -60,11 +66,14 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
                 Token token  = gson.fromJson(result.toString(), Token.class);
                 Log.d("response",result.toString());
 
-                // TODO: get actual current card
-                int currentCard = 1;
+                int currentCard = token.getCard_id();
                 Repository.addToken(this.appContext, currentCard, token);
 
+                // Sequentially fill upp token limit
+                // Could this be solved more elegantly?
                 if (Repository.getTokenCount(this.appContext, currentCard) < 3) {
+
+                    // Clear token data, but reuse rest
                     token.setTokenitem("");
                     String tokenJson = gson.toJson(token, Token.class);
                     new GetTokenTask(this.appContext)
@@ -83,7 +92,8 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
     private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
         InputStream is = null;
 
-        // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
+        // Remake json-string into json object.
+        // There has to be a smarter way to do this, but I cant pass a string and json object
         JSONObject msg = new JSONObject();
         JSONObject ret = null;
         try {
