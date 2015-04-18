@@ -1,28 +1,29 @@
 package is.valitor.lokaverkefni.oturgjold;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
-import is.valitor.lokaverkefni.oturgjold.repository.Token;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
     public static final int RESULT_FAILURE = 0;
     public static final int RESULT_SUCCESS = 1;
 
@@ -32,6 +33,9 @@ public class MainActivity extends Activity {
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
+
+    CardPagerAdapter pagerAdapter;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +60,21 @@ public class MainActivity extends Activity {
         }
 
         // initialize shared preferences file, give default value default - improve when refactoring
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putString("defaultCard", "main");
-        editor.commit();
+//        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+//        editor.putString("defaultCard", "main");
+//        editor.commit();
 
         enableRegistrationUI();
 
         NetworkUtil.enableNetworkMonitoring(getApplication());
+
+        pagerAdapter = new CardPagerAdapter(getSupportFragmentManager(), getApplication());
+        viewPager = (ViewPager) findViewById(R.id.cardPager);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOnPageChangeListener(pagerAdapter);
+        if (Repository.getCardCount(getApplication()) > 0) {
+            viewPager.setCurrentItem(Repository.getSelectedCardIndex(getApplication()));
+        }
     }
 
 
@@ -143,6 +155,11 @@ public class MainActivity extends Activity {
             enableRegistrationUI();
         }
 
+        if (reqCode == REQUEST_REGISTER_CARD) {
+            pagerAdapter.notifyDataSetChanged();
+            viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+        }
+
         if(reqCode == REQUEST_PAYMENT) {
             if(resCode == RESULT_OK) {
                 String pin = intent.getStringExtra("PIN");
@@ -165,6 +182,9 @@ public class MainActivity extends Activity {
         Button registerUserButton = (Button) findViewById(R.id.button_register_account);
         Button paymentButton = (Button) findViewById(R.id.button_payment);
 
+        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
+        ViewPager vp = (ViewPager) findViewById(R.id.cardPager);
+
         registerCardButton.setVisibility(View.INVISIBLE);
         paymentButton.setVisibility(View.INVISIBLE);
         registerUserButton.setVisibility(View.VISIBLE);
@@ -174,16 +194,25 @@ public class MainActivity extends Activity {
             registerCardButton.setVisibility(View.INVISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
 
+            vp.setVisibility(View.INVISIBLE);
+            mainLayout.setWeightSum(1);
+
         } else if(user != null && cards.size() == 0){
             registerCardButton.setVisibility(View.VISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
+
+            vp.setVisibility(View.INVISIBLE);
+            mainLayout.setWeightSum(1);
         }
         else {
             Log.d("hello","user not null");
             paymentButton.setVisibility(View.VISIBLE);
             registerCardButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
+
+            vp.setVisibility(View.VISIBLE);
+            mainLayout.setWeightSum(2);
         }
     }
 }

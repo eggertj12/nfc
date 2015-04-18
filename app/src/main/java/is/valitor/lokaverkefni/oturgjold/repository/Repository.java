@@ -3,7 +3,6 @@ package is.valitor.lokaverkefni.oturgjold.repository;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,12 +16,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
-import is.valitor.lokaverkefni.oturgjold.repository.Card;
-import is.valitor.lokaverkefni.oturgjold.repository.Token;
-import is.valitor.lokaverkefni.oturgjold.repository.User;
-
 /**
  * Created by eggert on 09/03/15.
+ *
+ * This static class handles persisting data
+ * Stores all data in private files on local storage
  */
 public class Repository {
     private static final String USER_FILE_NAME = "user.json";
@@ -137,7 +135,8 @@ public class Repository {
 
     /**
      * Load the queue from internal storage
-     * @param ctx
+     * @param ctx       The application context
+     * @param card_id   Id of card the queue applies to
      * @return
      */
     private static ArrayDeque<Token> loadQueue(Context ctx, int card_id) {
@@ -175,6 +174,12 @@ public class Repository {
         return tokenQueue;
     }
 
+    /**
+     * Save the queue to internal storage
+     * @param ctx       The application context
+     * @param card_id   Id of card the queue applies to
+     * @param tokens    ArrayDeque of tokens to save
+     */
     private static void saveQueue(Context ctx, int card_id, ArrayDeque<Token> tokens) {
         FileOutputStream fos = null;
 
@@ -199,6 +204,11 @@ public class Repository {
         }
     }
 
+    /**
+     * Add a card to the list of available cards
+     * @param ctx   The application context
+     * @param card  Card to be added
+     */
     public static void addCard(Context ctx, Card card) {
         FileOutputStream fos = null;
         FileInputStream fin = null;
@@ -247,6 +257,11 @@ public class Repository {
         }
     }
 
+    /**
+     * Get the collection of saved cards
+     * @param ctx   The application context
+     * @return      ArrayList of stored cards
+     */
     public static ArrayList<Card> getCards(Context ctx) {
         FileInputStream fin = null;
         Card card = null;
@@ -273,7 +288,38 @@ public class Repository {
         return cards;
     }
 
-   
+    /**
+     * Convenience method for getting the number of saved cards.
+     * @param ctx
+     * @return
+     */
+    public static int getCardCount(Context ctx) {
+        ArrayList<Card> cards = getCards(ctx);
+        return cards.size();
+    }
+
+    /**
+     * Convenience method for getting a card by index in storage.
+     * @param ctx
+     * @param index
+     * @return
+     */
+    public static Card getCardByIndex(Context ctx, int index) {
+        ArrayList<Card> cards = getCards(ctx);
+        return cards.get(index);
+    }
+
+    public static Card getCardById(Context ctx, int id) {
+        ArrayList<Card> cards = getCards(ctx);
+
+        for(Card c : cards) {
+            if (c.getCard_id() == id) {
+                return c;
+            }
+        }
+        return null;
+    }
+
     public static Card getCardByName(Context ctx, String name) {
         ArrayList<Card> cards = getCards(ctx);
 
@@ -299,17 +345,72 @@ public class Repository {
      * @param ctx
      * @return
      */
-    public static Card getDefaultCard(Context ctx) {
+    public static Card getSelectedCard(Context ctx) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
 
         // Second string in function call is value used if no value found in preferences
-        String defaultCardName = sp.getString("defaultCard", "main");
+        int cardId = sp.getInt("defaultCardId", -1);
 
-        Card rCard = getCardByName(ctx, defaultCardName);
+        if (cardId == -1) {
+            return null;
+        }
+
+        Card rCard = getCardById(ctx, cardId);
         if(rCard != null) {
             return rCard;
         }
         return getFirstCard(ctx);
+    }
+
+    /**
+     * Returns the index of selected default card in cardList
+     * @param ctx
+     * @return
+     */
+    public static int getSelectedCardIndex(Context ctx) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        // Second string in function call is value used if no value found in preferences
+        int cardId = sp.getInt("selectedCardId", -1);
+
+        if (cardId == -1) {
+            return 0;
+        }
+
+        ArrayList<Card> cards = getCards(ctx);
+
+        int index = 0;
+        for(Card c : cards) {
+            if (c.getCard_id() == cardId) {
+                return index;
+            }
+            index ++;
+        }
+
+        // Not found default to 0
+        return 0;
+    }
+
+    /**
+     * Set the given card as default card
+     * @param ctx
+     * @param card
+     */
+    public static void setSelectedCard(Context ctx, Card card) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(ctx).edit();
+
+        int cardId = card.getCard_id();
+        editor.putInt("selectedCardId", cardId);
+        editor.commit();
+    }
+
+    /**
+     * Set the card at given index as default card
+     * @param ctx
+     * @param index
+     */
+    public static void setSelectedCardByIndex(Context ctx, int index) {
+        setSelectedCard(ctx, getCardByIndex(ctx, index));
     }
 
 }

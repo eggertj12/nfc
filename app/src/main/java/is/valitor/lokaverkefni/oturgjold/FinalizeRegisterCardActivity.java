@@ -129,10 +129,11 @@ public class FinalizeRegisterCardActivity extends Activity {
     }
 
     public void defaultFinish(View view){
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
-        editor.putString("defaultCard", cardName);
-        editor.commit();
+        // Default card is now handled by pager on mainactivity
+//        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+//        editor.putString("defaultCard", cardName);
+//        editor.commit();
 
         setResult(RESULT_OK);
         finish();

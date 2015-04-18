@@ -164,7 +164,7 @@ public class RepositoryTest {
 
         ArrayList<Card> cards = Repository.getCards(ctx);
 
-        assertEquals(2, cards.size());
+        assertEquals(2, Repository.getCardCount(ctx));
 
         String names = "";
         for(Card c : cards) {

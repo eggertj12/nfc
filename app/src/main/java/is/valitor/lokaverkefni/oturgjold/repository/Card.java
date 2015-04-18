@@ -6,16 +6,19 @@ package is.valitor.lokaverkefni.oturgjold.repository;
 public class Card {
 
     private int card_id;
-
     private String card_name;
-
     private String last_four;
-
     private String tokenized_card_number;
-
     private String tokenized_validation;
-
     private String tokenized_cvv;
+
+    public Card() {
+        card_name = "";
+        last_four = "";
+        tokenized_card_number = "";
+        tokenized_validation = "";
+        tokenized_cvv = "";
+    }
 
     public int getCard_id() {
         return card_id;

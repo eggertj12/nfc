@@ -137,9 +137,9 @@ public class CardService extends HostApduService {
         JSONObject outMsg = new JSONObject();
         // Communicate with the service:
         try {
-            // TODO: get actual current card
-            ArrayList<Card> cards = Repository.getCards(getApplication());
-            int currentCard = cards.get(0).getCard_id();
+            // get currently selected card
+            Card card = Repository.getSelectedCard(getApplication());
+            int currentCard = card.getCard_id();
 
             // Make JSON
             Token ct = Repository.getToken(getApplication(), currentCard);
