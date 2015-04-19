@@ -356,7 +356,7 @@ public class Repository {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
 
         // Second string in function call is value used if no value found in preferences
-        int cardId = sp.getInt("defaultCardId", -1);
+        int cardId = sp.getInt("selectedCardId", -1);
 
         if (cardId == -1) {
             return null;
@@ -395,7 +395,7 @@ public class Repository {
         }
 
         // Not found default to 0
-        return 0;
+        return -1;
     }
 
     /**

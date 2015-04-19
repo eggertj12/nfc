@@ -143,7 +143,15 @@ public class CardService extends HostApduService {
 
             // Make JSON
             Token ct = Repository.getToken(getApplication(), currentCard);
+            if(ct.getTokenitem() == null)
+            {
+                Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
+                toast.show();
+                return null;
+            }
             if (ct != null) {
+
+
                 outMsg.put("tokenitem", ct.getTokenitem());
                 outMsg.put("appPin", "4567");
                 String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -169,6 +177,7 @@ public class CardService extends HostApduService {
         }
         catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
         return outMsg.toString();
     }
