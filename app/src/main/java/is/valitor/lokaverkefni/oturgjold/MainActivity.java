@@ -92,6 +92,8 @@ public class MainActivity extends FragmentActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        final Context ctx = getApplication();
+
         //Register new card
         if (id == R.id.register_card) {
             registerCard(item.getActionView());
@@ -100,7 +102,7 @@ public class MainActivity extends FragmentActivity {
 
         else if(id == R.id.show_token_count) {
             String message = "";
-            Context ctx = getApplication();
+
             ArrayList<Card> cards = Repository.getCards(ctx);
             for(Card card : cards) {
                 message = message
@@ -109,6 +111,11 @@ public class MainActivity extends FragmentActivity {
                         + "\n";
             }
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+            toast.show();
+        }else if(id == R.id.action_reset) {
+            String msg = String.format("Resetting d% cards to 0.", Repository.getCardCount(ctx));
+            Toast toast = Toast.makeText(this, "Resetting", Toast.LENGTH_LONG);
+            Repository.removeAllCards(ctx);
             toast.show();
         }
 

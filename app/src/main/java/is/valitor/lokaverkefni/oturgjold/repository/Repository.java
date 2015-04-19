@@ -256,6 +256,13 @@ public class Repository {
             }
         }
     }
+    /**
+     * Removes all saved cards from the Repository
+     */
+    public static void removeAllCards(Context ctx)
+    {
+
+    }
 
     /**
      * Get the collection of saved cards
@@ -412,5 +419,6 @@ public class Repository {
     public static void setSelectedCardByIndex(Context ctx, int index) {
         setSelectedCard(ctx, getCardByIndex(ctx, index));
     }
+
 
 }

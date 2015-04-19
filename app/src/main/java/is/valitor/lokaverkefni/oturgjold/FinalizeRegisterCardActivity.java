@@ -44,7 +44,8 @@ public class FinalizeRegisterCardActivity extends Activity {
     private Button continueRegisterCard;
     private static final int REQUEST_REGISTER_CARD = 2;
 
-    private String cardName;
+    private Card card = null;
+    //private String cardName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,8 +162,9 @@ public class FinalizeRegisterCardActivity extends Activity {
             public void onClick(View v) {
                 EditText ed = (EditText) dialog.findViewById(R.id.dialogTextEdit1);
                 if(ed != null) {
-                    cardName = ed.getText().toString();
+                    card.setCard_name(ed.getText().toString());
                 }
+                Repository.addCard(getApplication(), card);
                 dialog.dismiss();
             }
         });
@@ -171,7 +173,9 @@ public class FinalizeRegisterCardActivity extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardName = "PartyBro!!!";
+                card.setCard_name("");
+
+                Repository.addCard(getApplication(), card);
                 dialog.dismiss();
             }
         });
@@ -214,21 +218,15 @@ public class FinalizeRegisterCardActivity extends Activity {
                     startDialog();
 
                     Gson gson = new Gson();
-                    Card card = gson.fromJson(response.toString(), Card.class);
+                    card = gson.fromJson(response.toString(), Card.class);
 
-/*                    Card nCard = new Card();
-                    nCard.setCard_id(5);
-                    nCard.setCard_name("Partybro");
-                    cardName = "Partybro";
-                    String cardNumber = response.getString("cardnumber");
-*/
+
                     String cardNumber = response.getString("cardnumber");
                     card.setLast_four(cardNumber.substring(cardNumber.length() - 4));
                     card.setTokenized_card_number(cardNumber);
                     card.setTokenized_cvv(response.getString("cvv"));
                     card.setTokenized_validation(response.getString("validity"));
 
-                    Repository.addCard(getApplication(), card);
 
                     User theUser = Repository.getUser(getApplicationContext());
 
