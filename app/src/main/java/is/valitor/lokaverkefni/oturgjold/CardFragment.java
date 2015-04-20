@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,10 @@ public class CardFragment extends Fragment {
 
         Bundle args = getArguments();
         cardIndex = args.getInt(CARDFRAGMENT_CARDINDEX);
+
+        TextView cardNumber = (TextView) rootView.findViewById(R.id.fragmentCardNumber);
+        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "ocr_a_std.ttf");
+        cardNumber.setTypeface(font);
 
         drawUI();
 

@@ -172,4 +172,31 @@ public class RepositoryTest {
         }
         assertEquals("Card1Card2", names);
     }
+
+
+    @Test
+    public void selectedCardsTest() {
+        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        Context ctx = activity.getApplication();
+
+        Card card1 = new Card();
+        card1.setCard_name("Card1");
+        card1.setCard_id(1);
+        Repository.addCard(ctx, card1);
+
+        Card card2 = new Card();
+        card2.setCard_name("Card2");
+        card2.setCard_id(2);
+        Repository.addCard(ctx, card2);
+
+        Repository.setSelectedCard(ctx, card2);
+
+        assertEquals(1, Repository.getSelectedCardIndex(ctx));
+        assertEquals("Card2", Repository.getSelectedCard(ctx).getCard_name());
+
+        Repository.setSelectedCardByIndex(ctx, 0);
+        assertEquals(0, Repository.getSelectedCardIndex(ctx));
+        assertEquals("Card1", Repository.getSelectedCard(ctx).getCard_name());
+
+    }
 }
