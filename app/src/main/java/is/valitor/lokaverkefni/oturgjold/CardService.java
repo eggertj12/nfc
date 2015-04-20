@@ -122,7 +122,7 @@ public class CardService extends HostApduService {
             if (toSend == null) {
                 Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
                 toast.show();
-                return null;
+                return UNKNOWN_CMD_SW;
             }
 
             byte [] accountBytes = toSend.getBytes();
