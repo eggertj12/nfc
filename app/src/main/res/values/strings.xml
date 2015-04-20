@@ -25,6 +25,8 @@
     <string name="title_activity_account_management">Innskráning</string>
     <string name="title_activity_payment">Greiða</string>
 
+    <string name="action_getBalance">Sækja stöðu korts</string>
+
 
     <string name="service_name">CardEmulation Sample</string>
     <string name="card_title">Sample Loyalty Card</string>

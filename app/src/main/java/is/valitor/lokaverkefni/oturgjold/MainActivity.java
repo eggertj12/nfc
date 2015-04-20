@@ -1,10 +1,13 @@
 package is.valitor.lokaverkefni.oturgjold;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -13,13 +16,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
+import is.valitor.lokaverkefni.oturgjold.repository.Token;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
+import is.valitor.lokaverkefni.oturgjold.service.GetBalanceTask;
+
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
@@ -41,6 +59,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // In case this is being called from HCE. getBooleanExtra is just funky this way
         if(getIntent().getStringExtra("MSG_REQUEST_PIN") != null) {
@@ -92,7 +111,7 @@ public class MainActivity extends FragmentActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        final Context ctx = getApplication();
+        final Context ctx = getApplicationContext();
 
         //Register new card
         if (id == R.id.register_card) {
@@ -112,7 +131,10 @@ public class MainActivity extends FragmentActivity {
             }
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
-        }else if(id == R.id.action_reset) {
+        }else if(id == R.id.action_getBalance) {
+            getCurrentCardBalance();
+        }
+        else if(id == R.id.action_reset) {
             String msg = String.format("Resetting d% cards to 0.", Repository.getCardCount(ctx));
             Toast toast = Toast.makeText(this, "Resetting", Toast.LENGTH_LONG);
             Repository.removeAllCards(ctx);
@@ -222,4 +244,35 @@ public class MainActivity extends FragmentActivity {
             mainLayout.setWeightSum(2);
         }
     }
+
+    /*
+    Fetch the balance of the currentCard
+     */
+    private void getCurrentCardBalance()
+    {
+        try {
+
+            final TextView balance = (TextView)findViewById(R.id.fragmentCardBalance);
+            final AsyncTaskCompleteListener<Integer> listener = new AsyncTaskCompleteListener<Integer>() {
+                @Override
+                public void onTaskComplete(final Integer result) {
+                    balance.setText(result.toString());
+                }
+            };
+
+
+
+            // get currently selected card
+            Card card = Repository.getSelectedCard(getApplication());
+            int currentCard = card.getCard_id();
+            balance.setText(String.format("Sæki stöðu %d", currentCard));
+            new GetBalanceTask(listener).execute("https://kortagleypir.herokuapp.com/card/balance/" + currentCard);
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+}
 }

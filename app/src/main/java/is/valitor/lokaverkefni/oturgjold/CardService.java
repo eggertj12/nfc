@@ -111,14 +111,14 @@ public class CardService extends HostApduService {
         if (Arrays.equals(SELECT_APDU, commandApdu)) {
 
             // Get the last input PIN
-            String pin = getPin();
+           /*String pin = getPin();
             if(pin.length() != 4) {
                 // PIN is not ready, just be quiet
                 return null;
-            }
+            }*/
 
             String toSend = toSend();
-
+            Log.d(TAG, "Sending: "+toSend);
             if (toSend == null) {
                 Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
                 toast.show();
@@ -132,17 +132,19 @@ public class CardService extends HostApduService {
         }
     }
 
+    private static final String JSON_PATTERN = "{\"tokenitem\":\"%s\",\"device_id\":\"%s\"}";
     private String toSend()
     {
-        JSONObject outMsg = new JSONObject();
-        // Communicate with the service:
+        String tokenParam = null;
+        String deviceParam = null;
+
+        // Communicate with the service:enP
         try {
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
-            int currentCard = card.getCard_id();
 
             // Make JSON
-            Token ct = Repository.getToken(getApplication(), currentCard);
+            Token ct = Repository.getToken(getApplication(), card.getCard_id());
             if(ct.getTokenitem() == null)
             {
                 Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
@@ -150,22 +152,18 @@ public class CardService extends HostApduService {
                 return null;
             }
             if (ct != null) {
-
-
-                outMsg.put("tokenitem", ct.getTokenitem());
-                outMsg.put("appPin", "4567");
-                String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-                outMsg.put("device_id", android_id);
+                tokenParam = ct.getTokenitem();
+                deviceParam = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             }
 
             // Get a new token if there is connectivity
+
             Context ctx = getApplication();
             if (NetworkUtil.isConnected(ctx)) {
                 Gson gson = new Gson();
                 String tokenJson = gson.toJson(ct, Token.class);
                 new GetTokenTask(getApplication()).execute(getString(R.string.service_token_url), tokenJson);
             }
-
             // Setup network monitoring if not connected
             else {
                 NetworkUtil.enableNetworkMonitoring(ctx);
@@ -179,7 +177,7 @@ public class CardService extends HostApduService {
             e.printStackTrace();
             return null;
         }
-        return outMsg.toString();
+        return String.format(JSON_PATTERN, tokenParam, deviceParam);
     }
 
 
@@ -282,4 +280,3 @@ public class CardService extends HostApduService {
         return pin;
     }
 }
-

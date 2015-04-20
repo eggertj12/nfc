@@ -11,6 +11,7 @@ public class Card {
     private String tokenized_card_number;
     private String tokenized_validation;
     private String tokenized_cvv;
+    private int card_balance;
 
     public Card() {
         card_name = "";
@@ -18,8 +19,16 @@ public class Card {
         tokenized_card_number = "";
         tokenized_validation = "";
         tokenized_cvv = "";
+        card_balance = 0;
     }
 
+    public int getCard_balance() {
+        return card_balance;
+    }
+
+    public void setCard_balance(int card_balance) {
+        this.card_balance = card_balance;
+    }
     public int getCard_id() {
         return card_id;
     }

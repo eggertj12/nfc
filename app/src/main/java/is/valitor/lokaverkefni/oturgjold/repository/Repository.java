@@ -3,6 +3,7 @@ package is.valitor.lokaverkefni.oturgjold.repository;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -117,7 +118,9 @@ public class Repository {
      * @return Token or null if empty
      */
     public static Token getToken(Context ctx, int card_id) {
+
         ArrayDeque<Token> tokens = loadQueue(ctx, card_id);
+
         Token token = tokens.poll();
         saveQueue(ctx, card_id, tokens);
         return token;
@@ -160,6 +163,7 @@ public class Repository {
             // TODO: For some reason this code returns a ArrayDeque<LinkedTreeMap> on some devices
             // (The hacked S3 at least) Need to handle that somehow
             tokenQueue = gson.fromJson(cardJson, tokenDequeType);
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
