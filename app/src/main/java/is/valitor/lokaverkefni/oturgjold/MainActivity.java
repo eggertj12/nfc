@@ -260,8 +260,6 @@ public class MainActivity extends FragmentActivity {
                 }
             };
 
-
-
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
             int currentCard = card.getCard_id();

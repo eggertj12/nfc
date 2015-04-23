@@ -1,47 +1,18 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
 
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.app.Activity;
+
 
 /**
  * Created by kla on 20.4.2015.
@@ -139,8 +110,7 @@ public class GetBalanceTask extends AsyncTask <String, Void, Integer> {
 
            return parsedBalance;
         } catch (Exception e) {
-            //e.printStackTrace();
-            //Log.d("GETTOKEN", "Error reading token " + msg);
+
             return -1;
         }
 

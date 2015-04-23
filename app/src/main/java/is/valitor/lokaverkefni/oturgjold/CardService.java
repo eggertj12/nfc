@@ -147,7 +147,7 @@ public class CardService extends HostApduService {
             Token ct = Repository.getToken(getApplication(), card.getCard_id());
             if(ct.getTokenitem() == null)
             {
-                Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(this, "No token for " + card.getCard_id(), Toast.LENGTH_LONG);
                 toast.show();
                 return null;
             }

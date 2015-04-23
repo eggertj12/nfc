@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by eggert on 09/03/15.
@@ -363,6 +364,12 @@ public class Repository {
         int cardId = sp.getInt("selectedCardId", -1);
 
         if (cardId == -1) {
+            //fallback if there is no selected card_id
+            List<Card> cards = getCards(ctx);
+            if(cards.size()> 0)
+            {
+                return cards.get(0);
+            }
             return null;
         }
 

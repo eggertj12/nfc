@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
 
@@ -27,11 +31,18 @@ public class RegisterCardActivity extends Activity {
 
     private static final int REQUEST_REGISTER_CARD = 1;
 
+
+    //String cardholder = user.getName();
+    private String cardholder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_card);
 
+        User user = Repository.getUser(getApplication());
+        cardholder = user.getName().toString();
+        final TextView name = (TextView)findViewById(R.id.cordholderName);
+        name.setText(cardholder);
         // Populate spinner for selection of month
         Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerValidityMonth);
 
@@ -81,18 +92,19 @@ public class RegisterCardActivity extends Activity {
     public void createCardNext(View view) {
         // Start by validation
         Validator v = new Validator();
+        // get currently selected card
 
         // Cardholder name
-        EditText editCardholder = (EditText) findViewById(R.id.editCardholderName);
-        String cardholder = editCardholder.getText().toString();
+       // EditText editCardholder = (EditText) findViewById(R.id.editCardholderName);
+       // String cardholder = editCardholder.getText().toString();
         //if (!v.validateCardholderName(cardholder)) {
-        if(false) {
+       /* if(false) {
             CharSequence message = getResources().getString(R.string.error_invalid_cardholder_name);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
             editCardholder.requestFocus();
             return;
-        }
+        }*/
 
         // Card Number
         EditText editCardNumber = (EditText) findViewById(R.id.editCardNumber);
@@ -159,7 +171,7 @@ public class RegisterCardActivity extends Activity {
         // Populate intent with data
         intent.putExtra(MSG_CARDNUMBER, cardNumber);
         intent.putExtra(MSG_CARDTYPE, cardType);
-        intent.putExtra(MSG_CARDHOLDER, cardholder);
+        intent.putExtra(MSG_CARDHOLDER, "jon");
         intent.putExtra(MSG_CARDCVV, cardCvv);
         intent.putExtra(MSG_CARDMONTH, cardMonth);
         intent.putExtra(MSG_CARDYEAR, cardYear);

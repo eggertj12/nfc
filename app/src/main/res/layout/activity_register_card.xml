@@ -26,14 +26,22 @@
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
             android:id="@+id/titleCardHolderName" />
 
-        <EditText
+        <!--<EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editCardholderName"
             android:inputType="textPersonName"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin"  />
+            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+            />
+-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/cordholderName" />
 
         <TextView
             android:layout_width="match_parent"
