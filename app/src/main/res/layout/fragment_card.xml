@@ -59,17 +59,7 @@ tools:context="is.valitor.lokaverkefni.oturgjold.CardFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/card_fragment_balance"
-            android:textSize="12dp"
-            android:id="@+id/fragmentCardBalanceLabel"
-            android:paddingRight="@dimen/card_balance_right_margin"
-            android:paddingTop="@dimen/card_balance_top_margin" />
-
-        <TextView
-            android:gravity="center|right"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:id="@+id/fragmentCardBalance"
             android:paddingRight="@dimen/card_balance_right_margin"
             android:typeface="monospace" />

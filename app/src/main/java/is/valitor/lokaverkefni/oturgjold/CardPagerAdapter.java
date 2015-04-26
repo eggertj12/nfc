@@ -4,17 +4,22 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.ArrayMap;
+
+import java.util.ArrayList;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 /**
  * Created by eggert on 18/04/15.
  */
-public class CardPagerAdapter extends FragmentStatePagerAdapter implements ViewPager.OnPageChangeListener {
+public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
 
     private Context appContext;
+    private ArrayMap<Integer, CardFragment> fragments = new ArrayMap();
 
     public CardPagerAdapter(FragmentManager fm, Context ctx)
     {
@@ -32,6 +37,9 @@ public class CardPagerAdapter extends FragmentStatePagerAdapter implements ViewP
         args.putInt(CardFragment.CARDFRAGMENT_CARDINDEX, i);
         fragment.setArguments(args);
 
+        // Store fragment for future reference.
+        fragments.put(i, (CardFragment) fragment);
+
         return fragment;
     }
 
@@ -44,6 +52,9 @@ public class CardPagerAdapter extends FragmentStatePagerAdapter implements ViewP
     @Override
     public void onPageSelected(int position)
     {
+        if (fragments.containsKey(position)) {
+            fragments.get(position).getCurrentBalance();
+        }
         Repository.setSelectedCardByIndex(this.appContext, position);
     }
 

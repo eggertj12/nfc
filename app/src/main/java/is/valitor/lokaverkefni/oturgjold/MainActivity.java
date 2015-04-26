@@ -1,13 +1,10 @@
 package is.valitor.lokaverkefni.oturgjold;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -19,16 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
@@ -65,7 +52,7 @@ public class MainActivity extends FragmentActivity {
         if(getIntent().getStringExtra("MSG_REQUEST_PIN") != null) {
             // Extra layer of insulation:
             if(getIntent().getStringExtra("MSG_REQUEST_PIN").contentEquals("true")) {
-                // Clear last entered pin shared prefence
+                // Clear last entered pin shared preference
                 System.out.println("MAIN ACTIVITY BEING CALLED AFTER HCE");
                 SharedPreferences.Editor clearPin = PreferenceManager.getDefaultSharedPreferences(this).edit();
                 clearPin.putString("lastPIN", "");
@@ -136,7 +123,7 @@ public class MainActivity extends FragmentActivity {
         }
         else if(id == R.id.action_reset) {
             String msg = String.format("Resetting d% cards to 0.", Repository.getCardCount(ctx));
-            Toast toast = Toast.makeText(this, "Resetting", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
             Repository.removeAllCards(ctx);
             toast.show();
         }
@@ -226,7 +213,7 @@ public class MainActivity extends FragmentActivity {
             vp.setVisibility(View.INVISIBLE);
             mainLayout.setWeightSum(1);
 
-        } else if(user != null && cards.size() == 0){
+        } else if(cards.size() == 0){
             registerCardButton.setVisibility(View.VISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
@@ -263,6 +250,7 @@ public class MainActivity extends FragmentActivity {
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
             int currentCard = card.getCard_id();
+            Log.d("CardBalance", card.getLast_four());
             balance.setText(String.format("Sæki stöðu %d", currentCard));
             new GetBalanceTask(listener).execute("https://kortagleypir.herokuapp.com/card/balance/" + currentCard);
 
@@ -270,7 +258,6 @@ public class MainActivity extends FragmentActivity {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-
-}
 }

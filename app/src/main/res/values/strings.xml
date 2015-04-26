@@ -43,7 +43,7 @@
 
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="card_fragment_balance">Staða</string>
+    <string name="card_fragment_balance">Sjá stöðu</string>
 
     <!--web service urls-->
     <string name="service_account_url">https://kortagleypir.herokuapp.com/user</string>
