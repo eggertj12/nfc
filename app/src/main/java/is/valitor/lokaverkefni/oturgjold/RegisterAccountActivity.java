@@ -30,16 +30,12 @@ import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 public class RegisterAccountActivity extends Activity {
 
     private TextView editAccountName;
-    private TextView editAccountSSN;
-    private TextView serviceResponse;
     private ProgressBar loadingThings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_account);
         editAccountName = (TextView) findViewById(R.id.editAccountName);
-        editAccountSSN = (TextView) findViewById(R.id.editAccountSSN);
-        serviceResponse = (TextView) findViewById(R.id.responseText);
         loadingThings = (ProgressBar) findViewById(R.id.progressBar);
 
         loadingThings.setVisibility(View.INVISIBLE);

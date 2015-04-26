@@ -118,5 +118,10 @@ public class CardFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
+        else {
+            final TextView balance = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
+            balance.setText(R.string.card_fragment_balance);
+        }
     }
 }

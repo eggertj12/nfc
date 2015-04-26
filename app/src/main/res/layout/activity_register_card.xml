@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="#D5E1EB"
+    android:background="@color/background"
     tools:context="is.valitor.oturgjold.app.RegisterCardActivity">
 
 
@@ -34,6 +34,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+            android:nextFocusDown="@id/editCardNumber"
             />
 -->
         <TextView
@@ -59,6 +60,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+            android:nextFocusDown="@+id/editCardCvv"
             android:inputType="number" />
 
         <TextView
@@ -159,7 +161,8 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-                android:inputType="number" />
+                android:inputType="number"
+                android:nextFocusDown="@+id/editPIN"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -167,7 +170,8 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:nextFocusDown="@+id/button_register_card_next"/>
         </LinearLayout>
 
         <Button
@@ -181,7 +185,8 @@
             android:layout_marginTop="@dimen/inputblock_vertical_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
             android:background="@drawable/round_button"
-            android:id="@+id/button_register_card_next" />
+            android:id="@+id/button_register_card_next"
+            android:textColor="@color/buttontext" />
 
     </LinearLayout>
 </RelativeLayout>
