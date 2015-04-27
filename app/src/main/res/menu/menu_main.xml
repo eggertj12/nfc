@@ -21,4 +21,9 @@
         android:title="@string/action_getBalance"
         android:orderInCategory="400"
         android:showAsAction="never" />
+    <item
+        android:id="@+id/action_getTransactions"
+        android:title="@string/action_getTransactions"
+        android:orderInCategory="400"
+        android:showAsAction="never" />
 </menu>

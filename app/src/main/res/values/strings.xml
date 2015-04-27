@@ -26,6 +26,7 @@
     <string name="title_activity_payment">Greiða</string>
 
     <string name="action_getBalance">Sækja stöðu korts</string>
+    <string name="action_getTransactions">Yfirlit</string>
 
 
     <string name="service_name">CardEmulation Sample</string>
@@ -49,5 +50,6 @@
     <string name="service_account_url">https://kortagleypir.herokuapp.com/user</string>
     <string name="service_card_url">https://kortagleypir.herokuapp.com/card</string>
     <string name="service_token_url">https://kortagleypir.herokuapp.com/token</string>
+    <string name="title_activity_show_transactions">ShowTransactions</string>
 
 </resources>
