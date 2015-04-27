@@ -53,7 +53,6 @@ public class MainActivity extends FragmentActivity {
             setIntent(newIntent);
         }
 
-
         // In case this is being called from HCE. getBooleanExtra is just funky this way
         if(getIntent().getStringExtra("MSG_REQUEST_PIN") != null) {
             // Extra layer of insulation:
@@ -67,7 +66,6 @@ public class MainActivity extends FragmentActivity {
                 Intent intent = new Intent(this, PaymentActivity.class);
                 startActivityForResult(intent, REQUEST_PAYMENT);
                 // Rest is handled in the listener downstairs
-
             }
         }
 
@@ -128,10 +126,11 @@ public class MainActivity extends FragmentActivity {
             getCurrentCardBalance();
         }
         else if(id == R.id.action_reset) {
-            String msg = String.format("Resetting d% cards to 0.", Repository.getCardCount(ctx));
+            String msg = String.format("Resetting %d cards to 0.", Repository.getCardCount(ctx));
             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
             Repository.removeAllCards(ctx);
             toast.show();
+            System.exit(0);
         }
         else if(id==R.id.action_getTransactions)
         {

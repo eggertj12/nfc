@@ -264,9 +264,22 @@ public class Repository {
     /**
      * Removes all saved cards from the Repository
      */
-    public static void removeAllCards(Context ctx)
-    {
-
+    public static void removeAllCards(Context ctx) {
+        FileOutputStream fos = null;
+        try {
+            fos = ctx.openFileOutput(CARD_FILE_NAME, Context.MODE_PRIVATE);
+            fos.write(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
