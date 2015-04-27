@@ -47,6 +47,11 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // In case we hit back, or system constrains us into recreating with HCE intent
+        if(savedInstanceState != null) {
+            Intent newIntent = new Intent();
+            setIntent(newIntent);
+        }
 
 
         // In case this is being called from HCE. getBooleanExtra is just funky this way
