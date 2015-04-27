@@ -93,8 +93,8 @@ public class RegisterAccountActivity extends Activity {
         String ssn = editAccountSSN.getText().toString();
 
         // Proper validation might be in order
-        if (ssn.length() != 10 || !(ssn.endsWith("9") || ssn.endsWith("0"))) {
-            CharSequence message = getString(R.string.error_invalid_ssn);
+        if (!((ssn.length() != 10 && !(ssn.endsWith("9"))) || !ssn.endsWith("0"))) {
+            CharSequence message = "Rangt form á kennitölu";
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
             editAccountSSN.requestFocus();
@@ -180,7 +180,7 @@ public class RegisterAccountActivity extends Activity {
                 }
             }
             else {
-                editAccountName.setText("Misheppnuð skráning ahahahah!");
+                editAccountName.setText("Misheppnuð skráning!");
             }
 
         }
