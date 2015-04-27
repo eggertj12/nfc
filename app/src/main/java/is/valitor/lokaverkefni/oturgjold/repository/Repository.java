@@ -75,7 +75,6 @@ public class Repository {
         try {
             fis = ctx.openFileInput(USER_FILE_NAME);
             long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + USER_FILE_NAME).length();
-
             byte[] buffer = new byte[(int) length];
             int i = fis.read(buffer);
             String userJson = new String(buffer, "UTF-8");
@@ -262,6 +261,25 @@ public class Repository {
         }
     }
     /**
+     * Removes all saved data from the repository
+     */
+    public static void clearData(Context ctx) {
+        File userFile = new File(USER_FILE_NAME);
+        File cardFile = new File(CARD_FILE_NAME);
+        File tokenFile = new File(TOKEN_FILE_NAME);
+
+        try {
+            userFile.delete();
+            cardFile.delete();
+            tokenFile.delete();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
      * Removes all saved cards from the Repository
      */
     public static void removeAllCards(Context ctx) {
@@ -281,6 +299,49 @@ public class Repository {
             }
         }
     }
+
+    /**
+     * Removes all saved user info from the repository
+     */
+    public static void removeUserInfo(Context ctx){
+        FileOutputStream fos = null;
+        try {
+            fos = ctx.openFileOutput(USER_FILE_NAME, Context.MODE_PRIVATE);
+            fos.write(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Removes all token info from the repository
+     */
+    public static void removeTokens(Context ctx) {
+        FileOutputStream fos = null;
+        try {
+            fos = ctx.openFileOutput(TOKEN_FILE_NAME, Context.MODE_PRIVATE);
+            fos.write(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     /**
      * Get the collection of saved cards

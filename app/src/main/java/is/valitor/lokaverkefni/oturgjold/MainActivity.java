@@ -126,11 +126,11 @@ public class MainActivity extends FragmentActivity {
             getCurrentCardBalance();
         }
         else if(id == R.id.action_reset) {
+            // This is best done in the android OS - Application Manager
             String msg = String.format("Resetting %d cards to 0.", Repository.getCardCount(ctx));
             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-            Repository.removeAllCards(ctx);
+            //Repository.clearData(ctx);
             toast.show();
-            System.exit(0);
         }
         else if(id==R.id.action_getTransactions)
         {
