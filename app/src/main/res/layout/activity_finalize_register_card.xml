@@ -41,7 +41,9 @@
             android:layout_weight="1"
             android:onClick="defaultFinish"
             android:background="@drawable/rounded_button"
-            android:textColor="@color/buttontext" />
+            android:textColor="@color/buttontext"
+            android:padding="5dp"
+            android:layout_margin="5dp"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +52,9 @@
             android:layout_weight="1"
             android:onClick="registerCard"
             android:background="@drawable/rounded_button"
-            android:textColor="@color/buttontext" />
+            android:textColor="@color/buttontext"
+            android:padding="5dp"
+            android:layout_margin="5dp"/>
     </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
