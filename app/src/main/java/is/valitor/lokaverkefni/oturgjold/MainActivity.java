@@ -35,6 +35,7 @@ public class MainActivity extends FragmentActivity {
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;
     private static final int REQUEST_PAYMENT = 3;
+    private static final int REQUEST_SHOW_TRANSACTIONS = 4;
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
@@ -127,6 +128,10 @@ public class MainActivity extends FragmentActivity {
             Repository.removeAllCards(ctx);
             toast.show();
         }
+        else if(id==R.id.action_getTransactions)
+        {
+            getTransactions(item.getActionView());
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -139,7 +144,17 @@ public class MainActivity extends FragmentActivity {
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }
 
+    /**
+     * Called when user clicks showtransaction button in settings
+     * Stars a new activity to show the transactions for selected card
+     * @param view
+     */
+    public void getTransactions(View view)
+    {
+        Intent intent = new Intent(this,ShowTransactions.class);
 
+        startActivityForResult(intent, REQUEST_SHOW_TRANSACTIONS);
+    }
     /** Called when the user clicks the register account button */
     public void registerAccount(View view) {
         Intent intent = new Intent(this, RegisterAccountActivity.class);

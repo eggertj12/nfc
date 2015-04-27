@@ -85,7 +85,16 @@
         <activity
             android:name=".PaymentActivity"
             android:label="@string/title_activity_payment" >
+
             <!-- android:screenOrientation="portrait" -->
+        </activity>
+        <activity
+            android:name=".utils.ShowTransactions"
+            android:label="@string/title_activity_show_transactions" >
+        </activity>
+        <activity
+            android:name=".ShowTransactions"
+            android:label="@string/title_activity_show_transactions" >
         </activity>
     </application>
 
