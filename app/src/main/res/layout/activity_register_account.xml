@@ -26,7 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
         android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-        android:id="@+id/labeleditName"
+        android:id="@+id/titleEditName"
         android:layout_below="@+id/titleText"
         android:layout_alignParentEnd="true" />
 
@@ -37,7 +37,7 @@
         android:inputType="textPersonName"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/titleEditSSN"
+        android:layout_below="@+id/titleEditName"
         android:layout_alignParentRight="true" />
 
     <TextView
@@ -47,7 +47,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_alignParentStart="true"
         android:id="@+id/titleEditSSN"
-        android:layout_below="@+id/editAccountSSN"
+        android:layout_below="@+id/editAccountName"
         android:layout_alignParentRight="true" />
 
     <EditText
@@ -56,8 +56,8 @@
         android:id="@+id/editAccountSSN"
         android:layout_gravity="center_horizontal"
         android:inputType="number"
+        android:layout_below="@id/titleEditSSN"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/labeleditName"
         android:layout_alignParentRight="true" />
 
 
