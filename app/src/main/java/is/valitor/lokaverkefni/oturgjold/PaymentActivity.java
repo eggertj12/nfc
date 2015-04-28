@@ -23,6 +23,7 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
     private String pin = "";
     private RadioGroup[] disp;
+    private int pinLength = 0;
     private Context context = this;
 
     @Override
@@ -63,6 +64,8 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         disp[1] = (RadioGroup) findViewById(R.id.radioButton_2);
         disp[2] = (RadioGroup) findViewById(R.id.radioButton_3);
         disp[3] = (RadioGroup) findViewById(R.id.radiobutton_4);
+
+
 
 
         button1.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +146,22 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
                 close();
             }
         });
+
+        if(savedInstanceState != null) {
+            pin = savedInstanceState.getString("enteredPin");
+            for(int i = 0; i < savedInstanceState.getInt("pinLength"); i++) {
+                clickToBack();
+            }
+            for(int i = 0; i < savedInstanceState.getInt("pinLength"); i++) {
+                clickToPin(Character.getNumericValue(savedInstanceState.getString("enteredPin").charAt(i)));
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("enteredPin", pin);
+        savedInstanceState.putInt("pinLength", pin.length());
     }
 
     @Override

@@ -113,7 +113,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pin_row1">
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4"
@@ -124,7 +123,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5"
@@ -135,7 +133,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="6"
@@ -152,7 +149,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pin_row2">
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="7"
@@ -163,7 +159,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8"
@@ -175,7 +170,6 @@
             android:textColor="@color/buttontext" />
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9"
@@ -194,7 +188,6 @@
         android:layout_gravity="center_horizontal"
         >
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -205,7 +198,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -216,7 +208,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -236,7 +227,6 @@
         android:layout_gravity="center_horizontal"
         >
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
