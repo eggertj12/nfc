@@ -53,7 +53,8 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     public void onPageSelected(int position)
     {
         if (fragments.containsKey(position)) {
-            fragments.get(position).getCurrentBalance();
+            // Don't do this, its obtrusive
+            //fragments.get(position).getCurrentBalance();
         }
         Repository.setSelectedCardByIndex(this.appContext, position);
     }

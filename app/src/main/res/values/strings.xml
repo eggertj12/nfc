@@ -42,8 +42,6 @@
     <string name="title_activity_manage_card">ManageCardActivity</string>
     <string name="action_reset">Reset</string>
 
-
-<!-- TODO: Remove or change this placeholder text -->
     <string name="card_fragment_balance">Sjá stöðu</string>
 
     <!--web service urls-->

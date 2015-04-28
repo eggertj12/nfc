@@ -48,7 +48,6 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // In case this is being called from HCE. getBooleanExtra is just funky this way
         if(getIntent().getStringExtra("MSG_REQUEST_PIN") != null) {
             // Extra layer of insulation:

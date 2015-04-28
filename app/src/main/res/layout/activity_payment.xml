@@ -12,63 +12,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/pin_seekBar">
 
-        <RadioButton
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="invisible"/>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton_1"
-            android:layout_weight="1">
-            <RadioButton
-                android:id="@+id/pin_radio_1"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:clickable="false"/>
-        </RadioGroup>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton_2"
-            android:layout_weight="1">
-            <RadioButton
-                android:id="@+id/pin_radio_2"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:clickable="false"/>
-        </RadioGroup>
+            android:id="@+id/pin_stars"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton_3"
-            android:layout_weight="1">
-            <RadioButton
-                android:id="@+id/pin_radio_3"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:clickable="false"/>
-        </RadioGroup>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radiobutton_4"
-            android:layout_weight="1">
-                <RadioButton
-                android:id="@+id/pin_radio_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:clickable="false"/>
-        </RadioGroup>
-        <RadioButton
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="invisible"/>
     </LinearLayout>
 
     <LinearLayout
@@ -113,7 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pin_row1">
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4"
@@ -124,7 +76,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5"
@@ -135,7 +86,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="6"
@@ -152,7 +102,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pin_row2">
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="7"
@@ -163,7 +112,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8"
@@ -175,7 +123,6 @@
             android:textColor="@color/buttontext" />
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9"
@@ -194,7 +141,6 @@
         android:layout_gravity="center_horizontal"
         >
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -205,7 +151,6 @@
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -215,26 +160,7 @@
             android:padding="5dp"
             android:layout_margin="5dp"
             android:textColor="@color/buttontext" />
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/button_pin_forward"
-            android:text="\u2713"
-            android:visibility="invisible"
-            android:background="@drawable/round_button"
-            android:padding="5dp"
-            android:layout_margin="5dp"
-            android:textColor="@color/buttontext" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/pin_row5"
-        android:layout_below="@id/pin_row4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        >
+
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
@@ -245,7 +171,11 @@
             android:background="@drawable/round_button"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:textColor="@color/buttontext" />
+            android:textColor="@color/buttontext"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp" />
     </LinearLayout>
 
     <TextView
@@ -253,10 +183,10 @@
         android:layout_height="wrap_content"
         android:text="Sláðu inn PIN"
         android:id="@+id/textView_pin_message"
-        android:layout_below="@+id/pin_row5"
+        android:layout_below="@+id/pin_row4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center" />
 

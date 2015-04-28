@@ -2,27 +2,22 @@ package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import java.util.prefs.Preferences;
 
 
 public class PaymentActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private String pin = "";
-    private RadioGroup[] disp;
+    private TextView stars;
     private Context context = this;
 
     @Override
@@ -55,15 +50,9 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         Button button9 = (Button) findViewById(R.id.button_pin_9);
         Button button10 = (Button) findViewById(R.id.button_pin_0);
         Button button11 = (Button) findViewById(R.id.button_pin_back);
-        Button button12 = (Button) findViewById(R.id.button_pin_forward);
         Button cancel = (Button) findViewById(R.id.button_pin_cancel);
 
-        disp = new RadioGroup[4];
-        disp[0] = (RadioGroup) findViewById(R.id.radioButton_1);
-        disp[1] = (RadioGroup) findViewById(R.id.radioButton_2);
-        disp[2] = (RadioGroup) findViewById(R.id.radioButton_3);
-        disp[3] = (RadioGroup) findViewById(R.id.radiobutton_4);
-
+        stars = (TextView) findViewById(R.id.pin_stars);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,12 +120,6 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
                 clickToBack();
             }
         });
-        button12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // This might not be most intelligent manner to pass data
-            }
-        });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,63 +150,46 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         return super.onOptionsItemSelected(item);
     }
 
-    //not doing anything at the moment
-    public void createString()
-    {
-        // PIN Number
-        EditText editPin = (EditText) findViewById(R.id.editPIN);
-        String cardPin = editPin.getText().toString();
-       /* if (!v.validatePin(cardPin)) {
-            CharSequence message = getResources().getString(R.string.error_invalid_pin);
-            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-            toast.show();
-            editCardPin.requestFocus();
-            return;
-        }*/
+
+    private void showStars() {
+        String entered = "";
+
+        for (int i = 0; i < pin.length(); i++) {
+            entered = entered + " \u25c9 ";         // 25cf is also an option
+        }
+
+        stars.setText(entered);
     }
 
     private void clickToPin(int x) {
         int size = pin.length();
         if(size < 4 && size >= 0) {
             pin = pin.concat(Integer.toString(x));
-            // OMG YOU WOULD THINK A BSC IN COMPSCI WOULD MAKE ME A BETTER PROGRAMMER
-            switch(size) {
-                case 0:
-                    disp[size].check(R.id.pin_radio_1);
-                    break;
-                case 1:
-                    disp[size].check(R.id.pin_radio_2);
-                    break;
-                case 2:
-                    disp[size].check(R.id.pin_radio_3);
-                    break;
-                case 3:
-                    disp[size].check(R.id.pin_radio_4);
-                    TextView tv = (TextView) findViewById(R.id.textView_pin_message);
-                    tv.setText("Leggðu síma að posa til að greiða");
-                    findViewById(R.id.button_pin_forward).setVisibility(View.VISIBLE);
 
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                    editor.putString("lastPIN", pin);
-                    editor.commit();
+            showStars();
 
-                    break;
-                default:
-                    // sigh
-                    break;
+            if(pin.length() == 4) {
+                TextView tv = (TextView) findViewById(R.id.textView_pin_message);
+                tv.setText("Leggðu síma að posa til að greiða");
+
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                editor.putString("lastPIN", pin);
+                editor.commit();
             }
 
         }
     }
 
     private void clickToBack() {
+
         int size = pin.length();
         if(size <= 4 && size >= 1) {
             pin = pin.substring(0, pin.length() - 1);
-            disp[pin.length()].clearCheck();
+
+            showStars();
+
             TextView tv = (TextView) findViewById(R.id.textView_pin_message);
             tv.setText("Sláðu inn PIN");
-            findViewById(R.id.button_pin_forward).setVisibility(View.INVISIBLE);
 
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
             editor.putString("lastPIN", "");
@@ -247,7 +213,6 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
         // The card service will change this key to used when sending the payment
         if (key.equals("lastPIN") && preferences.getString(key, "").equals("used")) {
-
             close();
         }
     }

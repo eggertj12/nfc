@@ -87,7 +87,9 @@ public class CardFragment extends Fragment {
             }
         });
 
-        getCurrentBalance();
+        // Auto load balance of card
+        // Disabled, it's a resource hog
+        // getCurrentBalance();
     }
 
     /*
