@@ -9,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 
@@ -53,6 +51,8 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         Button cancel = (Button) findViewById(R.id.button_pin_cancel);
 
         stars = (TextView) findViewById(R.id.pin_stars);
+
+
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +126,22 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
                 close();
             }
         });
+
+        if(savedInstanceState != null) {
+            pin = savedInstanceState.getString("enteredPin");
+            for(int i = 0; i < savedInstanceState.getInt("pinLength"); i++) {
+                clickToBack();
+            }
+            for(int i = 0; i < savedInstanceState.getInt("pinLength"); i++) {
+                clickToPin(Character.getNumericValue(savedInstanceState.getString("enteredPin").charAt(i)));
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("enteredPin", pin);
+        savedInstanceState.putInt("pinLength", pin.length());
     }
 
     @Override
