@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -191,6 +192,9 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
                 editor.putString("lastPIN", pin);
                 editor.commit();
+
+                Vibrator vib = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                vib.vibrate(100);
             }
 
         }
