@@ -54,7 +54,8 @@ public class RegisterAccountActivityTest {
                 equalTo(activity.getString(R.string.error_invalid_cardholder_name)));
     }
 
-    @Test
+    // Validation disabled
+/*    @Test
     public void TestSSNValidation()
     {
         Button regButton = (Button) activity.findViewById(R.id.button_register_account);
@@ -65,7 +66,7 @@ public class RegisterAccountActivityTest {
         assertThat(ShadowToast.getTextOfLatestToast(),
                 equalTo(activity.getString(R.string.error_invalid_ssn)));
     }
-
+*/
 /*
     This is not working at all. Given up on unit testing the IO for now
 

@@ -48,6 +48,11 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // In case we hit back, or system constrains us into recreating with HCE intent
+        if(savedInstanceState != null) {
+            Intent newIntent = new Intent();
+            setIntent(newIntent);
+        }
 
         // In case this is being called from HCE. getBooleanExtra is just funky this way
         if(getIntent().getStringExtra("MSG_REQUEST_PIN") != null) {
@@ -62,7 +67,6 @@ public class MainActivity extends FragmentActivity {
                 Intent intent = new Intent(this, PaymentActivity.class);
                 startActivityForResult(intent, REQUEST_PAYMENT);
                 // Rest is handled in the listener downstairs
-
             }
         }
 
@@ -123,9 +127,10 @@ public class MainActivity extends FragmentActivity {
             getCurrentCardBalance();
         }
         else if(id == R.id.action_reset) {
-            String msg = String.format("Resetting d% cards to 0.", Repository.getCardCount(ctx));
+            // This is best done in the android OS - Application Manager
+            String msg = String.format("Resetting %d cards to 0.", Repository.getCardCount(ctx));
             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-            Repository.removeAllCards(ctx);
+            //Repository.clearData(ctx);
             toast.show();
         }
         else if(id==R.id.action_getTransactions)

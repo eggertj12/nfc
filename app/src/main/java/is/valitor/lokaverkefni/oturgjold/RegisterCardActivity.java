@@ -41,7 +41,7 @@ public class RegisterCardActivity extends Activity {
 
         User user = Repository.getUser(getApplication());
         cardholder = user.getName().toString();
-        final TextView name = (TextView)findViewById(R.id.cordholderName);
+        final TextView name = (TextView)findViewById(R.id.cardholderName);
         name.setText(cardholder);
         // Populate spinner for selection of month
         Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerValidityMonth);
