@@ -51,5 +51,6 @@
     <string name="service_card_url">https://kortagleypir.herokuapp.com/card</string>
     <string name="service_token_url">https://kortagleypir.herokuapp.com/token</string>
     <string name="title_activity_show_transactions">ShowTransactions</string>
+    <string name="service_transaction_url">https://kortagleypir.herokuapp.com/transaction</string>
 
 </resources>

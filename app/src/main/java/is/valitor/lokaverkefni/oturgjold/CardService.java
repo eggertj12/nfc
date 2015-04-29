@@ -111,11 +111,11 @@ public class CardService extends HostApduService {
         if (Arrays.equals(SELECT_APDU, commandApdu)) {
 
             // Get the last input PIN
-           /*String pin = getPin();
+           String pin = getPin();
             if(pin.length() != 4) {
                 // PIN is not ready, just be quiet
                 return null;
-            }*/
+            }
 
             String toSend = toSend();
             Log.d(TAG, "Sending: "+toSend);

@@ -45,4 +45,10 @@ public class Transactions {
         this.price = price;
     }
 
+    @Override
+    public String toString()
+    {
+        return this.getVendor() + " "  + this.getPrice() + " " + "kr";
+    }
+
 }
