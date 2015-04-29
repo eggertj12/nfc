@@ -1,12 +1,10 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.test.ApplicationTestCase;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -109,7 +107,7 @@ public class MainActivityTest {
         Repository.addCard(ctx, card);
 
         // Pager should have 1 fragment now
-        FragmentStatePagerAdapter ad = (FragmentStatePagerAdapter) pager.getAdapter();
+        FragmentPagerAdapter ad = (FragmentPagerAdapter) pager.getAdapter();
         assertTrue(ad.getCount() == 1);
 
         // Get the fragment and verify last 4

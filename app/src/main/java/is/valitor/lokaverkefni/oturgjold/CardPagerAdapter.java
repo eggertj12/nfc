@@ -19,7 +19,6 @@ import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
 
     private Context appContext;
-    private ArrayMap<Integer, CardFragment> fragments = new ArrayMap();
 
     public CardPagerAdapter(FragmentManager fm, Context ctx)
     {
@@ -37,9 +36,6 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
         args.putInt(CardFragment.CARDFRAGMENT_CARDINDEX, i);
         fragment.setArguments(args);
 
-        // Store fragment for future reference.
-        fragments.put(i, (CardFragment) fragment);
-
         return fragment;
     }
 
@@ -52,10 +48,6 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     @Override
     public void onPageSelected(int position)
     {
-        if (fragments.containsKey(position)) {
-            // Don't do this, its obtrusive
-            //fragments.get(position).getCurrentBalance();
-        }
         Repository.setSelectedCardByIndex(this.appContext, position);
     }
 
