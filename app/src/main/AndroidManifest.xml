@@ -96,7 +96,7 @@
         </activity>
 
         <activity
-            android:name=".ShowTransactions"
+            android:name=".ShowTransactionsActivity"
             android:label="@string/title_activity_show_transactions" >
         </activity>
     </application>

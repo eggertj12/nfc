@@ -24,6 +24,7 @@
     <string name="enter_pin">Sláðu inn PIN</string>
     <string name="title_activity_account_management">Innskráning</string>
     <string name="title_activity_payment">Greiða</string>
+    <string name="title_activity_show_transactions">Yfirlit</string>
 
     <string name="action_getBalance">Sækja stöðu korts</string>
     <string name="action_getTransactions">Yfirlit</string>
@@ -34,6 +35,7 @@
     <string name="account_number">Account Number</string>
     <string name="title_activity_token">Token</string>
     <string name="title_activity_token_receive">TokenReceive</string>
+
 
 
     <!--for testing tokenization-->
@@ -48,7 +50,8 @@
     <string name="service_account_url">https://kortagleypir.herokuapp.com/user</string>
     <string name="service_card_url">https://kortagleypir.herokuapp.com/card</string>
     <string name="service_token_url">https://kortagleypir.herokuapp.com/token</string>
-    <string name="title_activity_show_transactions">ShowTransactions</string>
     <string name="service_transaction_url">https://kortagleypir.herokuapp.com/transaction</string>
+
+
 
 </resources>

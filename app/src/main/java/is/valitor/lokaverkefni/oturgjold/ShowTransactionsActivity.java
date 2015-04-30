@@ -15,19 +15,21 @@ import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
 import is.valitor.lokaverkefni.oturgjold.service.GetTransactionsTask;
 
 
-public class ShowTransactions extends Activity implements AsyncTaskCompleteListener<List<Transaction>>{
+public class ShowTransactionsActivity extends Activity implements AsyncTaskCompleteListener<List<Transaction>>{
+
     static  final String TAG = "Show transactions";
+    private ListAdapter transList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_transactions);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         Card card = Repository.getSelectedCard(getApplication());
         int currentCard = card.getCard_id();
         new GetTransactionsTask(getApplication(),this).execute("https://kortagleypir.herokuapp.com/transaction/all/" + currentCard);
@@ -54,7 +56,7 @@ public class ShowTransactions extends Activity implements AsyncTaskCompleteListe
 
         }*/
 
-        ListAdapter transList = new TransactionArrayAdapter(result,this);
+        transList = new TransactionArrayAdapter(result,this);
         ListView viewList = (ListView)findViewById(R.id.list_transactions);
         viewList.setAdapter(transList);
     }
