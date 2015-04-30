@@ -19,7 +19,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
-import is.valitor.lokaverkefni.oturgjold.repository.Token;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
@@ -171,7 +170,7 @@ public class MainActivity extends FragmentActivity {
      */
     public void getTransactions(View view)
     {
-        Intent intent = new Intent(this,ShowTransactions.class);
+        Intent intent = new Intent(this,ShowTransactionsActivity.class);
 
         startActivityForResult(intent, REQUEST_SHOW_TRANSACTIONS);
     }

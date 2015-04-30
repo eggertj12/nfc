@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,19 @@ public class TransactionArrayAdapter extends ArrayAdapter {
 
         // Set values to text boxes from transaction row
         vendorText.setText(trans.getVendor());
-        priceText.setText(String.valueOf(trans.getPrice()));
-        dateText.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm").format(trans.getDate()));
+        DecimalFormat dcf = new DecimalFormat("###,###");
+        priceText.setText(dcf.format(trans.getPrice()) + " kr.");
+        dateText.setText(new SimpleDateFormat("dd.MM.yyyy").format(trans.getDate()));
+
+        // Zebra the listbrah
+        if(position % 2 != 0) {
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.background));
+        }
+        else {
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.white));
+        }
+
+
 
 
         // Return the filled out view
