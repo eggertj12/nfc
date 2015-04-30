@@ -11,19 +11,20 @@
         android:title="Show tokens"
         android:orderInCategory="200"
         android:showAsAction="never" />
-    <item
-        android:id="@+id/action_reset"
-        android:title="@string/action_reset"
-        android:orderInCategory="300"
-        android:showAsAction="never" />
+
     <item
         android:id="@+id/action_getBalance"
         android:title="@string/action_getBalance"
-        android:orderInCategory="400"
+        android:orderInCategory="300"
         android:showAsAction="never" />
     <item
         android:id="@+id/action_getTransactions"
         android:title="@string/action_getTransactions"
         android:orderInCategory="400"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_change_selected_card"
+        android:title="@string/action_change_selected_card"
+        android:orderInCategory="500"
         android:showAsAction="never" />
 </menu>

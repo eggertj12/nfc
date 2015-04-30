@@ -13,18 +13,16 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--for showing the list-->
+    <!-- for showing the list -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--for most essential function-->
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- for most essential function -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-
-        >
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -94,10 +92,13 @@
 
             <!-- android:screenOrientation="portrait" -->
         </activity>
-
         <activity
             android:name=".ShowTransactions"
             android:label="@string/title_activity_show_transactions" >
+        </activity>
+        <activity
+            android:name=".ChangeSelectedCard"
+            android:label="@string/title_activity_change_selected_card" >
         </activity>
     </application>
 

@@ -36,6 +36,7 @@ public class MainActivity extends FragmentActivity {
     private static final int REQUEST_REGISTER_CARD = 2;
     private static final int REQUEST_PAYMENT = 3;
     private static final int REQUEST_SHOW_TRANSACTIONS = 4;
+    private static final int REQUEST_CHANGE_SELECTED_CARD = 5;
 
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
@@ -126,12 +127,16 @@ public class MainActivity extends FragmentActivity {
         }else if(id == R.id.action_getBalance) {
             getCurrentCardBalance();
         }
-        else if(id == R.id.action_reset) {
+       /* else if(id == R.id.action_reset) {
             // This is best done in the android OS - Application Manager
             String msg = String.format("Resetting %d cards to 0.", Repository.getCardCount(ctx));
             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
             //Repository.clearData(ctx);
             toast.show();
+        }*/
+        else if(id == R.id.action_change_selected_card)
+        {
+            changeSelectedCard(item.getActionView());
         }
         else if(id==R.id.action_getTransactions)
         {
@@ -149,6 +154,16 @@ public class MainActivity extends FragmentActivity {
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }
 
+    /**
+     * Called when user clicks changeSelectedCard button in settings
+     * Stars a new activity to change the selected card
+     * @param view
+     */
+    public void changeSelectedCard(View view)
+    {
+        Intent intent = new Intent(this,ChangeSelectedCard.class);
+        startActivityForResult(intent,REQUEST_CHANGE_SELECTED_CARD);
+    }
     /**
      * Called when user clicks showtransaction button in settings
      * Stars a new activity to show the transactions for selected card

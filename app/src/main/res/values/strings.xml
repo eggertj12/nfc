@@ -27,6 +27,7 @@
 
     <string name="action_getBalance">Sækja stöðu korts</string>
     <string name="action_getTransactions">Yfirlit</string>
+    <string name="action_change_selected_card">Skipta um valið kort</string>
 
 
     <string name="service_name">CardEmulation Sample</string>
@@ -50,5 +51,6 @@
     <string name="service_token_url">https://kortagleypir.herokuapp.com/token</string>
     <string name="title_activity_show_transactions">ShowTransactions</string>
     <string name="service_transaction_url">https://kortagleypir.herokuapp.com/transaction</string>
+    <string name="title_activity_change_selected_card">ChangeSelectedCard</string>
 
 </resources>

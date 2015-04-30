@@ -37,22 +37,6 @@ public class ShowTransactions extends Activity implements AsyncTaskCompleteListe
     public void onTaskComplete(List<Transaction> result) {
         Toast.makeText(getApplicationContext(), "Got result "+result.size(), Toast.LENGTH_LONG).show();
 
-      /*  ArrayList<Transactions> tList = new ArrayList<Transactions>();
-        try {
-            String a[] = null;
-            JSONArray jArray = new JSONArray(result);
-            for (int i = 0; i < jArray.length(); i++) {
-                Transactions t = new Transactions();
-                String s = jArray.getJSONObject(i).getString("vendor");
-                int price = jArray.getJSONObject(i).getInt("price");
-
-                t.setVendor(s);
-                t.setPrice(String.valueOf(price));
-                tList.add(t);
-            }
-        }catch (Exception e){
-
-        }*/
 
         ListAdapter transList = new TransactionArrayAdapter(result,this);
         ListView viewList = (ListView)findViewById(R.id.list_transactions);
