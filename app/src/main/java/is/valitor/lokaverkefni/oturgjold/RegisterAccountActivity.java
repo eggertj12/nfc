@@ -94,7 +94,7 @@ public class RegisterAccountActivity extends Activity {
 
         // Proper validation might be in order
         if (!((ssn.length() != 10 && !(ssn.endsWith("9"))) || !ssn.endsWith("0"))) {
-            CharSequence message = "Rangt form á kennitölu";
+            CharSequence message = getString(R.string.error_invalid_ssn);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
             editAccountSSN.requestFocus();
@@ -127,7 +127,7 @@ public class RegisterAccountActivity extends Activity {
                     .execute(getString(R.string.service_account_url), jsonAccountObject.toString());
         } else {
             // display error
-            CharSequence message = "Nettenging ekki virk.";
+            CharSequence message = getString(R.string.error_no_network);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 
             toast.show();
@@ -142,16 +142,20 @@ public class RegisterAccountActivity extends Activity {
         public void onTaskComplete(AsyncTaskResult<JSONObject> result)
         {
             if (result.getError() != null) {
+                Exception error = result.getError();
                 // display error
                 CharSequence message;
-                if (result.getError() instanceof IOException) {
-                    message = "Network error, try again.";
+                if (error instanceof IOException) {
+                    error.printStackTrace();
+                    message = getString(R.string.error_general_network);
                     Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
                     registerAccountButton.setClickable(true);
                     registerAccountButton.setEnabled(true);
 
+                    loadingThings.setVisibility(View.INVISIBLE);
+
                 } else {
-                    message = "Unknown error, contact service.";
+                    message = getString(R.string.error_general);
                 }
                 Toast toast = Toast.makeText(RegisterAccountActivity.this, message, Toast.LENGTH_LONG);
                 toast.show();

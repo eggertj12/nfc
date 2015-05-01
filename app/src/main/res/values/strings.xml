@@ -12,13 +12,19 @@
     <string name="label_year">Ár</string>
     <string name="label_cvv">Öryggisnúmer</string>
     <string name="label_next">Skrá</string>
-    <string name="label_cancel">Hætta</string>
+    <string name="label_cancel">Hætta við</string>
+    <string name="label_cancel_short">Hætta</string>
+
     <string name="error_invalid_cardholder_name">Sláðu inn nafn korthafa</string>
     <string name="error_invalid_cardnumber">Sláðu inn gilt kortanúmer</string>
     <string name="error_invalid_validity_month">Veldu gildan mánuð</string>
     <string name="error_invalid_validity_year">Veldu gilt ár</string>
     <string name="error_invalid_cvv">Sláðu inn gilt öryggisnúmer</string>
     <string name="error_invalid_ssn">Rangt form á kennitölu</string>
+    <string name="error_no_network">Nettenging ekki virk</string>
+    <string name="error_general_network">Villa í nettengingu, reyndu aftur</string>
+    <string name="error_general">Óþekkt villa, hafðu samband við þjónustudeild</string>
+
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
     <string name="enter_pin">Sláðu inn PIN</string>
@@ -37,7 +43,8 @@
     <string name="title_activity_token">Token</string>
     <string name="title_activity_token_receive">TokenReceive</string>
 
-
+    <string name="payment_enter_pin">Sláðu inn PIN</string>
+    <string name="payment_tap_to_pay">Leggðu síma að posa til að greiða</string>
 
     <!--for testing tokenization-->
     <string name="device_id">456</string>

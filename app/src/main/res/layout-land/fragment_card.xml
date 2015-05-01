@@ -5,11 +5,11 @@ android:layout_height="match_parent"
 tools:context="is.valitor.lokaverkefni.oturgjold.CardFragment">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageView2"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/rain_creditcard" />
+        android:src="@drawable/rain_creditcard" />
 
     <LinearLayout
         android:orientation="vertical"

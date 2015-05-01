@@ -210,6 +210,19 @@ public class MainActivity extends FragmentActivity {
             viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
         }
 
+        if (reqCode == REQUEST_CHANGE_SELECTED_CARD) {
+            new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        if (Repository.getCardCount(getApplication()) > 0) {
+                            viewPager.setCurrentItem(Repository.getSelectedCardIndex(getApplication()));
+                        }
+                    }
+                },
+                300
+            );
+        }
+
         if(reqCode == REQUEST_PAYMENT) {
             if(resCode == RESULT_OK) {
                 String pin = intent.getStringExtra("PIN");

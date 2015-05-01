@@ -187,7 +187,8 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
             if(pin.length() == 4) {
                 TextView tv = (TextView) findViewById(R.id.textView_pin_message);
-                tv.setText("Leggðu síma að posa til að greiða");
+                tv.setTextColor(getResources().getColor(R.color.green));
+                tv.setText(getString(R.string.payment_tap_to_pay));
 
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
                 editor.putString("lastPIN", pin);
@@ -209,7 +210,8 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
             showStars();
 
             TextView tv = (TextView) findViewById(R.id.textView_pin_message);
-            tv.setText("Sláðu inn PIN");
+            tv.setTextColor(getResources().getColor(R.color.black));
+            tv.setText(getString(R.string.payment_enter_pin));
 
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
             editor.putString("lastPIN", "");

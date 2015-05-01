@@ -69,7 +69,7 @@ public class ChangeSelectedCard extends Activity implements AdapterView.OnItemCl
         List<Card> cards = Repository.getCards(context);
 
         Card card = cards.get(position);
-        Toast.makeText(this,card.getCard_name(),Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,card.getCard_name(),Toast.LENGTH_LONG).show();
         Repository.setSelectedCard(context,card);
 
 

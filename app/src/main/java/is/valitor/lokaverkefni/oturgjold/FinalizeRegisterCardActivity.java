@@ -190,12 +190,14 @@ public class FinalizeRegisterCardActivity extends Activity {
         {
             if (result.getError() != null) {
                 // display error
+                Exception error = result.getError();
                 CharSequence message;
-                if (result.getError() instanceof IOException) {
-                    message = "Network error, try again.";
+                if (error instanceof IOException) {
+                    error.printStackTrace();
+                    message = getString(R.string.error_general_network);
 
                 } else {
-                    message = "Unknown error, contact service.";
+                    message = getString(R.string.error_general);
                 }
                 Toast toast = Toast.makeText(FinalizeRegisterCardActivity.this, message, Toast.LENGTH_LONG);
                 toast.show();

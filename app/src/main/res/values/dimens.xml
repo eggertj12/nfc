@@ -6,9 +6,9 @@
     <dimen name="inputblock_horzontal_margin">4dp</dimen>
 
     <!-- For card fragment. Maybe this absolute dimensions method is crazy -->
-    <dimen name="card_name_top_margin">24dp</dimen>
+    <dimen name="card_name_top_margin">34dp</dimen>
     <dimen name="card_name_right_margin">28dp</dimen>
-    <dimen name="card_number_top_margin">48dp</dimen>
+    <dimen name="card_number_top_margin">58dp</dimen>
     <dimen name="card_balance_top_margin">4dp</dimen>
     <dimen name="card_balance_right_margin">4dp</dimen>
 </resources>

@@ -9,6 +9,8 @@
     <color name="blue2">#0A0DF0</color>
     <color name="blue25">#8183F0</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="green">#20a020</color>
 
     <color name="buttontext">#fff</color>
     <color name="background">#ffdfebf5</color>
