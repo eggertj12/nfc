@@ -156,6 +156,7 @@
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin"
                 android:inputType="number"
+                android:maxLength="4"
                 android:nextFocusDown="@+id/editPIN"/>
             <EditText
                 android:layout_width="match_parent"
@@ -165,6 +166,7 @@
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin"
                 android:inputType="number"
+                android:maxLength="4"
                 android:nextFocusDown="@+id/button_register_card_next"/>
         </LinearLayout>
 

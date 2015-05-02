@@ -171,7 +171,7 @@ public class RegisterCardActivity extends Activity {
         // Populate intent with data
         intent.putExtra(MSG_CARDNUMBER, cardNumber);
         intent.putExtra(MSG_CARDTYPE, cardType);
-        intent.putExtra(MSG_CARDHOLDER, "jon");
+        intent.putExtra(MSG_CARDHOLDER, cardholder);
         intent.putExtra(MSG_CARDCVV, cardCvv);
         intent.putExtra(MSG_CARDMONTH, cardMonth);
         intent.putExtra(MSG_CARDYEAR, cardYear);
