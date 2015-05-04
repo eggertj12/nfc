@@ -126,7 +126,10 @@ public class CardService extends HostApduService {
             }
 
             byte [] accountBytes = toSend.getBytes();
+
+            //Letting the user know token was sent
             Toast.makeText(this,"Greiðslubeiðni hefur verið send yfir í posa",Toast.LENGTH_LONG).show();
+
             return ConcatArrays(accountBytes,SELECT_OK_SW);
         } else {
             return UNKNOWN_CMD_SW;
