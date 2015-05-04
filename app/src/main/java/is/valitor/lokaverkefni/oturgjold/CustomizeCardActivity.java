@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
+
 
 public class CustomizeCardActivity extends Activity {
 
@@ -56,6 +58,16 @@ public class CustomizeCardActivity extends Activity {
         return pin.getText().toString();
     }
 
+    private String getCustomizeNick() {
+        EditText getNick = (EditText) findViewById(R.id.customize_nick_input);
+        String nick = getNick.getText().toString();
+        if(nick == null) {
+            nick = "";
+        }
+
+        return nick;
+    }
+
     public void finalizeCard(View view) {
 
         Intent oldIntent = getIntent();
@@ -68,6 +80,7 @@ public class CustomizeCardActivity extends Activity {
         intent.putExtra(MSG_CARDMONTH, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDMONTH));
         intent.putExtra(MSG_CARDYEAR, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR));
         intent.putExtra(MSG_CARDPIN, getCustomizePin());
+        intent.putExtra("Nickname", getCustomizeNick());
 
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }

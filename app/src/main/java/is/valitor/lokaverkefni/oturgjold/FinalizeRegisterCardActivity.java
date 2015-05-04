@@ -134,14 +134,6 @@ public class FinalizeRegisterCardActivity extends Activity {
         setResult(RESULT_OK);
         finish();
     }
-
-    /** Called when the user clicks the reg_new_card button */
-    public void registerCard(View view) {
-        // Create intent for opening new activity
-        Intent intent = new Intent(this, RegisterCardActivity.class);
-
-        startActivityForResult(intent, REQUEST_REGISTER_CARD);
-    }
     /**
      * For starting nickname dialog - removed on 04.05.2015
      */
@@ -218,6 +210,9 @@ public class FinalizeRegisterCardActivity extends Activity {
                     card.setTokenized_card_number(cardNumber);
                     card.setTokenized_cvv(response.getString("cvv"));
                     card.setTokenized_validation(response.getString("validity"));
+                    card.setCard_name(getIntent().getStringExtra("Nickname"));
+
+                    Repository.addCard(getApplicationContext(), card);
 
                     User theUser = Repository.getUser(getApplicationContext());
 
