@@ -290,7 +290,6 @@ public class Repository {
         }
     }
 
-
     /**
      * Removes all saved cards from the Repository
      */

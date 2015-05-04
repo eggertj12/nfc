@@ -80,7 +80,6 @@ public class CardFragment extends Fragment {
                 }
 
                 else {
-
                     Toast toast = Toast.makeText(ctx, "Ekkert netsamband", Toast.LENGTH_LONG);
                     toast.show();
                 }

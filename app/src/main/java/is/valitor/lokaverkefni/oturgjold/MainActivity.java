@@ -160,7 +160,7 @@ public class MainActivity extends FragmentActivity {
      */
     public void changeSelectedCard(View view)
     {
-        Intent intent = new Intent(this,ChangeSelectedCard.class);
+        Intent intent = new Intent(this,ChangeSelectedCardActivity.class);
         startActivityForResult(intent,REQUEST_CHANGE_SELECTED_CARD);
     }
     /**
@@ -174,6 +174,7 @@ public class MainActivity extends FragmentActivity {
 
         startActivityForResult(intent, REQUEST_SHOW_TRANSACTIONS);
     }
+
     /** Called when the user clicks the register account button */
     public void registerAccount(View view) {
         Intent intent = new Intent(this, RegisterAccountActivity.class);
@@ -182,7 +183,6 @@ public class MainActivity extends FragmentActivity {
         startActivityForResult(intent, REQUEST_REGISTER_USER);
     }
 
-
     /** Called when the user clicks the Register card button */
     public void payment(View view) {
         // Create intent for opening new activity
@@ -190,12 +190,6 @@ public class MainActivity extends FragmentActivity {
         //startActivity(intent);
         startActivityForResult(intent, REQUEST_PAYMENT);
     }
-
-    public void getDefaultName(View view) {
-        Intent intent = new Intent(this, ManageCardActivity.class);
-        startActivity(intent);
-    }
-
 
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {

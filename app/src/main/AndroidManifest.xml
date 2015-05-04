@@ -82,10 +82,6 @@
             android:label="@string/title_activity_account_management" >
         </activity>
         <activity
-            android:name=".ManageCardActivity"
-            android:label="@string/title_activity_manage_card" >
-        </activity>
-        <activity
             android:name=".PaymentActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_payment" >
@@ -97,7 +93,7 @@
             android:label="@string/title_activity_show_transactions" >
         </activity>
         <activity
-            android:name=".ChangeSelectedCard"
+            android:name=".ChangeSelectedCardActivity"
             android:label="@string/title_activity_change_selected_card" >
         </activity>
     </application>
