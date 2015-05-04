@@ -11,17 +11,34 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PIN"
+            android:text="@string/pin"
             android:id="@+id/customize_pin_title"
             />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customize_pin_input"
+        android:layout_below="@id/customize_pin_title"
+        >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/customize_pin"
             android:inputType="number"
             android:maxLength="4"
-            android:layout_below="@id/customize_pin_title"/>
-
+            android:layout_weight="3"
+            android:id="@+id/customize_pin_inputfield"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_pin"
+            android:id="@+id/customize_pin_info"
+            android:layout_below="@id/customize_pin_input"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +50,7 @@
             android:background="@drawable/round_button"
             android:id="@+id/customize_next"
             android:textColor="@color/buttontext"
-            android:layout_below="@+id/customize_pin"
+            android:layout_below="@+id/customize_pin_info"
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"/>
 

@@ -29,6 +29,7 @@
     <string name="title_activity_tokenize_card">Kort skráð</string>
     <string name="hello_world">Hello world!</string>
     <string name="enter_pin">Sláðu inn PIN</string>
+    <string name="pin">PIN</string>
     <string name="title_activity_account_management">Innskráning</string>
     <string name="title_activity_payment">Greiða</string>
     <string name="title_activity_show_transactions">Yfirlit</string>
@@ -64,9 +65,10 @@
 
     <!--for displaying first three four groupings of credit card number-->
     <string name="card_number_xes">xxxx-xxxx-xxxx-</string>
-    <string name="title_activity_register_account2">RegisterAccount2</string>
     <string name="title_activity_card_customization">CardCustomizationActivity</string>
 
+    <!--for conveying specific information to app user-->
+    <string name="info_pin">PIN for using this card specifically with this app. The pin you enter should not be the PIN issued by your bank.</string>
 
 
 

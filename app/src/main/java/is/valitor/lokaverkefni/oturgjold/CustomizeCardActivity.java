@@ -23,7 +23,7 @@ public class CustomizeCardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_customization);
+        setContentView(R.layout.activity_customize_card);
     }
 
 
@@ -51,7 +51,7 @@ public class CustomizeCardActivity extends Activity {
 
     public String getPin() {
 
-        EditText pin = (EditText) findViewById(R.id.customize_pin);
+        EditText pin = (EditText) findViewById(R.id.customize_pin_inputfield);
 
         return pin.getText().toString();
     }
@@ -78,8 +78,14 @@ public class CustomizeCardActivity extends Activity {
 
         if (reqCode == REQUEST_REGISTER_CARD) {
             if(resCode == RESULT_OK) {
+                setResult(RESULT_OK);
                 finish();
             }
         }
+    }
+
+    public void defaultFinish(View view){
+        setResult(RESULT_OK);
+        finish();
     }
 }
