@@ -29,7 +29,6 @@ public class ChangeSelectedCard extends Activity implements AdapterView.OnItemCl
         List<Card> cards = Repository.getCards(context);
 
 
-
         ListAdapter cardList = new ChangeSelectedCardArrayAdapter(cards,this);
         ListView viewList = (ListView)findViewById(R.id.change_selected_card);
         viewList.setAdapter(cardList);
