@@ -20,7 +20,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -34,15 +35,18 @@
         <activity
             android:name=".RegisterCardActivity"
             android:label="@string/title_activity_register_card"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="is.valitor.lokaverkefni.oturgjold.MainActivity" />
+                android:value="is.valitor.lokaverkefni.oturgjold.MainActivity"
+                />
         </activity>
         <activity
             android:name=".FinalizeRegisterCardActivity"
             android:label="@string/title_activity_tokenize_card"
-            android:parentActivityName=".RegisterCardActivity" >
+            android:parentActivityName=".RegisterCardActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />
@@ -79,22 +83,26 @@
         <!-- END_INCLUDE(CardEmulationManifest) -->
         <activity
             android:name=".RegisterAccountActivity"
-            android:label="@string/title_activity_account_management" >
+            android:label="@string/title_activity_account_management"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".PaymentActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_payment" >
+            android:label="@string/title_activity_payment"
+            >
 
             <!-- android:screenOrientation="portrait" -->
         </activity>
         <activity
             android:name=".ShowTransactionsActivity"
-            android:label="@string/title_activity_show_transactions" >
+            android:label="@string/title_activity_show_transactions"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ChangeSelectedCardActivity"
-            android:label="@string/title_activity_change_selected_card" >
+            android:label="@string/title_activity_change_selected_card"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

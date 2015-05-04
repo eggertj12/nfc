@@ -181,6 +181,7 @@ public class RegisterCardActivity extends Activity {
 //        finish();
     }
 
+
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {
         super.onActivityResult(reqCode, resCode, intent);
