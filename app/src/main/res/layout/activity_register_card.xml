@@ -181,7 +181,7 @@
             android:layout_marginTop="@dimen/inputblock_vertical_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
             android:background="@drawable/round_button"
-            android:id="@+id/button_register_card_next"
+            android:id="@+id/button_customize_card_next"
             android:textColor="@color/buttontext" />
 
     </LinearLayout>

@@ -14,7 +14,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
@@ -27,7 +26,7 @@ public class RegisterCardActivity extends Activity {
     public final static String MSG_CARDCVV = "is.valitor.oturgjold.MSG_CARDCVV";
     public final static String MSG_CARDMONTH = "is.valitor.oturgjold.MSG_CARDMONTH";
     public final static String MSG_CARDYEAR = "is.valitor.oturgjold.MSG_CARDYEAR";
-    public final static String MSG_CARDPIN = "is.valitor.otugjold.MSG_CARDPIN";
+    public final static String MSG_CARDPIN ="is.valitor.oturghold.MSG_CARDPIN";
 
     private static final int REQUEST_REGISTER_CARD = 1;
 
@@ -131,16 +130,6 @@ public class RegisterCardActivity extends Activity {
             return;
         }
 
-        // PIN Number
-        EditText editPin = (EditText) findViewById(R.id.editPIN);
-        String cardPin = editPin.getText().toString();
-       /* if (!v.validatePin(cardPin)) {
-            CharSequence message = getResources().getString(R.string.error_invalid_pin);
-            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-            toast.show();
-            editCardPin.requestFocus();
-            return;
-        }*/
         // Validity year
         Spinner spinnerYear = (Spinner) findViewById(R.id.spinnerValidityYear);
         String cardYear = spinnerYear.getSelectedItem().toString();
@@ -166,7 +155,7 @@ public class RegisterCardActivity extends Activity {
         }
 
         // Create intent for opening new activity
-        Intent intent = new Intent(this, FinalizeRegisterCardActivity.class);
+        Intent intent = new Intent(this, CustomizeCardActivity.class);
 
         // Populate intent with data
         intent.putExtra(MSG_CARDNUMBER, cardNumber);
@@ -175,10 +164,8 @@ public class RegisterCardActivity extends Activity {
         intent.putExtra(MSG_CARDCVV, cardCvv);
         intent.putExtra(MSG_CARDMONTH, cardMonth);
         intent.putExtra(MSG_CARDYEAR, cardYear);
-        intent.putExtra(MSG_CARDPIN,cardPin);
 
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
-//        finish();
     }
 
     @Override

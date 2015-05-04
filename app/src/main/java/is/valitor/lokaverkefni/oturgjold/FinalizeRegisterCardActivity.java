@@ -56,15 +56,17 @@ public class FinalizeRegisterCardActivity extends Activity {
 
         Intent intent = getIntent();
         // Lets get get the card data, temporary storage only ofc
-        String cardNumber = intent.getStringExtra(RegisterCardActivity.MSG_CARDNUMBER);
-        String cardHolder = intent.getStringExtra(RegisterCardActivity.MSG_CARDHOLDER);
-        String cardType = intent.getStringExtra(RegisterCardActivity.MSG_CARDTYPE);
-        String cardCvv = intent.getStringExtra(RegisterCardActivity.MSG_CARDCVV);
-        String cardMonth = intent.getStringExtra(RegisterCardActivity.MSG_CARDMONTH);
-        String cardYear = intent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR);
-        String cardPin = intent.getStringExtra(RegisterCardActivity.MSG_CARDPIN);
+        String cardNumber = intent.getStringExtra(CustomizeCardActivity.MSG_CARDNUMBER);
+        String cardHolder = intent.getStringExtra(CustomizeCardActivity.MSG_CARDHOLDER);
+        String cardType = intent.getStringExtra(CustomizeCardActivity.MSG_CARDTYPE);
+        String cardCvv = intent.getStringExtra(CustomizeCardActivity.MSG_CARDCVV);
+        String cardMonth = intent.getStringExtra(CustomizeCardActivity.MSG_CARDMONTH);
+        String cardYear = intent.getStringExtra(CustomizeCardActivity.MSG_CARDYEAR);
+        String cardPin = intent.getStringExtra(CustomizeCardActivity.MSG_CARDPIN);
 
         LinearLayout root = (LinearLayout) findViewById(R.id.finalize_register_linear);
+
+        System.out.println(cardNumber);
 
         // Having registered a card, you are now happy to return to main view
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
@@ -92,8 +94,8 @@ public class FinalizeRegisterCardActivity extends Activity {
                 // Communicate with service
                 new RegisterCardTask(this, new RegisterCardListener())
                         .execute(getString(R.string.service_card_url), outMsg.toString());
-
-            } else {
+            }
+            else {
                 // display error
                 CharSequence message = "Nettenging ekki virk.";
                 Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
@@ -102,7 +104,6 @@ public class FinalizeRegisterCardActivity extends Activity {
                 setResult(RESULT_CANCELED);
                 finish();
             }
-
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -130,12 +131,6 @@ public class FinalizeRegisterCardActivity extends Activity {
     }
 
     public void defaultFinish(View view){
-
-        // Default card is now handled by pager on mainactivity
-//        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-//        editor.putString("defaultCard", cardName);
-//        editor.commit();
-
         setResult(RESULT_OK);
         finish();
     }
@@ -144,11 +139,11 @@ public class FinalizeRegisterCardActivity extends Activity {
     public void registerCard(View view) {
         // Create intent for opening new activity
         Intent intent = new Intent(this, RegisterCardActivity.class);
-        //startActivity(intent);
+
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }
     /**
-     * For starting nickname dialog
+     * For starting nickname dialog - removed on 04.05.2015
      */
     public void startDialog() {
         final Dialog dialog = new Dialog(this);
@@ -206,7 +201,7 @@ public class FinalizeRegisterCardActivity extends Activity {
             }
 
             JSONObject response = result.getResult();
-            //textView.setText(result);
+
             int rCode = response.optInt("responseCode");
             loadingThings.setVisibility(View.INVISIBLE);
             defaultFinishButton.setVisibility(View.VISIBLE);
@@ -216,19 +211,13 @@ public class FinalizeRegisterCardActivity extends Activity {
                 try {
                     responseDisplay.setText("Kort hefur verið skráð.");
 
-                    // Have some fun with nicknames and dialogs
-                    startDialog();
-
                     Gson gson = new Gson();
                     card = gson.fromJson(response.toString(), Card.class);
-
-
                     String cardNumber = response.getString("cardnumber");
                     card.setLast_four(cardNumber.substring(cardNumber.length() - 4));
                     card.setTokenized_card_number(cardNumber);
                     card.setTokenized_cvv(response.getString("cvv"));
                     card.setTokenized_validation(response.getString("validity"));
-
 
                     User theUser = Repository.getUser(getApplicationContext());
 
@@ -239,7 +228,6 @@ public class FinalizeRegisterCardActivity extends Activity {
 
                     String tokenJson = gson.toJson(token, Token.class);
                     new GetTokenTask(getApplicationContext()).execute(getString(R.string.service_token_url), tokenJson);
-
 
                 } catch (Exception e) {
                     e.printStackTrace();

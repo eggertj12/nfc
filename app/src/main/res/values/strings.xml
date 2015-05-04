@@ -11,9 +11,10 @@
     <string name="label_month">Mán</string>
     <string name="label_year">Ár</string>
     <string name="label_cvv">Öryggisnúmer</string>
-    <string name="label_next">Skrá</string>
+    <string name="label_next">Áfram</string>
     <string name="label_cancel">Hætta við</string>
     <string name="label_cancel_short">Hætta</string>
+    <string name="label_finalize_card">Skrá</string>
 
     <string name="error_invalid_cardholder_name">Sláðu inn nafn korthafa</string>
     <string name="error_invalid_cardnumber">Sláðu inn gilt kortanúmer</string>
@@ -63,6 +64,8 @@
 
     <!--for displaying first three four groupings of credit card number-->
     <string name="card_number_xes">xxxx-xxxx-xxxx-</string>
+    <string name="title_activity_register_account2">RegisterAccount2</string>
+    <string name="title_activity_card_customization">CardCustomizationActivity</string>
 
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="is.valitor.lokaverkefni.oturgjold">
+    package="is.valitor.lokaverkefni.oturgjold" >
 
     <!-- Card emulation was introduced in API 19. -->
     <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
@@ -24,7 +24,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,8 +83,8 @@
         </activity>
         <activity
             android:name=".PaymentActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_payment" >
+            android:label="@string/title_activity_payment"
+            android:screenOrientation="portrait" >
 
             <!-- android:screenOrientation="portrait" -->
         </activity>
@@ -95,6 +95,22 @@
         <activity
             android:name=".ChangeSelectedCardActivity"
             android:label="@string/title_activity_change_selected_card" >
+        </activity>
+        <activity
+            android:name=".RegisterAccount2"
+            android:label="@string/title_activity_register_account2"
+            android:parentActivityName=".RegisterCardActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />
+        </activity>
+        <activity
+            android:name=".CustomizeCardActivity"
+            android:label="@string/title_activity_card_customization"
+            android:parentActivityName=".RegisterCardActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />
         </activity>
     </application>
 

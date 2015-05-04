@@ -195,7 +195,7 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
                 editor.commit();
 
                 Vibrator vib = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-                vib.vibrate(100);
+                vib.vibrate(200);
             }
 
         }
