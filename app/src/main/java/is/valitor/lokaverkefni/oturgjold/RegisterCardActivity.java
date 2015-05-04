@@ -26,13 +26,12 @@ public class RegisterCardActivity extends Activity {
     public final static String MSG_CARDCVV = "is.valitor.oturgjold.MSG_CARDCVV";
     public final static String MSG_CARDMONTH = "is.valitor.oturgjold.MSG_CARDMONTH";
     public final static String MSG_CARDYEAR = "is.valitor.oturgjold.MSG_CARDYEAR";
-    public final static String MSG_CARDPIN ="is.valitor.oturghold.MSG_CARDPIN";
 
     private static final int REQUEST_REGISTER_CARD = 1;
 
-
-    //String cardholder = user.getName();
     private String cardholder;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

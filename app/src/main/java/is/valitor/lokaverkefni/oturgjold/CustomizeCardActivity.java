@@ -49,7 +49,7 @@ public class CustomizeCardActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String getPin() {
+    private String getCustomizePin() {
 
         EditText pin = (EditText) findViewById(R.id.customize_pin_inputfield);
 
@@ -67,7 +67,7 @@ public class CustomizeCardActivity extends Activity {
         intent.putExtra(MSG_CARDCVV, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDCVV));
         intent.putExtra(MSG_CARDMONTH, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDMONTH));
         intent.putExtra(MSG_CARDYEAR, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR));
-        intent.putExtra(MSG_CARDPIN, getPin());
+        intent.putExtra(MSG_CARDPIN, getCustomizePin());
 
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }
@@ -78,6 +78,7 @@ public class CustomizeCardActivity extends Activity {
 
         if (reqCode == REQUEST_REGISTER_CARD) {
             if(resCode == RESULT_OK) {
+                // DRY!!! onelove
                 setResult(RESULT_OK);
                 finish();
             }

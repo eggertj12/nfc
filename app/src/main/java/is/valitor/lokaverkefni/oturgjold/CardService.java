@@ -112,13 +112,17 @@ public class CardService extends HostApduService {
 
             // Get the last input PIN
            String pin = getPin();
-            if(pin.length() != 4) {
-                // PIN is not ready, just be quiet
+            System.out.println("HCE HAS BEEN INITIATED!!!");
+            System.out.println("PINS IS: " + pin);
+            if(pin.contentEquals("used") || pin.length() != 4 ) {
+                // PIN is not ready, just be quiet - payment activity was launched from getPIN()
+                System.out.println("NOTHING TO SEE HERE");
                 return null;
             }
 
             String toSend = toSend();
-            Log.d(TAG, "Sending: "+toSend);
+            //Letting the user know token was sent
+            Toast.makeText(this, "Greiðslubeiðni hefur verið send yfir í posa",Toast.LENGTH_LONG).show();
             if (toSend == null) {
                 Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
                 toast.show();
@@ -126,9 +130,6 @@ public class CardService extends HostApduService {
             }
 
             byte [] accountBytes = toSend.getBytes();
-
-            //Letting the user know token was sent
-            Toast.makeText(this,"Greiðslubeiðni hefur verið send yfir í posa",Toast.LENGTH_LONG).show();
 
             return ConcatArrays(accountBytes,SELECT_OK_SW);
         } else {
@@ -184,8 +185,6 @@ public class CardService extends HostApduService {
         return String.format(JSON_PATTERN, tokenParam, deviceParam);
     }
 
-
-    // END_INCLUDE(processCommandApdu)
 
     /**
      * Build APDU for SELECT AID command. This command indicates which service a reader is
@@ -267,7 +266,7 @@ public class CardService extends HostApduService {
         String pin = sp.getString("lastPIN","");
 
         // No last entered PIN
-        if(pin.length() != 4) {
+        if(pin.contentEquals("used") || pin.length() != 4) {
             // Trigger PIN input
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("MSG_REQUEST_PIN", "true");
@@ -278,6 +277,7 @@ public class CardService extends HostApduService {
         else {
             SharedPreferences.Editor clearPIN = PreferenceManager.getDefaultSharedPreferences(this).edit();
             clearPIN.putString("lastPIN", "used");
+            // Commit rather than apply, this should be done ASAP
             clearPIN.commit();
         }
         // Last entered PIN is present

@@ -104,7 +104,8 @@
         <activity
             android:name=".CustomizeCardActivity"
             android:label="@string/title_activity_card_customization"
-            android:parentActivityName=".RegisterCardActivity" >
+            android:parentActivityName=".RegisterCardActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />

@@ -15,6 +15,7 @@
     <string name="label_cancel">Hætta við</string>
     <string name="label_cancel_short">Hætta</string>
     <string name="label_finalize_card">Skrá</string>
+    <string name="label_customize_nick">Kenninafn</string>
 
     <string name="error_invalid_cardholder_name">Sláðu inn nafn korthafa</string>
     <string name="error_invalid_cardnumber">Sláðu inn gilt kortanúmer</string>
@@ -65,11 +66,11 @@
 
     <!--for displaying first three four groupings of credit card number-->
     <string name="card_number_xes">xxxx-xxxx-xxxx-</string>
-    <string name="title_activity_card_customization">CardCustomizationActivity</string>
+    <string name="title_activity_card_customization">Skrá kort</string>
 
     <!--for conveying specific information to app user-->
-    <string name="info_pin">PIN for using this card specifically with this app. The pin you enter should not be the PIN issued by your bank.</string>
-
+    <string name="info_pin">PIN bara fyrir appið. Ekki slá inn sama PIN og bankinn gaf út.</string>
+    <string name="info_nick">Gælunafn fyrir kortið, notað í appinu.</string>
 
 
 </resources>

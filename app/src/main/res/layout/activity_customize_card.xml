@@ -1,11 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:id="@+id/customize_layout"
+    android:background="@color/background"
     tools:context="is.valitor.lokaverkefni.oturgjold.CustomizeCardActivity">
 
         <TextView
@@ -25,9 +27,9 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:maxLength="4"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:id="@+id/customize_pin_inputfield"
-            />
+            android:nextFocusDown="@+id/customize_nick_input"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +40,45 @@
             android:layout_height="wrap_content"
             android:text="@string/info_pin"
             android:id="@+id/customize_pin_info"
-            android:layout_below="@id/customize_pin_input"/>
+            android:layout_below="@id/customize_pin_input"
+            android:layout_margin="16dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customize_nick_title"
+        android:layout_below="@id/customize_pin_info"
+        android:text="@string/label_customize_nick"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customize_nick_inputfield"
+        android:layout_below="@id/customize_nick_title"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/customize_nick_input"
+            android:maxLength="16"
+            android:singleLine="true"
+            android:nextFocusDown="@+id/customize_next"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:id="@+id/customize_nick_info"
+        android:text="@string/info_nick"
+        android:layout_below="@id/customize_nick_inputfield"/>
+
+    <!-- Space reserved for choosing graphics-->
+
+    <!-- !!! -->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,8 +90,8 @@
             android:background="@drawable/round_button"
             android:id="@+id/customize_next"
             android:textColor="@color/buttontext"
-            android:layout_below="@+id/customize_pin_info"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
 
 </RelativeLayout>

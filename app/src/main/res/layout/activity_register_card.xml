@@ -134,11 +134,10 @@
                 android:layout_marginTop="@dimen/inputblock_vertical_margin"
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
-
+            <!-- For keeping weight -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PIN"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/inputblock_vertical_margin"
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
@@ -157,19 +156,15 @@
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin"
                 android:inputType="number"
                 android:maxLength="4"
-                android:nextFocusDown="@+id/editPIN"/>
+                android:nextFocusDown="@+id/button_register_card_next"/>
 
-
-            <EditText
+            <!-- For keeping weight -->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editPIN"
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-                android:inputType="number"
-                android:maxLength="4"
-                android:nextFocusDown="@+id/button_register_card_next"/>
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"/>
         </LinearLayout>
 
         <Button
