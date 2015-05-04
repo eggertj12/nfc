@@ -96,11 +96,41 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
+    /**
+     * Draws menu each time menu button is pressed
+     * All items set invisible by default, only set to true
+     * when certain requirements are met
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu)
+    {
+        boolean isRegistered = false;
+        boolean hasCard = false;
+        User user = Repository.getUser(getApplication());
+        int cardCount = Repository.getCardCount(getApplication());
+        if(user != null) isRegistered = true;
+        if(cardCount != 0) hasCard = true;
+
+        MenuItem menuItemRegCard = menu.findItem(R.id.register_card).setVisible(false);
+        MenuItem menuItemGetBalance = menu.findItem(R.id.action_getBalance).setVisible(false);
+        MenuItem menuItemCardTransactions = menu.findItem(R.id.action_getTransactions).setVisible(false);
+        MenuItem menuItemCardChangeSelectedCard = menu.findItem(R.id.action_change_selected_card).setVisible(false);
+
+        if(isRegistered) menuItemRegCard.setVisible(true);
+        if(isRegistered && hasCard) menuItemGetBalance.setVisible(true);
+        if(isRegistered && hasCard)menuItemCardTransactions.setVisible(true);
+        if(isRegistered && hasCard)menuItemCardChangeSelectedCard.setVisible(true);
+
+       return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         final Context ctx = getApplicationContext();
@@ -111,28 +141,10 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
 
-        else if(id == R.id.show_token_count) {
-            String message = "";
-
-            ArrayList<Card> cards = Repository.getCards(ctx);
-            for(Card card : cards) {
-                message = message
-                        + "CardId: " + Integer.toString(card.getCard_id())
-                        + ", tokens: " + Integer.toString(Repository.getTokenCount(ctx, card.getCard_id()))
-                        + "\n";
-            }
-            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-            toast.show();
-        }else if(id == R.id.action_getBalance) {
+        else if(id == R.id.action_getBalance) {
             getCurrentCardBalance();
         }
-       /* else if(id == R.id.action_reset) {
-            // This is best done in the android OS - Application Manager
-            String msg = String.format("Resetting %d cards to 0.", Repository.getCardCount(ctx));
-            Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-            //Repository.clearData(ctx);
-            toast.show();
-        }*/
+
         else if(id == R.id.action_change_selected_card)
         {
             changeSelectedCard(item.getActionView());
@@ -232,6 +244,9 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void enableRegistrationUI() {
+
+        //Force the menu to reload
+        invalidateOptionsMenu();
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
         ArrayList<Card> cards = Repository.getCards(getApplication());
