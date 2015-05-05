@@ -92,28 +92,30 @@ public class RegisterCardActivity extends Activity {
         Validator v = new Validator();
         // get currently selected card
 
-        // Cardholder name
-       // EditText editCardholder = (EditText) findViewById(R.id.editCardholderName);
-       // String cardholder = editCardholder.getText().toString();
-        //if (!v.validateCardholderName(cardholder)) {
-       /* if(false) {
-            CharSequence message = getResources().getString(R.string.error_invalid_cardholder_name);
-            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-            toast.show();
-            editCardholder.requestFocus();
-            return;
-        }*/
 
         // Card Number
-        EditText editCardNumber = (EditText) findViewById(R.id.editCardNumber);
-        String cardNumber = v.cleanupCardNumber(editCardNumber.getText().toString());
-        String cardType = v.validateCardNumber(cardNumber);
+        EditText editCardNumber1 = (EditText) findViewById(R.id.editCardNumber1);
+        EditText editCardNumber2 = (EditText) findViewById(R.id.editCardNumber2);
+        EditText editCardNumber3 = (EditText) findViewById(R.id.editCardNumber3);
+        EditText editCardNumber4 = (EditText) findViewById(R.id.editCardNumber4);
+
+        //Is all this nessecery?
+        String cardNumber1 = v.cleanupCardNumber(editCardNumber1.getText().toString());
+        String cardType = v.validateCardNumber(cardNumber1);
+        String cardNumber2 = v.cleanupCardNumber(editCardNumber2.getText().toString());
+        String cardType2 = v.validateCardNumber(cardNumber2);
+        String cardNumber3 = v.cleanupCardNumber(editCardNumber3.getText().toString());
+        String cardType3 = v.validateCardNumber(cardNumber3);
+        String cardNumber4 = v.cleanupCardNumber(editCardNumber4.getText().toString());
+        String cardType4 = v.validateCardNumber(cardNumber4);
+
+        String cardNumber = cardNumber1 + cardNumber2 + cardNumber3 + cardNumber4;
         //if (!(cardType == "visa" ||cardType == "mastercard" )) {
         if(false){
             CharSequence message = getResources().getString(R.string.error_invalid_cardnumber);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
-            editCardNumber.requestFocus();
+            editCardNumber1.requestFocus();
             return;
         }
 

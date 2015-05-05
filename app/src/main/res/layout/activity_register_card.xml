@@ -47,15 +47,51 @@
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editCardNumber"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:nextFocusDown="@+id/editCardCvv"
-            android:inputType="number" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editCardNumber1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:nextFocusDown="@+id/editCardNumber2"
+                android:inputType="number"
+                android:maxLength="4"/>
+            <EditText
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editCardNumber2"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:nextFocusDown="@+id/editCardNumber3"
+                android:inputType="number"
+                android:maxLength="4"/>
+            <EditText
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editCardNumber3"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:nextFocusDown="@+id/editCardNumber4"
+                android:inputType="number"
+                android:maxLength="4"/>
+            <EditText
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editCardNumber4"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:nextFocusDown="@+id/editCardCvv"
+                android:inputType="number"
+                android:maxLength="4"/>
+            </LinearLayout>
+
 
         <TextView
             android:layout_width="match_parent"
