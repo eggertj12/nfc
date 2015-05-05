@@ -172,28 +172,15 @@ public class RegisterCardActivity extends Activity {
         Validator v = new Validator();
         // get currently selected card
 
-        // Cardholder name
-       // EditText editCardholder = (EditText) findViewById(R.id.editCardholderName);
-       // String cardholder = editCardholder.getText().toString();
-        //if (!v.validateCardholderName(cardholder)) {
-       /* if(false) {
-            CharSequence message = getResources().getString(R.string.error_invalid_cardholder_name);
-            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-            toast.show();
-            editCardholder.requestFocus();
-            return;
-        }*/
 
-        // Card Number
-        EditText editCardNumber = (EditText) findViewById(R.id.editCardNumber);
-        String cardNumber = v.cleanupCardNumber(editCardNumber.getText().toString());
-        String cardType = v.validateCardNumber(cardNumber);
+        String cardNumber = findViewById(R.id.editCardNumber).toString();
+
+        String cardType = "";
         //if (!(cardType == "visa" ||cardType == "mastercard" )) {
         if(false){
             CharSequence message = getResources().getString(R.string.error_invalid_cardnumber);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
-            editCardNumber.requestFocus();
             return;
         }
 
