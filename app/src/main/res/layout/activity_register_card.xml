@@ -54,7 +54,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:inputType="number" />
+            android:inputType="number"
+            android:digits="0123456789 "
+            android:maxLength="19"
+            android:imeOptions="actionNext"/>
 
         <TextView
             android:layout_width="match_parent"

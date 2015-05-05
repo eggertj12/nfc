@@ -3,6 +3,8 @@ package is.valitor.lokaverkefni.oturgjold;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,8 @@ import java.util.Calendar;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
+import is.valitor.lokaverkefni.oturgjold.utils.FourDigitGrouper;
+import is.valitor.lokaverkefni.oturgjold.utils.FourDigitUngrouper;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
 
@@ -89,11 +93,14 @@ public class RegisterCardActivity extends Activity {
 
         cardNumber = (EditText) findViewById(R.id.editCardNumber);
         editCvv = (EditText) findViewById(R.id.editCardCvv);
+
+        // Keep credit card number format to groups of four digits
+        cardNumber.addTextChangedListener(new FourDigitGrouper());
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         // These booleans needed to ignore first selection
         firstCardN = true;
         firstSpM = true;
@@ -174,6 +181,8 @@ public class RegisterCardActivity extends Activity {
 
 
         String cardNumber = findViewById(R.id.editCardNumber).toString();
+        cardNumber = FourDigitUngrouper.RemoveSpaces(cardNumber);
+        System.out.println(cardNumber);
 
         String cardType = "";
         //if (!(cardType == "visa" ||cardType == "mastercard" )) {
