@@ -3,8 +3,11 @@ package is.valitor.lokaverkefni.oturgjold;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -31,6 +34,17 @@ public class RegisterCardActivity extends Activity {
 
     private String cardholder;
 
+    private EditText cardNumber;
+    private EditText editCvv;
+
+    private Spinner spM;
+    private Spinner spY;
+
+    // To handle the rogue first selection event
+    private boolean firstSpM;
+    private boolean firstSpY;
+    private boolean firstCardN;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +56,8 @@ public class RegisterCardActivity extends Activity {
         final TextView name = (TextView)findViewById(R.id.cardholderName);
         name.setText(cardholder);
         // Populate spinner for selection of month
-        Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerValidityMonth);
+        final Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerValidityMonth);
+        spM = spinnerMonth;
 
         ArrayList<String> arrayMonths = new ArrayList<>();
         for (int i = 1; i <= 12; i++)
@@ -56,7 +71,8 @@ public class RegisterCardActivity extends Activity {
         spinnerMonth.setAdapter(adapterMonth);
 
         // Populate spinner for selection of year
-        Spinner spinnerYear = (Spinner) findViewById(R.id.spinnerValidityYear);
+        final Spinner spinnerYear = (Spinner) findViewById(R.id.spinnerValidityYear);
+        spY = spinnerYear;
 
         ArrayList<String> arrayYear = new ArrayList<>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -69,6 +85,70 @@ public class RegisterCardActivity extends Activity {
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerYear.setAdapter(adapterYear);
+
+
+        cardNumber = (EditText) findViewById(R.id.editCardNumber);
+        editCvv = (EditText) findViewById(R.id.editCardCvv);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // These booleans needed to ignore first selection
+        firstCardN = true;
+        firstSpM = true;
+        firstSpY = true;
+
+        // Set listeners to ensure smooth flow through registration
+        cardNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_NEXT) {
+                    cardNumber.clearFocus();
+                    spM.requestFocus();
+                    spM.performClick();
+                }
+                return false;
+            }
+        });
+
+        spM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(firstSpM == true) {
+                    firstSpM = false;
+                    return;
+                }
+
+                spM.clearFocus();
+                spY.requestFocus();
+                spY.performClick();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Nothing
+            }
+        });
+
+        spY.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(firstSpY == true) {
+                    firstSpY = false;
+                    return;
+                }
+
+                spY.clearFocus();
+                editCvv.requestFocus();
+                editCvv.performClick();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -178,6 +258,8 @@ public class RegisterCardActivity extends Activity {
             }
         }
     }
+
+
 
     /** Validator methods for the input */
 }

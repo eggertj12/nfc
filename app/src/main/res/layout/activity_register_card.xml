@@ -54,75 +54,55 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:nextFocusDown="@+id/editCardCvv"
             android:inputType="number" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_validity"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/inputblock_vertical_margin"
-            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:stretchColumns="0,1">
+            android:orientation="horizontal">
 
-            <TableRow
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:text="@string/label_month"
+                android:layout_weight="1"/>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-                    android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:gravity="center_vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_year"
+                android:layout_weight="1"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_month" />
-
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                     <Spinner
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/spinnerValidityMonth"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-                    android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-                    android:layout_row="0"
-                    android:layout_column="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_year" />
+                        android:layout_weight="1"
+                        android:focusable="true"/>
 
                     <Spinner
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/spinnerValidityYear"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="1" />
-                </LinearLayout>
-            </TableRow>
-        </TableLayout>
+                        android:layout_weight="1"
+                        android:focusable="true"/>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -155,8 +135,7 @@
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin"
                 android:inputType="number"
-                android:maxLength="4"
-                android:nextFocusDown="@+id/button_register_card_next"/>
+                android:maxLength="4"/>
 
             <!-- For keeping weight -->
             <TextView
