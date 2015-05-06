@@ -37,7 +37,6 @@ public class RegisterAccountActivity extends Activity {
         setContentView(R.layout.activity_register_account);
         editAccountName = (TextView) findViewById(R.id.editAccountName);
         loadingThings = (ProgressBar) findViewById(R.id.progressBar);
-
         loadingThings.setVisibility(View.INVISIBLE);
     }
 
