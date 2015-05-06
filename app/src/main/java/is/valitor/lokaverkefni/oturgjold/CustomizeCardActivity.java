@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import is.valitor.lokaverkefni.oturgjold.repository.Card;
-
-
 public class CustomizeCardActivity extends Activity {
 
     private static final int REQUEST_REGISTER_CARD = 1;
@@ -25,12 +22,12 @@ public class CustomizeCardActivity extends Activity {
     public static final String MSG_CARDIMAGE ="is.valitor.oturgjold.MSG_CARDIMAGE";
 
     private static final int thumbs[] = {
+            R.id.ibAbsBrown,
             R.id.ibAbsBlue,
             R.id.ibAbsRed,
-            R.id.ibAbsBrown,
+            R.id.ibRainCyan,
             R.id.ibRainBlue,
-            R.id.ibRainRed,
-            R.id.ibRainCyan
+            R.id.ibRainRed
     };
 
     private String cardImage = "abs_brown_creditcard";
@@ -39,6 +36,12 @@ public class CustomizeCardActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize_card);
+
+        ImageButton button;
+        for (int i = 1; i <= 5; i++) {
+            button = (ImageButton) findViewById(thumbs[i]);
+            button.setColorFilter(R.color.grey05trans);
+        }
     }
 
 
@@ -115,8 +118,6 @@ public class CustomizeCardActivity extends Activity {
                 cardImage = "abs_brown_creditcard";
                 break;
         }
-
-        System.out.println(cardImage);
     }
 
     public void finalizeCard(View view) {
