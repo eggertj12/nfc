@@ -207,7 +207,13 @@ public class MainActivity extends FragmentActivity {
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {
         super.onActivityResult(reqCode, resCode, intent);
 
-        if (reqCode == REQUEST_REGISTER_USER || reqCode == REQUEST_REGISTER_CARD) {
+        if (reqCode == REQUEST_REGISTER_USER) {
+            if(resCode == RESULT_SUCCESS) {
+                Intent newIntent = new Intent(this, RegisterCardActivity.class);
+                startActivityForResult(newIntent, REQUEST_REGISTER_CARD);
+            }
+        }
+        if(reqCode == REQUEST_REGISTER_CARD) {
             enableRegistrationUI();
         }
 
