@@ -2,6 +2,7 @@ package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,12 +63,41 @@ public class CardFragment extends Fragment {
 
     private void drawUI() {
         Card card = Repository.getCardByIndex(ctx, cardIndex);
-        int cardCount = Repository.getCardCount(ctx);
 
         String name = card.getCard_name();
         if (name.equals("")) {
             name = String.format("Kort %d", cardIndex + 1);
         }
+
+        String image = card.getCard_image();
+        if (image.equals("")) {
+            image = "abs_brown_creditcard";
+        }
+
+        int resId = R.drawable.abs_blue_creditcard;
+        switch (image) {
+            case "abs_blue_creditcard":
+                resId = R.drawable.abs_blue_creditcard;
+                break;
+            case "abs_red_creditcard":
+                resId = R.drawable.abs_red_creditcard;
+                break;
+            case "abs_brown_creditcard":
+                resId = R.drawable.abs_brown_creditcard;
+                break;
+            case "rain_blue_creditcard":
+                resId = R.drawable.rain_blue_creditcard;
+                break;
+            case "rain_cyan_creditcard":
+                resId = R.drawable.rain_cyan_creditcard;
+                break;
+            case "rain_red_creditcard":
+                resId = R.drawable.rain_red_creditcard;
+                break;
+        }
+
+        Resources res = getResources();
+        ((ImageView) rootView.findViewById(R.id.cardImage)).setImageDrawable(res.getDrawable(resId));
 
         ((TextView) rootView.findViewById(R.id.fragmentCardName)).setText(name);
         ((TextView) rootView.findViewById(R.id.fragmentCardNumber)).setText("XXXX XXXX XXXX " + card.getLast_four());

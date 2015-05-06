@@ -1,97 +1,191 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customize_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:id="@+id/customize_layout"
-    android:background="@color/background"
     tools:context="is.valitor.lokaverkefni.oturgjold.CustomizeCardActivity">
+
+    <TextView
+        android:id="@+id/customize_pin_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pin" />
+
+    <LinearLayout
+        android:id="@+id/customize_pin_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customize_pin_title">
+
+        <EditText
+            android:id="@+id/customize_pin_inputfield"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:inputType="number"
+            android:maxLength="4"
+            android:nextFocusDown="@+id/customize_nick_input" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pin"
-            android:id="@+id/customize_pin_title"
-            />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/customize_pin_input"
-        android:layout_below="@id/customize_pin_title"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="4"
-            android:layout_weight="4"
-            android:id="@+id/customize_pin_inputfield"
-            android:nextFocusDown="@+id/customize_nick_input"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
     </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/info_pin"
-            android:id="@+id/customize_pin_info"
-            android:layout_below="@id/customize_pin_input"
-            android:layout_margin="16dp"/>
+
     <TextView
+        android:id="@+id/customize_pin_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/customize_pin_input"
+        android:layout_margin="16dp"
+        android:text="@string/info_pin" />
+
+    <TextView
         android:id="@+id/customize_nick_title"
-        android:layout_below="@id/customize_pin_info"
-        android:text="@string/label_customize_nick"
-    />
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/customize_pin_info"
+        android:text="@string/label_customize_nick" />
+
+    <LinearLayout
         android:id="@+id/customize_nick_inputfield"
-        android:layout_below="@id/customize_nick_title"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customize_nick_title">
+
         <EditText
+            android:id="@+id/customize_nick_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:id="@+id/customize_nick_input"
             android:maxLength="16"
-            android:singleLine="true"
-            android:nextFocusDown="@+id/customize_next"/>
+            android:nextFocusDown="@+id/customize_next"
+            android:singleLine="true" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"/>
+            android:layout_weight="2" />
     </LinearLayout>
+
     <TextView
+        android:id="@+id/customize_nick_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/customize_nick_inputfield"
         android:layout_margin="16dp"
-        android:id="@+id/customize_nick_info"
-        android:text="@string/info_nick"
-        android:layout_below="@id/customize_nick_inputfield"/>
+        android:text="@string/info_nick" />
 
-    <!-- Space reserved for choosing graphics-->
+    <LinearLayout
+        android:id="@+id/customize_look_1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/customize_nick_info"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-    <!-- !!! -->
-        <Button
+        <ImageButton
+            android:id="@+id/ibAbsBrown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_finalize_card"
-            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:background="@color/background"
             android:clickable="true"
-            android:onClick="finalizeCard"
-            android:layout_marginEnd="@dimen/inputblock_horzontal_margin"
-            android:background="@drawable/round_button"
-            android:id="@+id/customize_next"
-            android:textColor="@color/buttontext"
-            android:layout_margin="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true" />
+            android:onClick="onSelectCardImage"
+            android:src="@drawable/ic_abs_brown_creditcard" />
+
+        <ImageButton
+            android:id="@+id/ibAbsBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:clickable="true"
+            android:onClick="onSelectCardImage"
+            android:src="@drawable/ic_abs_blue_creditcard"
+            android:tint="@color/grey05trans" />
+
+        <ImageButton
+            android:id="@+id/ibAbsRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:clickable="true"
+            android:onClick="onSelectCardImage"
+            android:src="@drawable/ic_abs_red_creditcard"
+            android:tint="@color/grey05trans" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/customize_look_2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customize_look_1"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageButton
+            android:id="@+id/ibRainCyan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:clickable="true"
+            android:onClick="onSelectCardImage"
+            android:src="@drawable/ic_rain_cyan_creditcard"
+            android:tint="@color/grey05trans" />
+
+        <ImageButton
+            android:id="@+id/ibRainBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:clickable="true"
+            android:onClick="onSelectCardImage"
+            android:src="@drawable/ic_rain_blue_creditcard"
+            android:tint="@color/grey05trans" />
+
+        <ImageButton
+            android:id="@+id/ibRainRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:clickable="true"
+            android:onClick="onSelectCardImage"
+            android:src="@drawable/ic_rain_red_creditcard"
+            android:tint="@color/grey05trans" />
+
+
+    </LinearLayout>
+
+
+    <!-- !!! -->
+    <Button
+        android:id="@+id/customize_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="@dimen/inputblock_horzontal_margin"
+        android:background="@drawable/round_button"
+        android:clickable="true"
+        android:onClick="finalizeCard"
+        android:text="@string/label_finalize_card"
+        android:textColor="@color/buttontext" />
+
 
 </RelativeLayout>

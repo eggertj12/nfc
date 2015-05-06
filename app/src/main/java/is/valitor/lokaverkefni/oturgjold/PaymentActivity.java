@@ -235,6 +235,9 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
         // The card service will change this key to used when sending the payment
         if (key.equals("lastPIN") && preferences.getString(key, "").equals("used")) {
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+            editor.putString("lastPIN", "");
+            editor.commit();
             close();
         }
     }

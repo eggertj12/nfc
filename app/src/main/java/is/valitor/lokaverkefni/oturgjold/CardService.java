@@ -111,7 +111,7 @@ public class CardService extends HostApduService {
         if (Arrays.equals(SELECT_APDU, commandApdu)) {
 
             // Get the last input PIN
-           String pin = getPin();
+            String pin = getPin();
             System.out.println("HCE HAS BEEN INITIATED!!!");
             System.out.println("PINS IS: " + pin);
             if(pin.contentEquals("used") || pin.length() != 4 ) {
