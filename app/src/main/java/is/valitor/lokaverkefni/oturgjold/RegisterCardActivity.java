@@ -180,8 +180,8 @@ public class RegisterCardActivity extends Activity {
         // get currently selected card
 
 
-        String cardNumber = findViewById(R.id.editCardNumber).toString();
-        cardNumber = FourDigitUngrouper.RemoveSpaces(cardNumber);
+        cardNumber = (EditText) findViewById(R.id.editCardNumber);
+        String cn = FourDigitUngrouper.RemoveSpaces(cardNumber.getText().toString());
         System.out.println(cardNumber);
 
         String cardType = "";
@@ -233,7 +233,7 @@ public class RegisterCardActivity extends Activity {
         Intent intent = new Intent(this, CustomizeCardActivity.class);
 
         // Populate intent with data
-        intent.putExtra(MSG_CARDNUMBER, cardNumber);
+        intent.putExtra(MSG_CARDNUMBER, cn);
         intent.putExtra(MSG_CARDTYPE, cardType);
         intent.putExtra(MSG_CARDHOLDER, cardholder);
         intent.putExtra(MSG_CARDCVV, cardCvv);

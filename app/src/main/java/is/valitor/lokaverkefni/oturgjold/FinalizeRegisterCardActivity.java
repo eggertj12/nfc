@@ -169,6 +169,12 @@ public class FinalizeRegisterCardActivity extends Activity {
         dialog.show();
     }
 
+    /** Called when the user clicks the reg_new_card button */
+    public void registerCard(View view) {
+        // Create intent for opening new activity
+         Intent intent = new Intent(this, RegisterCardActivity.class);
+         startActivityForResult(intent, REQUEST_REGISTER_CARD);}
+
     private class RegisterCardListener implements AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> {
 
         // onTaskComplete is called once the task has completed.

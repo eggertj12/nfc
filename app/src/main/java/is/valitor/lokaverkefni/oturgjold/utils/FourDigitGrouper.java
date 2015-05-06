@@ -22,7 +22,6 @@ public class FourDigitGrouper implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        System.out.println("TRIGGERED!!!");
         // Remove spacing char
         if (s.length() > 0 && (s.length() % 5) == 0) {
             final char c = s.charAt(s.length() - 1);
