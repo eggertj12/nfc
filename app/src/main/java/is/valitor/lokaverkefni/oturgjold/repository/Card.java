@@ -11,6 +11,7 @@ public class Card {
     private String tokenized_card_number;
     private String tokenized_validation;
     private String tokenized_cvv;
+    private String card_image;
     private int card_balance;
 
     public Card() {
@@ -19,6 +20,7 @@ public class Card {
         tokenized_card_number = "";
         tokenized_validation = "";
         tokenized_cvv = "";
+        card_image = "";
         card_balance = 0;
     }
 
@@ -51,6 +53,14 @@ public class Card {
 
     public void setLast_four(String last_four) {
         this.last_four = last_four;
+    }
+
+    public String getCard_image() {
+        return card_image;
+    }
+
+    public void setCard_image(String card_image) {
+        this.card_image = card_image;
     }
 
     public String getTokenized_card_number() {

@@ -1,6 +1,5 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
-
 import android.os.AsyncTask;
 
 import java.io.IOException;
@@ -10,8 +9,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-
 
 
 /**
