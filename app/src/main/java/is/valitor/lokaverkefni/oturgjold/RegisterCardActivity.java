@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class RegisterCardActivity extends Activity {
 
     private Spinner spM;
     private Spinner spY;
+
+    private Button nb;
 
     // To handle the rogue first selection event
     private boolean firstSpM;
@@ -93,6 +96,7 @@ public class RegisterCardActivity extends Activity {
 
         cardNumber = (EditText) findViewById(R.id.editCardNumber);
         editCvv = (EditText) findViewById(R.id.editCardCvv);
+        nb = (Button) findViewById(R.id.button_register_card_next);
 
         // Keep credit card number format to groups of four digits
         cardNumber.addTextChangedListener(new FourDigitGrouper());
@@ -111,9 +115,8 @@ public class RegisterCardActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_NEXT) {
-                    cardNumber.clearFocus();
-                    spM.requestFocus();
                     spM.performClick();
+                    editCvv.setCursorVisible(false);
                 }
                 return false;
             }
@@ -126,9 +129,6 @@ public class RegisterCardActivity extends Activity {
                     firstSpM = false;
                     return;
                 }
-
-                spM.clearFocus();
-                spY.requestFocus();
                 spY.performClick();
             }
 
@@ -145,8 +145,6 @@ public class RegisterCardActivity extends Activity {
                     firstSpY = false;
                     return;
                 }
-
-                spY.clearFocus();
                 editCvv.requestFocus();
                 editCvv.performClick();
             }
@@ -154,6 +152,23 @@ public class RegisterCardActivity extends Activity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        editCvv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editCvv.setCursorVisible(true);
+            }
+        });
+
+        editCvv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    nb.requestFocus();
+                }
+                return false;
             }
         });
     }

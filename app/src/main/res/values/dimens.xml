@@ -5,6 +5,9 @@
     <dimen name="inputblock_vertical_margin">8dp</dimen>
     <dimen name="inputblock_horzontal_margin">4dp</dimen>
 
+    <!-- For Rectangular buttons -->
+    <dimen name="button_width">96sp</dimen>
+
     <!-- For card fragment. Maybe this absolute dimensions method is crazy -->
     <dimen name="card_name_top_margin">34dp</dimen>
     <dimen name="card_name_right_margin">28dp</dimen>

@@ -247,27 +247,23 @@ public class MainActivity extends FragmentActivity {
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
         ArrayList<Card> cards = Repository.getCards(getApplication());
-        Button registerCardButton = (Button) findViewById(R.id.button_register_card);
         Button registerUserButton = (Button) findViewById(R.id.button_register_account);
         Button paymentButton = (Button) findViewById(R.id.button_payment);
 
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
         ViewPager vp = (ViewPager) findViewById(R.id.cardPager);
 
-        registerCardButton.setVisibility(View.INVISIBLE);
         paymentButton.setVisibility(View.INVISIBLE);
         registerUserButton.setVisibility(View.VISIBLE);
 
         if (user == null) {
             Log.d("jo", "user null");
-            registerCardButton.setVisibility(View.INVISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.INVISIBLE);
             mainLayout.setWeightSum(1);
 
         } else if(cards.size() == 0){
-            registerCardButton.setVisibility(View.VISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
 
@@ -277,7 +273,6 @@ public class MainActivity extends FragmentActivity {
         else {
             Log.d("hello","user not null");
             paymentButton.setVisibility(View.VISIBLE);
-            registerCardButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.VISIBLE);

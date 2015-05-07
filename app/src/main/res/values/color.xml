@@ -9,11 +9,15 @@
     <color name="orange5">#DE8240</color>
     <color name="blue2">#0A0DF0</color>
     <color name="blue25">#8183F0</color>
+
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="green">#20a020</color>
 
     <color name="buttontext">#fff</color>
     <color name="background">#ffdfebf5</color>
+    <color name="headerBlue">#F07396AA</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="background_grey">#515152</color>
 
 </resources>
