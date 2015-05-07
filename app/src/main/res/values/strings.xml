@@ -34,6 +34,8 @@
     <string name="label_finalize_card">Skrá</string>
     <string name="label_customize_nick">Kenninafn</string>
     <string name="label_up_arrow">\u2191</string>
+    <string name="label_yes_caps">JÁ</string>
+    <string name="label_no_caps">NEI</string>
 
 
     <!-- Error messages -->
@@ -90,6 +92,9 @@
     <string name="info_pin">PIN fyrir kortið til notkunar í Oturgjöldum. Ekki slá inn sama PIN og bankinn gaf út.</string>
     <string name="info_nick">Gælunafn fyrir kortið. Birt með kortinu til að auðvelda að aðgreina kort. Valkvæmt.</string>
     <string name="info_image">Táknmynd fyrir kortið. Valkvæmt.</string>
+    <!-- FinalizeRegisterCard -->
+    <string name="info_finalize_service_response">Kort hefur verið skráð</string>
+    <string name="info_finalize_prompt_next_action">Skrá annað kort?</string>
 
 
 </resources>

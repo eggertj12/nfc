@@ -39,6 +39,7 @@ import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 public class FinalizeRegisterCardActivity extends Activity {
 
     private TextView responseDisplay;
+    private TextView nextActionPrompt;
     private ProgressBar loadingThings;
     private Button defaultFinishButton;
     private Button continueRegisterCard;
@@ -52,6 +53,7 @@ public class FinalizeRegisterCardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finalize_register_card);
         responseDisplay = (TextView) findViewById(R.id.serviceResponse);
+        nextActionPrompt = (TextView) findViewById(R.id.finalize_next_action);
         loadingThings = (ProgressBar) findViewById(R.id.tokCardProgressBar);
 
         Intent intent = getIntent();
@@ -64,8 +66,6 @@ public class FinalizeRegisterCardActivity extends Activity {
         String cardYear = intent.getStringExtra(CustomizeCardActivity.MSG_CARDYEAR);
         String cardPin = intent.getStringExtra(CustomizeCardActivity.MSG_CARDPIN);
 
-        LinearLayout root = (LinearLayout) findViewById(R.id.finalize_register_linear);
-
         System.out.println(cardNumber);
 
         // Having registered a card, you are now happy to return to main view
@@ -75,6 +75,8 @@ public class FinalizeRegisterCardActivity extends Activity {
         //Register new card (another card)
         continueRegisterCard = (Button)findViewById(R.id.reg_new_card);
         continueRegisterCard.setVisibility(View.INVISIBLE);
+
+
 
         // Communicate with the service:
         try {
@@ -206,9 +208,9 @@ public class FinalizeRegisterCardActivity extends Activity {
             continueRegisterCard.setVisibility(View.VISIBLE);
 
             if(rCode == 200) {
+                responseDisplay.setVisibility(View.VISIBLE);
+                nextActionPrompt.setVisibility(View.VISIBLE);
                 try {
-                    responseDisplay.setText("Kort hefur verið skráð.");
-
                     Gson gson = new Gson();
                     card = gson.fromJson(response.toString(), Card.class);
                     String cardNumber = response.getString("cardnumber");

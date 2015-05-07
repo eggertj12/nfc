@@ -5,6 +5,10 @@
     <dimen name="inputblock_vertical_margin">8dp</dimen>
     <dimen name="inputblock_horzontal_margin">4dp</dimen>
 
+    <!-- For Buttons in FinalizeRegisterCard -->
+    <dimen name="finalize_bottom_margin">116dp</dimen>
+    <dimen name="finalize_text_bottom">88dp</dimen>
+
     <!-- For Rectangular buttons -->
     <dimen name="button_width">96sp</dimen>
 

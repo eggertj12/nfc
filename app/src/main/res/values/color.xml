@@ -19,5 +19,7 @@
     <color name="headerBlue">#F07396AA</color>
     <color name="text_white">#FFFFFF</color>
     <color name="background_grey">#515152</color>
+    <color name="alt_button_text">#EB6A0E</color>
+    <color name="text_grey">#a051524D</color>
 
 </resources>

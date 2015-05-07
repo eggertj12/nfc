@@ -5,12 +5,12 @@
     android:layout_height="fill_parent"
     tools:context="is.valitor.oturgjold.app.RegisterCardActivity"
     android:fillViewport="true"
+    android:background="@drawable/leather_background"
     >
 
     <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -69,7 +69,7 @@
             android:layout_below="@id/customize_nick_inputfield"
             android:text="@string/info_image" />
 
-        <LinearLayout
+    <LinearLayout
         android:id="@+id/customize_look_1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -83,7 +83,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/background"
             android:clickable="true"
             android:onClick="onSelectCardImage"
             android:src="@drawable/ic_abs_brown_creditcard" />
@@ -93,7 +92,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/background"
             android:clickable="true"
             android:onClick="onSelectCardImage"
             android:src="@drawable/ic_abs_blue_creditcard" />
@@ -103,7 +101,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/background"
             android:clickable="true"
             android:onClick="onSelectCardImage"
             android:src="@drawable/ic_abs_red_creditcard" />
@@ -125,7 +122,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/background"
             android:clickable="true"
             android:onClick="onSelectCardImage"
             android:src="@drawable/ic_rain_cyan_creditcard" />
@@ -135,7 +131,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/background"
             android:clickable="true"
             android:onClick="onSelectCardImage"
             android:src="@drawable/ic_rain_blue_creditcard" />
@@ -145,15 +140,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/background"
             android:clickable="true"
             android:onClick="onSelectCardImage"
             android:src="@drawable/ic_rain_red_creditcard" />
-
-
     </LinearLayout>
-
-
     <!-- !!! -->
     <Button
         android:id="@+id/customize_next"
