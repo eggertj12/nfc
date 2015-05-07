@@ -111,7 +111,7 @@ public class CardFragment extends Fragment {
                 }
 
                 else {
-                    Toast toast = Toast.makeText(ctx, "Ekkert netsamband", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(ctx, getString(R.string.error_no_network), Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
@@ -142,8 +142,8 @@ public class CardFragment extends Fragment {
                 // get currently selected card
                 Card card = Repository.getSelectedCard(ctx);
                 int currentCard = card.getCard_id();
-                balance.setText(String.format("Sæki stöðu", currentCard));
-                new GetBalanceTask(listener).execute("https://kortagleypir.herokuapp.com/card/balance/" + currentCard);
+                balance.setText(String.format(getString(R.string.card_fragment_get_balance), currentCard));
+                new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
 
             }
             catch (Exception e) {
