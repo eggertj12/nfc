@@ -217,6 +217,7 @@ public class FinalizeRegisterCardActivity extends Activity {
                     card.setTokenized_cvv(response.getString("cvv"));
                     card.setTokenized_validation(response.getString("validity"));
                     card.setCard_name(getIntent().getStringExtra("Nickname"));
+                    card.setCard_image(getIntent().getStringExtra(CustomizeCardActivity.MSG_CARDIMAGE));
 
                     Repository.addCard(getApplicationContext(), card);
 

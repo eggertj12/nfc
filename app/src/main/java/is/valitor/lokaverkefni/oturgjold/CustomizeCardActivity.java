@@ -7,9 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-
-import is.valitor.lokaverkefni.oturgjold.repository.Card;
-
+import android.widget.ImageButton;
 
 public class CustomizeCardActivity extends Activity {
 
@@ -20,12 +18,30 @@ public class CustomizeCardActivity extends Activity {
     public static final String MSG_CARDCVV = "is.valitor.oturgjold.MSG_CARDCVV";
     public static final String MSG_CARDMONTH = "is.valitor.oturgjold.MSG_CARDMONTH";
     public static final String MSG_CARDYEAR = "is.valitor.oturgjold.MSG_CARDYEAR";
-    public static final String MSG_CARDPIN ="is.valitor.oturghold.MSG_CARDPIN";
+    public static final String MSG_CARDPIN ="is.valitor.oturgjold.MSG_CARDPIN";
+    public static final String MSG_CARDIMAGE ="is.valitor.oturgjold.MSG_CARDIMAGE";
+
+    private static final int thumbs[] = {
+            R.id.ibAbsBrown,
+            R.id.ibAbsBlue,
+            R.id.ibAbsRed,
+            R.id.ibRainCyan,
+            R.id.ibRainBlue,
+            R.id.ibRainRed
+    };
+
+    private String cardImage = "abs_brown_creditcard";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize_card);
+
+        ImageButton button;
+        for (int i = 1; i <= 5; i++) {
+            button = (ImageButton) findViewById(thumbs[i]);
+            button.setColorFilter(R.color.grey05trans);
+        }
     }
 
 
@@ -68,6 +84,42 @@ public class CustomizeCardActivity extends Activity {
         return nick;
     }
 
+    public void onSelectCardImage(View v) {
+        // This should be handled by a radioGroup but it has serious layout deficiencies
+        // F.ex. no possibility for wrapping buttons in a group
+
+        ImageButton button;
+
+        for (int id: thumbs) {
+            button = (ImageButton) findViewById(id);
+            button.setColorFilter(R.color.grey05trans);
+        }
+
+        button = (ImageButton) v;
+        button.clearColorFilter();
+
+        switch (v.getId()) {
+            case R.id.ibRainBlue:
+                cardImage = "rain_blue_creditcard";
+                break;
+            case R.id.ibRainRed:
+                cardImage = "rain_red_creditcard";
+                break;
+            case R.id.ibRainCyan:
+                cardImage = "rain_cyan_creditcard";
+                break;
+            case R.id.ibAbsBlue:
+                cardImage = "abs_blue_creditcard";
+                break;
+            case R.id.ibAbsRed:
+                cardImage = "abs_red_creditcard";
+                break;
+            case R.id.ibAbsBrown:
+                cardImage = "abs_brown_creditcard";
+                break;
+        }
+    }
+
     public void finalizeCard(View view) {
 
         Intent oldIntent = getIntent();
@@ -80,6 +132,7 @@ public class CustomizeCardActivity extends Activity {
         intent.putExtra(MSG_CARDMONTH, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDMONTH));
         intent.putExtra(MSG_CARDYEAR, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR));
         intent.putExtra(MSG_CARDPIN, getCustomizePin());
+        intent.putExtra(MSG_CARDIMAGE, cardImage);
         intent.putExtra("Nickname", getCustomizeNick());
 
         startActivityForResult(intent, REQUEST_REGISTER_CARD);

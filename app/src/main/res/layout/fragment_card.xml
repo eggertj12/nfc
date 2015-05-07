@@ -8,9 +8,9 @@ tools:context="is.valitor.lokaverkefni.oturgjold.CardFragment"
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
+        android:id="@+id/cardImage"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/rain_creditcard"
+        android:src="@drawable/rain_blue_creditcard"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="false" />
 
@@ -64,7 +64,8 @@ tools:context="is.valitor.lokaverkefni.oturgjold.CardFragment"
             android:textSize="20dp"
             android:id="@+id/fragmentCardBalance"
             android:paddingRight="@dimen/card_balance_right_margin"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
