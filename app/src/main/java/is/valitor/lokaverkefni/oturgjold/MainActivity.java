@@ -221,6 +221,9 @@ public class MainActivity extends FragmentActivity {
         if (reqCode == REQUEST_REGISTER_CARD) {
             pagerAdapter.notifyDataSetChanged();
             viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+            if(resCode == RESULT_ADD_CARD) {
+                registerCard(null);
+            }
         }
 
         if (reqCode == REQUEST_CHANGE_SELECTED_CARD) {

@@ -143,16 +143,15 @@ public class CustomizeCardActivity extends Activity {
         super.onActivityResult(reqCode, resCode, intent);
 
         if (reqCode == REQUEST_REGISTER_CARD) {
-            if(resCode == RESULT_OK) {
-                // DRY!!! onelove
-                setResult(RESULT_OK);
-                finish();
-            }
+            // Just pass the result code down the stack
+            setResult(resCode);
+            finish();
         }
     }
 
-    public void defaultFinish(View view){
+/*    public void defaultFinish(View view){
         setResult(RESULT_OK);
         finish();
     }
+*/
 }

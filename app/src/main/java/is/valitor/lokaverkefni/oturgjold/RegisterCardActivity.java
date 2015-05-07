@@ -249,9 +249,9 @@ public class RegisterCardActivity extends Activity {
         super.onActivityResult(reqCode, resCode, intent);
 
         if (reqCode == REQUEST_REGISTER_CARD) {
-            if(resCode == RESULT_OK) {
-                finish();
-            }
+            // Just pass the result code down the stack
+            setResult(resCode);
+            finish();
         }
     }
 
