@@ -57,12 +57,14 @@
     <string name="action_reset">Reset</string>
 
     <string name="card_fragment_balance">Sjá stöðu</string>
+    <string name="card_fragment_get_balance">Sæki stöðu</string>
 
     <!--web service urls-->
     <string name="service_account_url">https://kortagleypir.herokuapp.com/user</string>
     <string name="service_card_url">https://kortagleypir.herokuapp.com/card</string>
     <string name="service_token_url">https://kortagleypir.herokuapp.com/token</string>
     <string name="service_transaction_url">https://kortagleypir.herokuapp.com/transaction</string>
+    <string name="service_balance_url">https://kortagleypir.herokuapp.com/card/balance/</string>
 
     <!--for displaying first three four groupings of credit card number-->
     <string name="card_number_xes">xxxx-xxxx-xxxx-</string>

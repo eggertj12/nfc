@@ -174,7 +174,7 @@ public class RegisterAccountActivity extends Activity {
 
                     //go back to frontpage
                     // Set result to trigger action in mainActivity
-                    setResult(MainActivity.RESULT_SUCCESS);
+                    setResult(RESULT_OK);
                     finish();
                 }
 

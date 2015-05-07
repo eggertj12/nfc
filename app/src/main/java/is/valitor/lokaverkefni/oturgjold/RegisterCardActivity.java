@@ -69,7 +69,7 @@ public class RegisterCardActivity extends Activity {
             arrayMonths.add(Integer.toString(i));
         }
 
-        ArrayAdapter<String> adapterMonth = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayMonths);
+        ArrayAdapter<String> adapterMonth = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayMonths);
         adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerMonth.setAdapter(adapterMonth);
@@ -255,7 +255,4 @@ public class RegisterCardActivity extends Activity {
         }
     }
 
-
-
-    /** Validator methods for the input */
 }
