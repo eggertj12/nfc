@@ -70,11 +70,6 @@ public class MainActivity extends FragmentActivity {
             }
         }
 
-        // initialize shared preferences file, give default value default - improve when refactoring
-//        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-//        editor.putString("defaultCard", "main");
-//        editor.commit();
-
         enableRegistrationUI();
 
         NetworkUtil.enableNetworkMonitoring(getApplication());
@@ -127,10 +122,7 @@ public class MainActivity extends FragmentActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
+        // Handle action bar item clicks here.
         int id = item.getItemId();
 
         final Context ctx = getApplicationContext();
@@ -250,7 +242,6 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void enableRegistrationUI() {
-
         //Force the menu to reload
         invalidateOptionsMenu();
         // Check if there is a user and disable buttons if not
@@ -300,7 +291,6 @@ public class MainActivity extends FragmentActivity {
     private void getCurrentCardBalance()
     {
         try {
-
             final TextView balance = (TextView)findViewById(R.id.fragmentCardBalance);
             final AsyncTaskCompleteListener<Integer> listener = new AsyncTaskCompleteListener<Integer>() {
                 @Override
@@ -308,14 +298,12 @@ public class MainActivity extends FragmentActivity {
                     balance.setText(result.toString());
                 }
             };
-
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
             int currentCard = card.getCard_id();
             Log.d("CardBalance", card.getLast_four());
             balance.setText(String.format("Sæki stöðu %d", currentCard));
             new GetBalanceTask(listener).execute("https://kortagleypir.herokuapp.com/card/balance/" + currentCard);
-
         }
         catch (Exception e) {
             e.printStackTrace();

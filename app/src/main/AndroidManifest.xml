@@ -115,6 +115,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="is.valitor.lokaverkefni.oturgjold.RegisterCardActivity" />
         </activity>
+
     </application>
 
 </manifest>

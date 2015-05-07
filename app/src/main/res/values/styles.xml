@@ -3,7 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+
+        <!-- Styles for individual elements. -->
+        <item name="android:actionBarStyle">@style/ActionBarHeader</item>
+
         <!-- <item name="android:windowNoTitle">true</item> -->
     </style>
 
+    <style name="ActionBarHeader" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <!-- Customize Action Bar -->
+        <item name="android:background">@color/orange4</item>
+        <item name="android:height">@dimen/actionbar_height</item>
+        >
+    </style>
 </resources>
