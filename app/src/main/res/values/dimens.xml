@@ -5,10 +5,20 @@
     <dimen name="inputblock_vertical_margin">8dp</dimen>
     <dimen name="inputblock_horzontal_margin">4dp</dimen>
 
+    <!-- For Buttons in FinalizeRegisterCard -->
+    <dimen name="finalize_bottom_margin">116dp</dimen>
+    <dimen name="finalize_text_bottom">88dp</dimen>
+
+    <!-- For Rectangular buttons -->
+    <dimen name="button_width">96sp</dimen>
+
     <!-- For card fragment. Maybe this absolute dimensions method is crazy -->
     <dimen name="card_name_top_margin">34dp</dimen>
     <dimen name="card_name_right_margin">28dp</dimen>
     <dimen name="card_number_top_margin">58dp</dimen>
     <dimen name="card_balance_top_margin">4dp</dimen>
     <dimen name="card_balance_right_margin">4dp</dimen>
+
+    <!-- For ActionBar styling. -->
+    <dimen name="actionbar_height">80dp</dimen>
 </resources>

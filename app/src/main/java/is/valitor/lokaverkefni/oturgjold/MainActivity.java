@@ -71,11 +71,6 @@ public class MainActivity extends FragmentActivity {
             }
         }
 
-        // initialize shared preferences file, give default value default - improve when refactoring
-//        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-//        editor.putString("defaultCard", "main");
-//        editor.commit();
-
         enableRegistrationUI();
 
         NetworkUtil.enableNetworkMonitoring(getApplication());
@@ -128,10 +123,7 @@ public class MainActivity extends FragmentActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
+        // Handle action bar item clicks here.
         int id = item.getItemId();
 
         final Context ctx = getApplicationContext();
@@ -254,33 +246,28 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void enableRegistrationUI() {
-
         //Force the menu to reload
         invalidateOptionsMenu();
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
         ArrayList<Card> cards = Repository.getCards(getApplication());
-        Button registerCardButton = (Button) findViewById(R.id.button_register_card);
         Button registerUserButton = (Button) findViewById(R.id.button_register_account);
         Button paymentButton = (Button) findViewById(R.id.button_payment);
 
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
         ViewPager vp = (ViewPager) findViewById(R.id.cardPager);
 
-        registerCardButton.setVisibility(View.INVISIBLE);
         paymentButton.setVisibility(View.INVISIBLE);
         registerUserButton.setVisibility(View.VISIBLE);
 
         if (user == null) {
             Log.d("jo", "user null");
-            registerCardButton.setVisibility(View.INVISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.INVISIBLE);
             mainLayout.setWeightSum(1);
 
         } else if(cards.size() == 0){
-            registerCardButton.setVisibility(View.VISIBLE);
             paymentButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
 
@@ -290,7 +277,6 @@ public class MainActivity extends FragmentActivity {
         else {
             Log.d("hello","user not null");
             paymentButton.setVisibility(View.VISIBLE);
-            registerCardButton.setVisibility(View.INVISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.VISIBLE);
@@ -304,8 +290,7 @@ public class MainActivity extends FragmentActivity {
     private void getCurrentCardBalance()
     {
         try {
-
-            // Get current card fragment
+           // Get current card fragment
             // This code relies on an unsupported trick to get the current fragment which is not supported by the API
             Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.cardPager + ":" + viewPager.getCurrentItem());
             // based on the current position you can then cast the page to the correct
@@ -314,7 +299,6 @@ public class MainActivity extends FragmentActivity {
                 // No fragment found, have to abort
                 return;
             }
-
             final TextView balance = (TextView) page.getView().findViewById(R.id.fragmentCardBalance);
             final AsyncTaskCompleteListener<Integer> listener = new AsyncTaskCompleteListener<Integer>() {
                 @Override
@@ -323,14 +307,11 @@ public class MainActivity extends FragmentActivity {
                     balance.setText(fmt.format(result));
                 }
             };
-
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
             int currentCard = card.getCard_id();
-
             balance.setText(getString(R.string.card_fragment_get_balance));
             new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
-
         }
         catch (Exception e) {
             e.printStackTrace();

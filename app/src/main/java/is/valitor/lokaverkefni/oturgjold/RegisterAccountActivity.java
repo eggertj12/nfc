@@ -59,7 +59,6 @@ public class RegisterAccountActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -100,7 +99,6 @@ public class RegisterAccountActivity extends Activity {
             return;
         }
 
-
         JSONObject jsonAccountObject = new JSONObject();
 
         try {
@@ -131,7 +129,6 @@ public class RegisterAccountActivity extends Activity {
 
             toast.show();
         }
-
     }
 
     private class RegisterAccountListener implements AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> {
@@ -177,7 +174,6 @@ public class RegisterAccountActivity extends Activity {
                     setResult(RESULT_OK);
                     finish();
                 }
-
                 catch (Exception e) {
 
                 }
@@ -185,9 +181,7 @@ public class RegisterAccountActivity extends Activity {
             else {
                 editAccountName.setText("Misheppnuð skráning!");
             }
-
         }
-
     }
 }
 
