@@ -18,7 +18,7 @@ import is.valitor.lokaverkefni.oturgjold.service.GetTransactionsTask;
 public class ShowTransactionsActivity extends Activity implements AsyncTaskCompleteListener<List<Transaction>>{
 
     static  final String TAG = "Show transactions";
-    private ListAdapter transList = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,8 @@ public class ShowTransactionsActivity extends Activity implements AsyncTaskCompl
 
     @Override
     public void onTaskComplete(List<Transaction> result) {
-        Toast.makeText(getApplicationContext(), "Got result "+result.size(), Toast.LENGTH_LONG).show();
 
-
+        ListAdapter transList = null;
         transList = new TransactionArrayAdapter(result,this);
         ListView viewList = (ListView)findViewById(R.id.list_transactions);
         viewList.setAdapter(transList);

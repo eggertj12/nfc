@@ -2,7 +2,6 @@ package is.valitor.lokaverkefni.oturgjold.service;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 
 import org.json.JSONObject;
 
@@ -18,12 +17,13 @@ import java.net.URL;
 /**
  * Created by eggert on 20/03/15.
  */
-public class RegisterAccountTask extends AsyncTask<String, Void, AsyncTaskResult<JSONObject>> {
+public class RegisterAccountTask extends AsyncTask<String, Void, RegisterResult> {
 
     private Context context;
-    private AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> listener;
+    private AsyncTaskCompleteListener <RegisterResult>listener;
+    private Exception exception;
 
-    public RegisterAccountTask(Context ctx, AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> listener)
+    public RegisterAccountTask(Context ctx, AsyncTaskCompleteListener<RegisterResult> listener)
     {
         this.context = ctx;
         this.listener = listener;
@@ -35,31 +35,33 @@ public class RegisterAccountTask extends AsyncTask<String, Void, AsyncTaskResult
     }
 
     @Override
-    protected AsyncTaskResult<JSONObject> doInBackground(String... params)
+    protected RegisterResult doInBackground(String... params)
     {
         try {
             // params comes from the execute() call: params[0] is the url.
-            return new AsyncTaskResult<JSONObject>(postUrl(params[0], params[1]));
+            return postUrl(params[0], params[1]);
         } catch (IOException e) {
-            return new AsyncTaskResult<JSONObject>(e);
+            return null;
         } catch (Exception e) {
-            return new AsyncTaskResult<JSONObject>(e);
+            this.exception = e;
         }
+        return null;
     }
 
     @Override
-    protected void onPostExecute(AsyncTaskResult<JSONObject> myPojo)
+    protected void onPostExecute(RegisterResult result)
     {
-        super.onPostExecute(myPojo);
-        listener.onTaskComplete(myPojo);
+        super.onPostExecute(result);
+        listener.onTaskComplete(result);
     }
 
-    private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
+    private RegisterResult postUrl(String serviceURL, String json_accountInfo) throws IOException {
         InputStream is = null;
 
         // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
         JSONObject msg = new JSONObject();
-        JSONObject ret = null;
+
+        RegisterResult result = new RegisterResult();
         try {
             msg = new JSONObject(json_accountInfo);
         }
@@ -95,12 +97,27 @@ public class RegisterAccountTask extends AsyncTask<String, Void, AsyncTaskResult
             String responseMessage = conn.getResponseMessage();
             System.out.println("The response message is: " + responseMessage);
 
+            //handle the result
+            result.setResultCode(conn.getResponseCode());
+            result.setResultMessage(conn.getResponseMessage());
 
-
-            // Convert the InputStream into a string
-            is = conn.getInputStream();
+            if(result.getResultCode() == 200)
+            {
+                is = conn.getInputStream();
+            }
+            else
+            {
+                is = conn.getErrorStream();
+            }
+            result.setResultContent(readInput(is, conn.getContentLength()));
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+        return result;
             //System.out.println(is.available());
-            ret = readJSON(is, 5000);
+            /*result = readJSON(is, 5000);
             try {
                 ret.put("responseCode", response);
                 ret.put("sentMessage", msg);
@@ -115,11 +132,23 @@ public class RegisterAccountTask extends AsyncTask<String, Void, AsyncTaskResult
                 is.close();
             }
         }
-        return ret;
+        return ret;*/
     }
-
+    private String readInput(final InputStream stream, int length)
+    {
+        try{
+            Reader reader = null;
+            reader = new InputStreamReader(stream, "UTF-8");
+            char[] buffer = new char[length];
+            reader.read(buffer);
+            return new String(buffer);
+        }catch(Exception ex)
+        {
+            return "";
+        }
+    }
     // Reads an InputStream and converts it to a JSONObject.
-    JSONObject readJSON(InputStream stream, int len) throws IOException {
+    /*JSONObject readJSON(InputStream stream, int len) throws IOException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
         char[] buffer = new char[len];
@@ -134,6 +163,6 @@ public class RegisterAccountTask extends AsyncTask<String, Void, AsyncTaskResult
             e.printStackTrace();
         }
         return ret;
-    }
+    }*/
 
 }

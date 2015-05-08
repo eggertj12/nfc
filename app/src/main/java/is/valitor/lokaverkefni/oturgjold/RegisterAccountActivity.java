@@ -16,21 +16,21 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
-
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
-import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterAccountTask;
-import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
+import is.valitor.lokaverkefni.oturgjold.service.RegisterResult;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
 
-public class RegisterAccountActivity extends Activity {
+public class RegisterAccountActivity extends Activity implements AsyncTaskCompleteListener<RegisterResult>{
 
     private TextView editAccountName;
     private ProgressBar loadingThings;
+    private RegisterResult requestResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +105,7 @@ public class RegisterAccountActivity extends Activity {
             jsonAccountObject.put("name", name);
             jsonAccountObject.put("ssn", ssn);
             jsonAccountObject.put("device_id", android_id);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return;
         }
@@ -120,53 +119,23 @@ public class RegisterAccountActivity extends Activity {
             registerAccountButton.setEnabled(false);
 
             // fetch data
-            new RegisterAccountTask(this, new RegisterAccountListener())
+            new RegisterAccountTask(getApplicationContext(),this)
                     .execute(getString(R.string.service_account_url), jsonAccountObject.toString());
-        } else {
-            // display error
-            CharSequence message = getString(R.string.error_no_network);
-            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-
-            toast.show();
         }
     }
 
-    private class RegisterAccountListener implements AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> {
 
         // onTaskComplete is called once the task has completed.
-        @Override
-        public void onTaskComplete(AsyncTaskResult<JSONObject> result)
+
+    @Override
+    public void onTaskComplete(RegisterResult result) {
+
+        if(result.getResultCode() == 200)
         {
-            if (result.getError() != null) {
-                Exception error = result.getError();
-                // display error
-                CharSequence message;
-                if (error instanceof IOException) {
-                    error.printStackTrace();
-                    message = getString(R.string.error_general_network);
-                    Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
-                    registerAccountButton.setClickable(true);
-                    registerAccountButton.setEnabled(true);
-
-                    loadingThings.setVisibility(View.INVISIBLE);
-
-                } else {
-                    message = getString(R.string.error_general);
-                }
-                Toast toast = Toast.makeText(RegisterAccountActivity.this, message, Toast.LENGTH_LONG);
-                toast.show();
-
-                return;
-            }
-
-            JSONObject response = result.getResult();
-            //textView.setText(result);
-            int rCode = response.optInt("responseCode");
-            loadingThings.setVisibility(View.INVISIBLE);
-            if(rCode == 200) {
+            Toast.makeText(this, result.getResultMessage(),Toast.LENGTH_LONG).show();
                 try {
                     Gson gson = new Gson();
-                    User user = gson.fromJson(response.toString(), User.class);
+                    User user = gson.fromJson(result.getResultContent().toString(), User.class);
                     Repository.setUser(getApplication(), user);
 
                     //go back to frontpage
@@ -178,12 +147,19 @@ public class RegisterAccountActivity extends Activity {
 
                 }
             }
-            else {
-                editAccountName.setText("Misheppnuð skráning!");
-            }
+        else {
+            Toast.makeText(this,result.getResultContent(),Toast.LENGTH_LONG).show();
+            loadingThings.setVisibility(View.INVISIBLE);
+            Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
+            registerAccountButton.setClickable(true);
+            registerAccountButton.setEnabled(true);
+            editAccountName.requestFocus();
         }
-    }
+     }
 }
+
+
+
 
 
 
