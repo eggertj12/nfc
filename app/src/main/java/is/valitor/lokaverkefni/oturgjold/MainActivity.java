@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
@@ -28,8 +30,7 @@ import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
 public class MainActivity extends FragmentActivity {
-    public static final int RESULT_FAILURE = 0;
-    public static final int RESULT_SUCCESS = 1;
+    public static final int RESULT_ADD_CARD = 0;
 
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;
@@ -200,7 +201,7 @@ public class MainActivity extends FragmentActivity {
         super.onActivityResult(reqCode, resCode, intent);
 
         if (reqCode == REQUEST_REGISTER_USER) {
-            if(resCode == RESULT_SUCCESS) {
+            if(resCode == RESULT_OK) {
                 Intent newIntent = new Intent(this, RegisterCardActivity.class);
                 startActivityForResult(newIntent, REQUEST_REGISTER_CARD);
             }
@@ -212,6 +213,9 @@ public class MainActivity extends FragmentActivity {
         if (reqCode == REQUEST_REGISTER_CARD) {
             pagerAdapter.notifyDataSetChanged();
             viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+            if(resCode == RESULT_ADD_CARD) {
+                registerCard(null);
+            }
         }
 
         if (reqCode == REQUEST_CHANGE_SELECTED_CARD) {
@@ -235,7 +239,7 @@ public class MainActivity extends FragmentActivity {
                 clearPin.putString("lastPIN", pin);
                 clearPin.commit();
             }
-            else if(resCode == RESULT_FAILURE) {
+            else if(resCode == RESULT_CANCELED) {
 
             }
         }
@@ -286,19 +290,28 @@ public class MainActivity extends FragmentActivity {
     private void getCurrentCardBalance()
     {
         try {
-            final TextView balance = (TextView)findViewById(R.id.fragmentCardBalance);
+           // Get current card fragment
+            // This code relies on an unsupported trick to get the current fragment which is not supported by the API
+            Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.cardPager + ":" + viewPager.getCurrentItem());
+            // based on the current position you can then cast the page to the correct
+            // class and call the method:
+            if (page == null) {
+                // No fragment found, have to abort
+                return;
+            }
+            final TextView balance = (TextView) page.getView().findViewById(R.id.fragmentCardBalance);
             final AsyncTaskCompleteListener<Integer> listener = new AsyncTaskCompleteListener<Integer>() {
                 @Override
                 public void onTaskComplete(final Integer result) {
-                    balance.setText(result.toString());
+                    DecimalFormat fmt = new DecimalFormat("###,###.##");
+                    balance.setText(fmt.format(result));
                 }
             };
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
             int currentCard = card.getCard_id();
-            Log.d("CardBalance", card.getLast_four());
-            balance.setText(String.format("Sæki stöðu %d", currentCard));
-            new GetBalanceTask(listener).execute("https://kortagleypir.herokuapp.com/card/balance/" + currentCard);
+            balance.setText(getString(R.string.card_fragment_get_balance));
+            new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
         }
         catch (Exception e) {
             e.printStackTrace();

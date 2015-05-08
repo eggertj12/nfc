@@ -136,46 +136,13 @@ public class FinalizeRegisterCardActivity extends Activity {
         setResult(RESULT_OK);
         finish();
     }
-    /**
-     * For starting nickname dialog - removed on 04.05.2015
-     */
-    public void startDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_finalize_register_card);
-        dialog.setTitle("Kortið þitt vill gælunafn!");
-        dialog.setCancelable(false);
-
-        Button button1 = (Button) dialog.findViewById(R.id.button_dialog_button68);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText ed = (EditText) dialog.findViewById(R.id.dialogTextEdit1);
-                if(ed != null) {
-                    card.setCard_name(ed.getText().toString());
-                }
-                Repository.addCard(getApplication(), card);
-                dialog.dismiss();
-            }
-        });
-
-        Button button2 = (Button) dialog.findViewById(R.id.button_dialogButton69);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                card.setCard_name("");
-
-                Repository.addCard(getApplication(), card);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
 
     /** Called when the user clicks the reg_new_card button */
     public void registerCard(View view) {
-        // Create intent for opening new activity
-         Intent intent = new Intent(this, RegisterCardActivity.class);
-         startActivityForResult(intent, REQUEST_REGISTER_CARD);}
+         // Finish this activity signalling request to add another
+         setResult(MainActivity.RESULT_ADD_CARD);
+         finish();
+    }
 
     private class RegisterCardListener implements AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> {
 
