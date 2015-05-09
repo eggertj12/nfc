@@ -94,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:popupBackground="@drawable/menu_dropdown_panel_oturgjold"
                 android:focusable="true" />
 
             <Spinner
@@ -102,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:popupBackground="@drawable/menu_dropdown_panel_oturgjold"
                 android:focusable="true" />
 
         </LinearLayout>
