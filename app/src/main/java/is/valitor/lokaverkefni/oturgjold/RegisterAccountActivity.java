@@ -20,6 +20,7 @@ import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterAccountTask;
+import is.valitor.lokaverkefni.oturgjold.utils.DigitGrouper;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterResult;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
@@ -38,6 +39,10 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
         editAccountName = (TextView) findViewById(R.id.editAccountName);
         loadingThings = (ProgressBar) findViewById(R.id.progressBar);
         loadingThings.setVisibility(View.INVISIBLE);
+
+        // Group first 6 numbers of SSN
+        TextView editSsn = (TextView) findViewById(R.id.editAccountSSN);
+        editSsn.addTextChangedListener(new DigitGrouper(6));
     }
 
 
@@ -87,8 +92,9 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
             editAccountName.requestFocus();
             return;
         }
+
         EditText editAccountSSN = (EditText) findViewById(R.id.editAccountSSN);
-        String ssn = editAccountSSN.getText().toString();
+        String ssn = editAccountSSN.getText().toString().replace(String.valueOf(DigitGrouper.space), "");
 
         // Proper validation might be in order
         if (!((ssn.length() != 10 && !(ssn.endsWith("9"))) || !ssn.endsWith("0"))) {

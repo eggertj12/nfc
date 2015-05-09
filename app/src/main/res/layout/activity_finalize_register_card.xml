@@ -65,8 +65,8 @@
             android:text="@string/label_yes_caps"
             android:id="@+id/button_finish_default_card"
             android:onClick="defaultFinish"
-            android:background="@drawable/alt_orange_button"
-            android:textColor="@color/alt_button_text"
+            android:background="@drawable/btn_white_rounded"
+            android:textColor="@color/btn_text_alt"
             android:padding="5dp"
             android:layout_margin="5dp"/>
         <Button
@@ -75,8 +75,8 @@
             android:text="@string/label_no_caps"
             android:id="@+id/reg_new_card"
             android:onClick="registerCard"
-            android:background="@drawable/orange_button"
-            android:textColor="@color/buttontext"
+            android:background="@drawable/btn_orange_rounded"
+            android:textColor="@color/btn_text_default"
             android:padding="5dp"
             android:layout_margin="5dp"/>
     </LinearLayout>

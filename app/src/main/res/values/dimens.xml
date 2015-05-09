@@ -11,6 +11,7 @@
 
     <!-- For Rectangular buttons -->
     <dimen name="button_width">96sp</dimen>
+    <dimen name="button_corner_rounding">2dp</dimen>
 
     <!-- For card fragment. Maybe this absolute dimensions method is crazy -->
     <dimen name="card_name_top_margin">34dp</dimen>
