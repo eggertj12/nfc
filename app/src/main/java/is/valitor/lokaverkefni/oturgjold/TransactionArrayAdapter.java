@@ -52,15 +52,16 @@ public class TransactionArrayAdapter extends ArrayAdapter {
         vendorText.setText(trans.getVendor());
         DecimalFormat dcf = new DecimalFormat("###,###");
         priceText.setText(dcf.format(trans.getPrice()) + " kr.");
-        dateText.setText(new SimpleDateFormat("dd.MM.yyyy").format(trans.getDate()));
+        dateText.setText(new SimpleDateFormat("dd.MM.yyyy  HH:mm").format(trans.getDate()));
+
 
         // Zebra the listbrah
-        if(position % 2 != 0) {
-            rowView.setBackgroundColor(context.getResources().getColor(R.color.background));
+        /*if(position % 2 != 0) {
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.black));
         }
         else {
-            rowView.setBackgroundColor(context.getResources().getColor(R.color.white));
-        }
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.grey05));
+        }*/
 
 
 

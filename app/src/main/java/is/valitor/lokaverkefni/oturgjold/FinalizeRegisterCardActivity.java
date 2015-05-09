@@ -139,14 +139,16 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
     }
 
     public void defaultFinish(View view){
-        setResult(RESULT_OK);
+        setResult(MainActivity.RESULT_ADD_CARD);
+       // setResult(RESULT_OK);
         finish();
     }
 
     /** Called when the user clicks the reg_new_card button */
     public void registerCard(View view) {
          // Finish this activity signalling request to add another
-         setResult(MainActivity.RESULT_ADD_CARD);
+         //setResult(MainActivity.RESULT_ADD_CARD);
+        setResult(RESULT_OK);
          finish();
     }
 

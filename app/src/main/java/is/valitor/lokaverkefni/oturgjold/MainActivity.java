@@ -138,7 +138,7 @@ public class MainActivity extends FragmentActivity {
         // Handle action bar item clicks here.
         int id = item.getItemId();
 
-        final Context ctx = getApplicationContext();
+       // final Context ctx = getApplicationContext();
 
         //Register new card
         if (id == R.id.register_card) {
