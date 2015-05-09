@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class PaymentActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private String pin = "";
-    private TextView stars;
+    private TextView stars[] = new TextView[4];
     private Context context = this;
 
     @Override
@@ -52,7 +52,10 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         Button button11 = (Button) findViewById(R.id.button_pin_back);
         Button cancel = (Button) findViewById(R.id.button_pin_cancel);
 
-        stars = (TextView) findViewById(R.id.pin_stars);
+        stars[0] = (TextView) findViewById(R.id.pin_stars_1);
+        stars[1] = (TextView) findViewById(R.id.pin_stars_2);
+        stars[2] = (TextView) findViewById(R.id.pin_stars_3);
+        stars[3] = (TextView) findViewById(R.id.pin_stars_4);
 
         Typeface icoMoon = Typeface.createFromAsset(getAssets(), "fonts/icomoon.ttf");
         button11.setTypeface(icoMoon);
@@ -175,10 +178,14 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         String entered = "";
 
         for (int i = 0; i < pin.length(); i++) {
-            entered = entered + " \u25c9 ";         // 25cf is also an option
+            //entered = entered + " \u25c9 ";         // 25cf is also an option
+            stars[i].setTextColor(getResources().getColor(R.color.bright_orange));
         }
 
-        stars.setText(entered);
+        for (int i = pin.length(); i < 4; i++) {
+            stars[i].setTextColor(getResources().getColor(R.color.dark_blue));
+        }
+
     }
 
     private void clickToPin(int x) {
@@ -190,7 +197,7 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
             if(pin.length() == 4) {
                 TextView tv = (TextView) findViewById(R.id.textView_pin_message);
-                tv.setTextColor(getResources().getColor(R.color.green));
+                tv.setTextColor(getResources().getColor(R.color.bright_orange));
                 tv.setText(getString(R.string.payment_tap_to_pay));
 
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -213,7 +220,7 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
             showStars();
 
             TextView tv = (TextView) findViewById(R.id.textView_pin_message);
-            tv.setTextColor(getResources().getColor(R.color.black));
+            tv.setTextColor(getResources().getColor(R.color.white));
             tv.setText(getString(R.string.payment_enter_pin));
 
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();

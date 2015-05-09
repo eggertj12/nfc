@@ -21,4 +21,5 @@
 
     <!-- For ActionBar styling. -->
     <dimen name="actionbar_height">80dp</dimen>
+    <dimen name="actionbar_padding">8dp</dimen>
 </resources>

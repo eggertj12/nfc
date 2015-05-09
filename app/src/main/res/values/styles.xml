@@ -17,6 +17,8 @@
         <!-- Customize Action Bar -->
         <item name="android:background">@color/headerBlue</item>
         <item name="android:height">@dimen/actionbar_height</item>
+        <!--        <item name="android:paddingTop">@dimen/actionbar_padding</item>
+                <item name="android:paddingBottom">@dimen/actionbar_padding</item>-->
         <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
     </style>
 
@@ -31,9 +33,21 @@
         <item name="android:layout_weight">1</item>
         <item name="android:padding">5dp</item>
         <item name="android:layout_margin">5dp</item>
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:background">@drawable/button_payment</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textColor">@color/buttontext</item>
+    </style>
+
+    <style name="PinStar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">\u25cf</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
     </style>
 </resources>

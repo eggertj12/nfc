@@ -22,4 +22,8 @@
     <color name="alt_button_text">#EB6A0E</color>
     <color name="text_grey">#a051524D</color>
 
+    <color name="dark_blue">#00273d</color>
+    <color name="bright_orange">#eba532</color>
+    <color name="dark_orange">#ed5e2d</color>
+
 </resources>
