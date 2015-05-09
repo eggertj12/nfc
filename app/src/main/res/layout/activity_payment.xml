@@ -14,7 +14,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:background="@color/background"
+        android:background="@drawable/leather_background"
         tools:context="is.valitor.lokaverkefni.oturgjold.PaymentActivity">
 
         <LinearLayout
@@ -40,35 +40,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pin_seekBar">
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="1"
                 android:id="@+id/button_pin_1"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="2"
                 android:id="@+id/button_pin_2"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="3"
                 android:id="@+id/button_pin_3"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/pin_row2"
@@ -76,35 +58,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pin_row1">
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="4"
                 android:id="@+id/button_pin_4"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="5"
                 android:id="@+id/button_pin_5"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="6"
                 android:id="@+id/button_pin_6"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/pin_row3"
@@ -112,36 +76,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pin_row2">
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="7"
                 android:id="@+id/button_pin_7"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="8"
                 android:id="@+id/button_pin_8"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="9"
                 android:id="@+id/button_pin_9"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/pin_row4"
@@ -151,39 +97,20 @@
             android:layout_gravity="center_horizontal"
             >
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/button_pin_back"
-                android:text="\u2190"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                android:text="\uE602"
+                android:textSize="20sp"
+                style="@style/ButtonPayment" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="0"
                 android:id="@+id/button_pin_0"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext" />
+                style="@style/ButtonPayment" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/button_pin_cancel"
-                android:text="@string/label_cancel_short"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/buttontext"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:paddingLeft="0dp"
-                android:paddingRight="0dp" />
+                android:text=""
+                style="@style/ButtonPayment"
+                android:clickable="false"
+                android:enabled="false" />
         </LinearLayout>
 
         <TextView

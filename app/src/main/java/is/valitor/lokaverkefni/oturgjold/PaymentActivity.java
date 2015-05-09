@@ -3,6 +3,7 @@ package is.valitor.lokaverkefni.oturgjold;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -53,6 +54,8 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
         stars = (TextView) findViewById(R.id.pin_stars);
 
+        Typeface icoMoon = Typeface.createFromAsset(getAssets(), "fonts/icomoon.ttf");
+        button11.setTypeface(icoMoon);
 
 
         button1.setOnClickListener(new View.OnClickListener() {

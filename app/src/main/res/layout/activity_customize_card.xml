@@ -85,7 +85,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onSelectCardImage"
-            android:src="@drawable/ic_abs_brown_creditcard" />
+            android:src="@drawable/ic_abs_brown_creditcard"
+            android:background="@null" />
 
         <ImageButton
             android:id="@+id/ibAbsBlue"
@@ -94,7 +95,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onSelectCardImage"
-            android:src="@drawable/ic_abs_blue_creditcard" />
+            android:src="@drawable/ic_abs_blue_creditcard"
+            android:background="@null" />
 
         <ImageButton
             android:id="@+id/ibAbsRed"
@@ -103,7 +105,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onSelectCardImage"
-            android:src="@drawable/ic_abs_red_creditcard" />
+            android:src="@drawable/ic_abs_red_creditcard"
+            android:background="@null" />
 
 
     </LinearLayout>
@@ -124,7 +127,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onSelectCardImage"
-            android:src="@drawable/ic_rain_cyan_creditcard" />
+            android:src="@drawable/ic_rain_cyan_creditcard"
+            android:background="@null" />
 
         <ImageButton
             android:id="@+id/ibRainBlue"
@@ -133,7 +137,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onSelectCardImage"
-            android:src="@drawable/ic_rain_blue_creditcard" />
+            android:src="@drawable/ic_rain_blue_creditcard"
+            android:background="@null" />
 
         <ImageButton
             android:id="@+id/ibRainRed"
@@ -142,7 +147,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onSelectCardImage"
-            android:src="@drawable/ic_rain_red_creditcard" />
+            android:src="@drawable/ic_rain_red_creditcard"
+            android:background="@null" />
     </LinearLayout>
     <!-- !!! -->
     <Button
