@@ -33,7 +33,6 @@
     <string name="label_cancel_short">Hætta</string>
     <string name="label_finalize_card">Skrá</string>
     <string name="label_customize_nick">Kenninafn</string>
-    <string name="label_up_arrow">\u2191</string>
     <string name="label_yes_caps">JÁ</string>
     <string name="label_no_caps">NEI</string>
 
@@ -50,10 +49,9 @@
     <string name="error_general">Óþekkt villa, hafðu samband við þjónustudeild</string>
     <string name="error_register_card">Villa í innslætti. Kort var ekki skráð</string>
 
-
-    <string name="hello_world">Hello world!</string>
     <string name="enter_pin">Sláðu inn PIN</string>
     <string name="pin">PIN</string>
+    <string name="pay">Greiða</string>
 
 
     <string name="action_getBalance">Sækja stöðu korts</string>

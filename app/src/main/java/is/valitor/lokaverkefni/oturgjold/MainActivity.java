@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,11 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // To prevent flash of action bar for initial screen
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
+
         setContentView(R.layout.activity_main);
 
         // In case we hit back, or system constrains us into recreating with HCE intent
@@ -85,6 +92,7 @@ public class MainActivity extends FragmentActivity {
         }
 
         Typeface icoMoon = Typeface.createFromAsset(getAssets(), "fonts/icomoon.ttf");
+        ((TextView) findViewById(R.id.main_register_account)).setTypeface(icoMoon);
         ((TextView) findViewById(R.id.button_payment)).setTypeface(icoMoon);
     }
 
@@ -255,35 +263,50 @@ public class MainActivity extends FragmentActivity {
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
         ArrayList<Card> cards = Repository.getCards(getApplication());
-        Button registerUserButton = (Button) findViewById(R.id.button_register_account);
+
+
+        Button registerUserButton = (Button) findViewById(R.id.main_register_account);
         Button paymentButton = (Button) findViewById(R.id.button_payment);
 
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
-        ViewPager vp = (ViewPager) findViewById(R.id.cardPager);
+        View registerLayout = findViewById(R.id.sublayout_register);
+        View paymentLayout = findViewById(R.id.sublayout_payment);
 
-        paymentButton.setVisibility(View.INVISIBLE);
-        registerUserButton.setVisibility(View.VISIBLE);
+        ViewPager vp = (ViewPager) findViewById(R.id.cardPager);
+        ImageView startLogo = (ImageView) findViewById(R.id.startLogo);
+
+//        paymentButton.setVisibility(View.INVISIBLE);
+//        registerUserButton.setVisibility(View.VISIBLE);
 
         if (user == null) {
-            Log.d("jo", "user null");
-            paymentButton.setVisibility(View.INVISIBLE);
+            getActionBar().hide();
+
+            paymentLayout.setVisibility(View.INVISIBLE);
+            registerLayout.setVisibility(View.VISIBLE);
 
             vp.setVisibility(View.INVISIBLE);
+            startLogo.setVisibility(View.VISIBLE);
             mainLayout.setWeightSum(1);
 
         } else if(cards.size() == 0){
-            paymentButton.setVisibility(View.INVISIBLE);
-            registerUserButton.setVisibility(View.INVISIBLE);
+            getActionBar().show();
+
+            // Should never happen, but just in case
+            paymentLayout.setVisibility(View.INVISIBLE);
+            registerLayout.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.INVISIBLE);
+            startLogo.setVisibility(View.VISIBLE);
             mainLayout.setWeightSum(1);
         }
         else {
-            Log.d("hello", "user not null");
-            paymentButton.setVisibility(View.VISIBLE);
-            registerUserButton.setVisibility(View.INVISIBLE);
+            getActionBar().show();
+
+            paymentLayout.setVisibility(View.VISIBLE);
+            registerLayout.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.VISIBLE);
+            startLogo.setVisibility(View.INVISIBLE);
             mainLayout.setWeightSum(2);
         }
     }
