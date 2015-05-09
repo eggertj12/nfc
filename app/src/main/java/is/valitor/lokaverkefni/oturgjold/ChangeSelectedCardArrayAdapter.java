@@ -46,9 +46,9 @@ public class ChangeSelectedCardArrayAdapter extends ArrayAdapter {
         lastFour.setText(context.getResources().getString(R.string.card_number_xes) + card.getLast_four());
 
         // Set background color of currently selected card to background blue
-        if(card.getCard_id() == Repository.getSelectedCard(context).getCard_id()) {
+       /* if(card.getCard_id() == Repository.getSelectedCard(context).getCard_id()) {
             rowView.setBackgroundColor(context.getResources().getColor(R.color.background));
-        };
+        };*/
 
         // Return the filled out view
         return rowView;

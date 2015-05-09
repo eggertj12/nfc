@@ -72,7 +72,7 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         String nickName = intent.getStringExtra(CustomizeCardActivity.MSG_NICKNAME);
 
 
-        System.out.println(cardNumber);
+//        System.out.println(cardNumber);
 
         // Having registered a card, you are now happy to return to main view
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
@@ -118,38 +118,18 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tokenize_card, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void defaultFinish(View view){
-        setResult(MainActivity.RESULT_ADD_CARD);
-       // setResult(RESULT_OK);
+       setResult(MainActivity.RESULT_ADD_CARD);
+       //setResult(RESULT_OK);
         finish();
     }
 
     /** Called when the user clicks the reg_new_card button */
     public void registerCard(View view) {
          // Finish this activity signalling request to add another
-         //setResult(MainActivity.RESULT_ADD_CARD);
+        // setResult(MainActivity.RESULT_ADD_CARD);
         setResult(RESULT_OK);
-         finish();
+        finish();
     }
 
     // onTaskComplete is called once the task has completed.
