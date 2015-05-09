@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+
 public class CustomizeCardActivity extends Activity {
 
     private static final int REQUEST_REGISTER_CARD = 1;
@@ -46,28 +48,6 @@ public class CustomizeCardActivity extends Activity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_card_customization, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private String getCustomizePin() {
 
         EditText pin = (EditText) findViewById(R.id.customize_pin_inputfield);
@@ -78,8 +58,9 @@ public class CustomizeCardActivity extends Activity {
     private String getCustomizeNick() {
         EditText getNick = (EditText) findViewById(R.id.customize_nick_input);
         String nick = getNick.getText().toString();
-        if(nick == null) {
-            nick = "";
+        if(nick == null || nick.trim().equals("")) {
+           int size = Repository.getCardCount(this);
+            nick = "Kort " + String.valueOf(size+1);
         }
 
         return nick;
