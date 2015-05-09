@@ -44,6 +44,7 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
     private ProgressBar loadingThings;
     private Button defaultFinishButton;
     private Button continueRegisterCard;
+    private TextView sendRequest;
     private static final int REQUEST_REGISTER_CARD = 2;
 
     private Card card = null;
@@ -53,9 +54,11 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finalize_register_card);
+        sendRequest = (TextView) findViewById(R.id.serviceRequest);
         responseDisplay = (TextView) findViewById(R.id.serviceResponse);
         nextActionPrompt = (TextView) findViewById(R.id.finalize_next_action);
         loadingThings = (ProgressBar) findViewById(R.id.tokCardProgressBar);
+
 
         Intent intent = getIntent();
         // Lets get get the card data, temporary storage only ofc
@@ -151,6 +154,7 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
     @Override
     public void onTaskComplete(RegisterResult result) {
 
+        sendRequest.setVisibility(View.INVISIBLE);
         loadingThings.setVisibility(View.INVISIBLE);
         defaultFinishButton.setVisibility(View.VISIBLE);
         continueRegisterCard.setVisibility(View.VISIBLE);
@@ -192,10 +196,7 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         }else{
             Toast.makeText(this,result.getResultContent(),Toast.LENGTH_LONG).show();
             finish();
-
         }
 
     }
-
-
 }
