@@ -59,6 +59,24 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/sublayout_add_card"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/main_register_card"
+                style="@style/ButtonOrangeRounded"
+                android:clickable="true"
+                android:enabled="true"
+                android:onClick="registerCard"
+                android:text="@string/button_register_card" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/sublayout_payment"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"

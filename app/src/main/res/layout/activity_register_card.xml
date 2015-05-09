@@ -1,70 +1,70 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="is.valitor.oturgjold.app.RegisterCardActivity"
     android:fillViewport="true"
-    >
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/leather_background"
+    tools:context="is.valitor.oturgjold.app.RegisterCardActivity">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:weightSum="1"
-        android:background="@drawable/leather_background">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <TextView
+            android:id="@+id/titleCardHolderName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_cardholder_name"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/inputblock_vertical_margin"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:id="@+id/titleCardHolderName" />
+            android:layout_marginTop="@dimen/inputblock_vertical_margin"
+            android:text="@string/label_cardholder_name" />
 
         <TextView
+            android:id="@+id/cardholderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/cardholderName" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_card_number"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/inputblock_vertical_margin"
-            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editCardNumber"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
             android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:inputType="number"
+            android:layout_marginTop="@dimen/inputblock_vertical_margin"
+            android:text="@string/label_card_number" />
+
+        <EditText
+            android:id="@+id/editCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
             android:digits="0123456789 "
-            android:maxLength="19"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="19" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_validity"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+            android:text="@string/label_validity" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,95 +74,98 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_month"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/label_month" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_year"
-                android:layout_weight="1"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinnerValidityMonth"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:focusable="true"
-
-                        />
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinnerValidityYear"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:focusable="true"/>
+                android:layout_weight="1"
+                android:text="@string/label_year" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
+
+            <Spinner
+                android:id="@+id/spinnerValidityMonth"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_cvv"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/inputblock_vertical_margin"
-                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-                android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
-            <!-- For keeping weight -->
-            <TextView
-                android:layout_width="match_parent"
+                android:focusable="true" />
+
+            <Spinner
+                android:id="@+id/spinnerValidityYear"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/inputblock_vertical_margin"
-                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-                android:layout_marginRight="@dimen/inputblock_horzontal_margin" />
+                android:focusable="true" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editCardCvv"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
                 android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:layout_marginTop="@dimen/inputblock_vertical_margin"
+                android:layout_weight="1"
+                android:text="@string/label_cvv" />
+            <!-- For keeping weight -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:layout_marginTop="@dimen/inputblock_vertical_margin"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editCardCvv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:layout_weight="1"
                 android:inputType="number"
-                android:maxLength="4"/>
+                android:maxLength="4" />
 
             <!-- For keeping weight -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/inputblock_horzontal_margin"
-                android:layout_marginRight="@dimen/inputblock_horzontal_margin"/>
+                android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+                android:layout_weight="1" />
         </LinearLayout>
 
-        <Button
-            android:layout_width="@dimen/button_width"
-            android:layout_height="wrap_content"
-            android:text="@string/label_next"
-            android:layout_gravity="right"
-            android:clickable="true"
-            android:nestedScrollingEnabled="true"
-            android:onClick="createCardNext"
-            android:layout_marginTop="@dimen/inputblock_vertical_margin"
-            android:layout_marginRight="@dimen/inputblock_horzontal_margin"
-            android:background="@drawable/orange_button"
-            android:id="@+id/button_register_card_next"
-            android:textColor="@color/buttontext" />
 
     </LinearLayout>
-</ScrollView>
+
+    <Button
+        android:id="@+id/button_register_card_next"
+        style="@style/ButtonOrangeRounded"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/inputblock_vertical_margin"
+        android:layout_marginRight="@dimen/inputblock_horzontal_margin"
+        android:clickable="true"
+        android:nestedScrollingEnabled="true"
+        android:onClick="createCardNext"
+        android:text="@string/label_next" />
+</RelativeLayout>
+

@@ -33,7 +33,7 @@ import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
 public class MainActivity extends FragmentActivity {
-    public static final int RESULT_ADD_CARD = 0;
+    public static final int RESULT_ADD_CARD = 1;
 
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;
@@ -270,6 +270,7 @@ public class MainActivity extends FragmentActivity {
 
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
         View registerLayout = findViewById(R.id.sublayout_register);
+        View addCardLayout = findViewById(R.id.sublayout_add_card);
         View paymentLayout = findViewById(R.id.sublayout_payment);
 
         ViewPager vp = (ViewPager) findViewById(R.id.cardPager);
@@ -282,6 +283,7 @@ public class MainActivity extends FragmentActivity {
             getActionBar().hide();
 
             paymentLayout.setVisibility(View.INVISIBLE);
+            addCardLayout.setVisibility(View.INVISIBLE);
             registerLayout.setVisibility(View.VISIBLE);
 
             vp.setVisibility(View.INVISIBLE);
@@ -293,6 +295,7 @@ public class MainActivity extends FragmentActivity {
 
             // Should never happen, but just in case
             paymentLayout.setVisibility(View.INVISIBLE);
+            addCardLayout.setVisibility(View.VISIBLE);
             registerLayout.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.INVISIBLE);
@@ -303,6 +306,7 @@ public class MainActivity extends FragmentActivity {
             getActionBar().show();
 
             paymentLayout.setVisibility(View.VISIBLE);
+            addCardLayout.setVisibility(View.INVISIBLE);
             registerLayout.setVisibility(View.INVISIBLE);
 
             vp.setVisibility(View.VISIBLE);
