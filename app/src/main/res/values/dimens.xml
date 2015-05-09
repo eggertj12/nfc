@@ -20,6 +20,5 @@
     <dimen name="card_balance_right_margin">4dp</dimen>
 
     <!-- For ActionBar styling. -->
-    <dimen name="actionbar_height">80dp</dimen>
-    <dimen name="actionbar_padding">8dp</dimen>
+    <dimen name="actionbar_height">60sp</dimen>
 </resources>
