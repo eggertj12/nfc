@@ -33,10 +33,11 @@ import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
+import is.valitor.lokaverkefni.oturgjold.service.RegisterResult;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
-public class FinalizeRegisterCardActivity extends Activity {
+public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskCompleteListener<RegisterResult>{
 
     private TextView responseDisplay;
     private TextView nextActionPrompt;
@@ -65,6 +66,8 @@ public class FinalizeRegisterCardActivity extends Activity {
         String cardMonth = intent.getStringExtra(CustomizeCardActivity.MSG_CARDMONTH);
         String cardYear = intent.getStringExtra(CustomizeCardActivity.MSG_CARDYEAR);
         String cardPin = intent.getStringExtra(CustomizeCardActivity.MSG_CARDPIN);
+        String nickName = intent.getStringExtra(CustomizeCardActivity.MSG_NICKNAME);
+
 
         System.out.println(cardNumber);
 
@@ -94,7 +97,7 @@ public class FinalizeRegisterCardActivity extends Activity {
             // Ensure connection
             if (NetworkUtil.isConnected(getApplication())) {
                 // Communicate with service
-                new RegisterCardTask(this, new RegisterCardListener())
+                new RegisterCardTask(getApplication(),this)
                         .execute(getString(R.string.service_card_url), outMsg.toString());
             }
             else {
@@ -144,72 +147,55 @@ public class FinalizeRegisterCardActivity extends Activity {
          finish();
     }
 
-    private class RegisterCardListener implements AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> {
+    // onTaskComplete is called once the task has completed.
+    @Override
+    public void onTaskComplete(RegisterResult result) {
 
-        // onTaskComplete is called once the task has completed.
-        @Override
-        public void onTaskComplete(AsyncTaskResult<JSONObject> result)
+        loadingThings.setVisibility(View.INVISIBLE);
+        defaultFinishButton.setVisibility(View.VISIBLE);
+        continueRegisterCard.setVisibility(View.VISIBLE);
+
+        //Registration was succsessful
+        if(result.getResultCode()==200)
         {
-            if (result.getError() != null) {
-                // display error
-                Exception error = result.getError();
-                CharSequence message;
-                if (error instanceof IOException) {
-                    error.printStackTrace();
-                    message = getString(R.string.error_general_network);
+            responseDisplay.setVisibility(View.VISIBLE);
+            nextActionPrompt.setVisibility(View.VISIBLE);
+            try{
 
-                } else {
-                    message = getString(R.string.error_general);
-                }
-                Toast toast = Toast.makeText(FinalizeRegisterCardActivity.this, message, Toast.LENGTH_LONG);
-                toast.show();
+                //Retrieve the content from the response and add to repository
+                Gson gson = new Gson();
+                Card c = gson.fromJson(result.getResultContent().toString(), Card.class);
 
-                return;
+
+                c.setCard_name(getIntent().getStringExtra(CustomizeCardActivity.MSG_NICKNAME));
+                c.setCard_image(getIntent().getStringExtra(CustomizeCardActivity.MSG_CARDIMAGE));
+                String cardNumber = getIntent().getStringExtra(CustomizeCardActivity.MSG_CARDNUMBER);
+                c.setLast_four(cardNumber.substring(cardNumber.length() -4));
+                Repository.addCard(this,c);
+
+                //Getting ready to request for tokens for this new card
+                User theUser = Repository.getUser(getApplicationContext());
+
+                Token token = new Token();
+                token.setUsr_id(theUser.getUsr_id());
+                token.setDevice_id(theUser.getDevice_id());
+                token.setCard_id(c.getCard_id());
+
+                String tokenJson = gson.toJson(token, Token.class);
+                new GetTokenTask(getApplicationContext()).execute(getString(R.string.service_token_url), tokenJson);
+
+
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
-            JSONObject response = result.getResult();
-
-            int rCode = response.optInt("responseCode");
-            loadingThings.setVisibility(View.INVISIBLE);
-            defaultFinishButton.setVisibility(View.VISIBLE);
-            continueRegisterCard.setVisibility(View.VISIBLE);
-
-            if(rCode == 200) {
-                responseDisplay.setVisibility(View.VISIBLE);
-                nextActionPrompt.setVisibility(View.VISIBLE);
-                try {
-                    Gson gson = new Gson();
-                    card = gson.fromJson(response.toString(), Card.class);
-                    String cardNumber = response.getString("cardnumber");
-                    card.setLast_four(cardNumber.substring(cardNumber.length() - 4));
-                    card.setTokenized_card_number(cardNumber);
-                    card.setTokenized_cvv(response.getString("cvv"));
-                    card.setTokenized_validation(response.getString("validity"));
-                    card.setCard_name(getIntent().getStringExtra("Nickname"));
-                    card.setCard_image(getIntent().getStringExtra(CustomizeCardActivity.MSG_CARDIMAGE));
-
-                    Repository.addCard(getApplicationContext(), card);
-
-                    User theUser = Repository.getUser(getApplicationContext());
-
-                    Token token = new Token();
-                    token.setUsr_id(theUser.getUsr_id());
-                    token.setDevice_id(theUser.getDevice_id());
-                    token.setCard_id(card.getCard_id());
-
-                    String tokenJson = gson.toJson(token, Token.class);
-                    new GetTokenTask(getApplicationContext()).execute(getString(R.string.service_token_url), tokenJson);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                System.out.println(rCode);
-            }
+        }else{
+            Toast.makeText(this,result.getResultContent(),Toast.LENGTH_LONG).show();
+            finish();
 
         }
 
     }
+
 
 }

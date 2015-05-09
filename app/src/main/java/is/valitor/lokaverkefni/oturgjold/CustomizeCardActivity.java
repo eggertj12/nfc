@@ -20,6 +20,7 @@ public class CustomizeCardActivity extends Activity {
     public static final String MSG_CARDYEAR = "is.valitor.oturgjold.MSG_CARDYEAR";
     public static final String MSG_CARDPIN ="is.valitor.oturgjold.MSG_CARDPIN";
     public static final String MSG_CARDIMAGE ="is.valitor.oturgjold.MSG_CARDIMAGE";
+    public static final String MSG_NICKNAME ="is.valitor.oturgjold.MSG_CARDNICKNAME";
 
     private static final int thumbs[] = {
             R.id.ibAbsBrown,
@@ -133,7 +134,7 @@ public class CustomizeCardActivity extends Activity {
         intent.putExtra(MSG_CARDYEAR, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR));
         intent.putExtra(MSG_CARDPIN, getCustomizePin());
         intent.putExtra(MSG_CARDIMAGE, cardImage);
-        intent.putExtra("Nickname", getCustomizeNick());
+        intent.putExtra(MSG_NICKNAME, getCustomizeNick());
 
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }

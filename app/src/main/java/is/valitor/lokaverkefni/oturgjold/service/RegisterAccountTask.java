@@ -116,23 +116,7 @@ public class RegisterAccountTask extends AsyncTask<String, Void, RegisterResult>
             }
         }
         return result;
-            //System.out.println(is.available());
-            /*result = readJSON(is, 5000);
-            try {
-                ret.put("responseCode", response);
-                ret.put("sentMessage", msg);
-            }
-            catch(Exception e) {
-                e.printStackTrace();
-            }
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
-        return ret;*/
+
     }
     private String readInput(final InputStream stream, int length)
     {
@@ -147,22 +131,4 @@ public class RegisterAccountTask extends AsyncTask<String, Void, RegisterResult>
             return "";
         }
     }
-    // Reads an InputStream and converts it to a JSONObject.
-    /*JSONObject readJSON(InputStream stream, int len) throws IOException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-
-        String msg = new String(buffer);
-        JSONObject ret = new JSONObject();
-        try {
-            ret = new JSONObject(msg);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return ret;
-    }*/
-
 }

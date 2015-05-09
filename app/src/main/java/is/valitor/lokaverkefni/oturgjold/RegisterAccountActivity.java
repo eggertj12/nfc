@@ -132,7 +132,7 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
 
         if(result.getResultCode() == 200)
         {
-            Toast.makeText(this, result.getResultMessage(),Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, result.getResultMessage(),Toast.LENGTH_LONG).show();
                 try {
                     Gson gson = new Gson();
                     User user = gson.fromJson(result.getResultContent().toString(), User.class);

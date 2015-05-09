@@ -17,12 +17,13 @@ import java.net.URL;
 /**
  * Created by eggert on 27/03/15.
  */
-public class RegisterCardTask extends AsyncTask<String, Void, AsyncTaskResult<JSONObject>> {
+public class RegisterCardTask extends AsyncTask<String, Void, RegisterResult> {
 
     private Context context;
-    private AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> listener;
+    private AsyncTaskCompleteListener<RegisterResult> listener;
+    private Exception exception;
 
-    public RegisterCardTask(Context ctx, AsyncTaskCompleteListener<AsyncTaskResult<JSONObject>> listener)
+    public RegisterCardTask(Context ctx, AsyncTaskCompleteListener<RegisterResult> listener)
     {
         this.context = ctx;
         this.listener = listener;
@@ -34,31 +35,31 @@ public class RegisterCardTask extends AsyncTask<String, Void, AsyncTaskResult<JS
     }
 
     @Override
-    protected AsyncTaskResult<JSONObject> doInBackground(String... params)
+    protected RegisterResult doInBackground(String... params)
     {
         try {
             // params comes from the execute() call: params[0] is the url.
-            return new AsyncTaskResult<JSONObject>(postUrl(params[0], params[1]));
+            return postUrl(params[0], params[1]);
         } catch (IOException e) {
-            return new AsyncTaskResult<JSONObject>(e);
+            return null;
         } catch (Exception e) {
-            return new AsyncTaskResult<JSONObject>(e);
+            this.exception = e;
         }
+        return null;
     }
 
     @Override
-    protected void onPostExecute(AsyncTaskResult<JSONObject> result)
+    protected void onPostExecute(RegisterResult result)
     {
         super.onPostExecute(result);
         listener.onTaskComplete(result);
     }
-
-    private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
+    private RegisterResult postUrl(String serviceURL, String json_accountInfo) throws IOException {
         InputStream is = null;
 
         // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
         JSONObject msg = new JSONObject();
-        JSONObject ret = new JSONObject();
+        RegisterResult result = new RegisterResult();
         try {
             msg = new JSONObject(json_accountInfo);
         } catch (Exception e) {
@@ -94,41 +95,36 @@ public class RegisterCardTask extends AsyncTask<String, Void, AsyncTaskResult<JS
             String responseMessage = conn.getResponseMessage();
             System.out.println("The response message is: " + responseMessage);
 
-            // Convert the InputStream into a string
-            is = conn.getInputStream();
-            //System.out.println(is.available());
-            ret = readJSON(is, 5000);
-            try {
-                ret.put("sentMessage", msg);
-                ret.put("responseCode", response);
-            } catch (Exception e) {
-                e.printStackTrace();
+            //handle the result
+            result.setResultCode(conn.getResponseCode());
+            result.setResultMessage(conn.getResponseMessage());
+
+            if (result.getResultCode() == 200) {
+                is = conn.getInputStream();
+            } else {
+                is = conn.getErrorStream();
             }
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
+            result.setResultContent(readInput(is, conn.getContentLength()));
         } finally {
             if (is != null) {
                 is.close();
             }
         }
-        return ret;
+        return result;
     }
 
-    // Reads an InputStream and converts it to a JSONObject.
-    private JSONObject readJSON(InputStream stream, int len) throws IOException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-
-        String msg = new String(buffer);
-        JSONObject ret = new JSONObject();
-        try {
-            ret = new JSONObject(msg);
-        } catch (Exception e) {
-            e.printStackTrace();
+        private String readInput(final InputStream stream, int length)
+        {
+            try{
+                Reader reader = null;
+                reader = new InputStreamReader(stream, "UTF-8");
+                char[] buffer = new char[length];
+                reader.read(buffer);
+                return new String(buffer);
+            }catch(Exception ex)
+            {
+                return "";
+            }
         }
-        return ret;
-    }
 
 }
