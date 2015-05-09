@@ -47,7 +47,7 @@
         <Button
             android:layout_width="140dp"
             android:layout_height="80dp"
-            android:text="Greiða"
+            android:text="\uE600"
             android:id="@+id/button_payment"
             android:layout_gravity="center_horizontal"
             android:clickable="true"

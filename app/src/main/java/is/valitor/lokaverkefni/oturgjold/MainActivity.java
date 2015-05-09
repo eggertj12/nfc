@@ -3,6 +3,7 @@ package is.valitor.lokaverkefni.oturgjold;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -82,6 +83,9 @@ public class MainActivity extends FragmentActivity {
         if (Repository.getCardCount(getApplication()) > 0) {
             viewPager.setCurrentItem(Repository.getSelectedCardIndex(getApplication()));
         }
+
+        Typeface icoMoon = Typeface.createFromAsset(getAssets(), "fonts/icomoon.ttf");
+        ((TextView) findViewById(R.id.button_payment)).setTypeface(icoMoon);
     }
 
 
@@ -275,7 +279,7 @@ public class MainActivity extends FragmentActivity {
             mainLayout.setWeightSum(1);
         }
         else {
-            Log.d("hello","user not null");
+            Log.d("hello", "user not null");
             paymentButton.setVisibility(View.VISIBLE);
             registerUserButton.setVisibility(View.INVISIBLE);
 

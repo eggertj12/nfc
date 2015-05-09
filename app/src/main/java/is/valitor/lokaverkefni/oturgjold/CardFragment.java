@@ -49,7 +49,7 @@ public class CardFragment extends Fragment {
         ctx = getActivity().getApplication();
 
         TextView cardNumber = (TextView) rootView.findViewById(R.id.fragmentCardNumber);
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "ocr_a_std.ttf");
+        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ocr_a_std.ttf");
         cardNumber.setTypeface(font);
 
         drawUI();
