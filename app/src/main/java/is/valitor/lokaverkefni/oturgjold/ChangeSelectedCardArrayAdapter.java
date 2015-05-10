@@ -49,8 +49,19 @@ public class ChangeSelectedCardArrayAdapter extends ArrayAdapter {
         cardIcon.setTypeface(tf);
         radioButton.setTypeface(tf);
 
+        //Get the selected card
+        Card c =  Repository.getSelectedCard(context);
 
-        // Set values to text boxes from transaction row
+
+        if(card.getCard_id()== c.getCard_id())
+        {
+            radioButton.setText(context.getResources().getString(R.string.selected_card));
+            radioButton.setTextColor(context.getResources().getColor(R.color.orange4));
+        }else{
+            // Set values to text boxes from transaction row
+            radioButton.setText(context.getResources().getString(R.string.not_selected_card));
+        }
+
         cardNameText.setText(card.getCard_name());
         lastFour.setText(context.getResources().getString(R.string.card_number_xes) + card.getLast_four());
 

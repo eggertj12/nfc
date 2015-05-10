@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
@@ -45,6 +46,7 @@ public class CustomizeCardActivity extends Activity {
             button = (ImageButton) findViewById(thumbs[i]);
             button.setColorFilter(R.color.grey05trans);
         }
+        findViewById(R.id.customize_pin_inputfield).requestFocus();
     }
 
 
@@ -107,15 +109,24 @@ public class CustomizeCardActivity extends Activity {
         Intent oldIntent = getIntent();
         Intent intent = new Intent(this, FinalizeRegisterCardActivity.class);
 
+        // Validate app PIN
+        if(getCustomizePin().length() != 4) {
+            CharSequence message = getResources().getString(R.string.error_customize_pin_length);
+            Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+            toast.show();
+            findViewById(R.id.customize_pin_inputfield).requestFocus();
+            return;
+        }
+
         intent.putExtra(MSG_CARDNUMBER, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDNUMBER));
         intent.putExtra(MSG_CARDTYPE, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDTYPE));
         intent.putExtra(MSG_CARDHOLDER, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDHOLDER));
         intent.putExtra(MSG_CARDCVV, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDCVV));
         intent.putExtra(MSG_CARDMONTH, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDMONTH));
         intent.putExtra(MSG_CARDYEAR, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDYEAR));
-        intent.putExtra(MSG_CARDPIN, getCustomizePin());
         intent.putExtra(MSG_CARDIMAGE, cardImage);
         intent.putExtra(MSG_NICKNAME, getCustomizeNick());
+        intent.putExtra(MSG_CARDPIN, getCustomizePin());
 
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }

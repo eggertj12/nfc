@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Radio buttons in cardslist-->
+    <string name="selected_card">\uea54</string>
+    <string name="not_selected_card">\uea56</string>
+
+
     <!-- Texts on buttons -->
     <string name="button_register_card">Skrá kort</string>
     <string name="button_register_account">Nýskráning</string>
@@ -48,6 +53,7 @@
     <string name="error_general_network">Villa í nettengingu, reyndu aftur</string>
     <string name="error_general">Óþekkt villa, hafðu samband við þjónustudeild</string>
     <string name="error_register_card">Villa í innslætti. Kort var ekki skráð</string>
+    <string name="error_customize_pin_length">PIN þarf að vera fjórir stafir.</string>
 
     <string name="enter_pin">Sláðu inn PIN</string>
     <string name="pin">PIN</string>

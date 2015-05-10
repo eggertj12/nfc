@@ -20,10 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.StringReader;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
@@ -150,8 +152,9 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
 
                 //Retrieve the content from the response and add to repository
                 Gson gson = new Gson();
-                Card c = gson.fromJson(result.getResultContent().toString(), Card.class);
-
+                JsonReader jr = new JsonReader(new StringReader(result.getResultContent()));
+                jr.setLenient(true);
+                Card c = gson.fromJson(jr, Card.class);
 
                 c.setCard_name(getIntent().getStringExtra(CustomizeCardActivity.MSG_NICKNAME));
                 c.setCard_image(getIntent().getStringExtra(CustomizeCardActivity.MSG_CARDIMAGE));
