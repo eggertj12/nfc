@@ -157,7 +157,6 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         String entered = "";
 
         for (int i = 0; i < pin.length(); i++) {
-            //entered = entered + " \u25c9 ";         // 25cf is also an option
             stars[i].setTextColor(getResources().getColor(R.color.bright_orange));
         }
 

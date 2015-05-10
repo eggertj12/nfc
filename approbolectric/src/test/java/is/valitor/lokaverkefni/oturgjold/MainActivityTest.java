@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -32,13 +33,20 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class MainActivityTest {
 
+    Activity activity;
+    View reg_acc;
+    View reg_card;
+    View pay;
+    View vp;
+
     @Test
     public void InitialActivityTest()
     {
-        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
-        Button reg_acc = (Button) activity.findViewById(R.id.button_register_account);
-        Button reg_card = (Button) activity.findViewById(R.id.button_register_card);
-        Button pay = (Button) activity.findViewById(R.id.button_payment);
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        reg_acc = activity.findViewById(R.id.sublayout_register);
+        reg_card = activity.findViewById(R.id.sublayout_add_card);
+        pay = activity.findViewById(R.id.payment_button_layout);
+        vp = activity.findViewById(R.id.card_pager_layout);
 
         // Check visibility of UI elements, only register user button should be visible
         assertTrue(reg_acc.getVisibility() == View.VISIBLE);
@@ -54,11 +62,11 @@ public class MainActivityTest {
         User user = new User();
         Repository.setUser(ctx, user);
 
-        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
-        Button reg_acc = (Button) activity.findViewById(R.id.button_register_account);
-        Button reg_card = (Button) activity.findViewById(R.id.button_register_card);
-        Button pay = (Button) activity.findViewById(R.id.button_payment);
-        ViewPager vp = (ViewPager) activity.findViewById(R.id.cardPager);
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        reg_acc = activity.findViewById(R.id.sublayout_register);
+        reg_card = activity.findViewById(R.id.sublayout_add_card);
+        pay = activity.findViewById(R.id.payment_button_layout);
+        vp = activity.findViewById(R.id.card_pager_layout);
 
         // Check visibility of UI elements, now register card should be visible
         assertTrue(reg_acc.getVisibility() == View.INVISIBLE);
@@ -77,11 +85,11 @@ public class MainActivityTest {
         Card card = new Card();
         Repository.addCard(ctx, card);
 
-        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
-        Button reg_acc = (Button) activity.findViewById(R.id.button_register_account);
-        Button reg_card = (Button) activity.findViewById(R.id.button_register_card);
-        Button pay = (Button) activity.findViewById(R.id.button_payment);
-        ViewPager vp = (ViewPager) activity.findViewById(R.id.cardPager);
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        reg_acc = activity.findViewById(R.id.sublayout_register);
+        reg_card = activity.findViewById(R.id.sublayout_add_card);
+        pay = activity.findViewById(R.id.payment_button_layout);
+        vp = activity.findViewById(R.id.card_pager_layout);
 
         // Check visibility of UI elements, now register card should be visible
         assertTrue(reg_acc.getVisibility() == View.INVISIBLE);
@@ -95,7 +103,8 @@ public class MainActivityTest {
     @Test
     public void BasicCardFragmentTest()
     {
-        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+
         ViewPager pager = (ViewPager) activity.findViewById(R.id.cardPager);
         assertTrue(pager != null);
 
