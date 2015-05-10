@@ -131,14 +131,14 @@ public class MainActivity extends FragmentActivity {
         if(isRegistered && hasCard)menuItemCardTransactions.setVisible(true);
         if(isRegistered && hasCard)menuItemCardChangeSelectedCard.setVisible(true);
 
-       return true;
+        return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here.
         int id = item.getItemId();
 
-       // final Context ctx = getApplicationContext();
+        // final Context ctx = getApplicationContext();
 
         //Register new card
         if (id == R.id.register_card) {
@@ -232,14 +232,14 @@ public class MainActivity extends FragmentActivity {
 
         if (reqCode == REQUEST_CHANGE_SELECTED_CARD) {
             new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        if (Repository.getCardCount(getApplication()) > 0) {
-                            viewPager.setCurrentItem(Repository.getSelectedCardIndex(getApplication()));
+                    new Runnable() {
+                        public void run() {
+                            if (Repository.getCardCount(getApplication()) > 0) {
+                                viewPager.setCurrentItem(Repository.getSelectedCardIndex(getApplication()));
+                            }
                         }
-                    }
-                },
-                300
+                    },
+                    300
             );
         }
 
@@ -321,7 +321,7 @@ public class MainActivity extends FragmentActivity {
     private void getCurrentCardBalance()
     {
         try {
-           // Get current card fragment
+            // Get current card fragment
             // This code relies on an unsupported trick to get the current fragment which is not supported by the API
             Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.cardPager + ":" + viewPager.getCurrentItem());
             // based on the current position you can then cast the page to the correct

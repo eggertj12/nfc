@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,16 +40,20 @@ public class ChangeSelectedCardArrayAdapter extends ArrayAdapter {
 
         // Get handle of text boxes
         TextView cardNameText = (TextView) rowView.findViewById(R.id.card_name);
-        TextView lastFour = (TextView) rowView.findViewById(R.id.last_four);
+        TextView lastFour = (TextView) rowView.findViewById(R.id.card_number);
+        TextView cardIcon = (TextView) rowView.findViewById(R.id.card_icon);
+        TextView radioButton = (TextView) rowView.findViewById(R.id.radio_Button);
+
+        //to get the picture of the card and radio button right
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/icomoon.ttf");
+        cardIcon.setTypeface(tf);
+        radioButton.setTypeface(tf);
+
 
         // Set values to text boxes from transaction row
         cardNameText.setText(card.getCard_name());
         lastFour.setText(context.getResources().getString(R.string.card_number_xes) + card.getLast_four());
 
-        // Set background color of currently selected card to background blue
-       /* if(card.getCard_id() == Repository.getSelectedCard(context).getCard_id()) {
-            rowView.setBackgroundColor(context.getResources().getColor(R.color.background));
-        };*/
 
         // Return the filled out view
         return rowView;

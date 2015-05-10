@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +45,12 @@ public class TransactionArrayAdapter extends ArrayAdapter {
         View rowView = inflater.inflate(R.layout.list_transactions, parent, false);
 
         // Get handle of text boxes
+
         TextView vendorText = (TextView) rowView.findViewById(R.id.vendor);
         TextView priceText = (TextView) rowView.findViewById(R.id.price);
         TextView dateText = (TextView)rowView.findViewById(R.id.date);
+
+
 
         // Set values to text boxes from transaction row
         vendorText.setText(trans.getVendor());
