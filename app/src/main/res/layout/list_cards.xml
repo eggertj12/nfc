@@ -35,7 +35,7 @@
             android:id="@+id/card_name"
             android:layout_marginStart="30dp"
             android:clickable="true"
-            android:onClick="changeSelectedCard" />
+            android:onClick="onItemClick" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/radio_Button"
-            android:text="\uea56"
+            android:text=""
+            android:textColor="@color/white"
             android:gravity="center"
             />
 

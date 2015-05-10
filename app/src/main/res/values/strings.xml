@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Radio buttons in cardslist-->
+    <string name="selected_card">\uea54</string>
+    <string name="not_selected_card">\uea56</string>
+
+
     <!-- Texts on buttons -->
     <string name="button_register_card">Skrá kort</string>
     <string name="button_register_account">Nýskráning</string>
