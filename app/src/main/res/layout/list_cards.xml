@@ -34,7 +34,9 @@
             android:text=""
             android:textSize="20dp"
             android:id="@+id/card_name"
-            android:layout_marginStart="30dp"/>
+            android:layout_marginStart="30dp"
+            android:clickable="true"
+            android:onClick="changeSelectedCard" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,13 +50,14 @@
     <RelativeLayout
         android:layout_width="40dp"
         android:layout_alignParentRight="true"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:id="@+id/button_layout">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/radio_Button"
             android:text="\uea56"
+            android:gravity="center"
             />
 
     </RelativeLayout>
