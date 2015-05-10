@@ -86,7 +86,7 @@ public class RegisterCardActivity extends Activity {
             arrayYear.add(Integer.toString(i + currentYear));
         }
 
-        ArrayAdapter<String> adapterYear = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayYear);
+        ArrayAdapter<String> adapterYear = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayYear);
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerYear.setAdapter(adapterYear);

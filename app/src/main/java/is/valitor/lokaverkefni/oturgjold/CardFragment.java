@@ -1,21 +1,16 @@
 package is.valitor.lokaverkefni.oturgjold;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 
@@ -99,11 +94,11 @@ public class CardFragment extends Fragment {
         Resources res = getResources();
         ((ImageView) rootView.findViewById(R.id.cardImage)).setImageDrawable(res.getDrawable(resId));
 
-        ((TextView) rootView.findViewById(R.id.fragmentCardName)).setText(name);
+//        ((TextView) rootView.findViewById(R.id.fragmentCardName)).setText(name);
         ((TextView) rootView.findViewById(R.id.fragmentCardNumber)).setText("XXXX XXXX XXXX " + card.getLast_four());
 
-        TextView balance = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
-        balance.setOnClickListener(new View.OnClickListener() {
+        TextView balanceLabel = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
+        balanceLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (NetworkUtil.isConnected(ctx)) {
@@ -127,10 +122,11 @@ public class CardFragment extends Fragment {
      */
     public void getCurrentBalance()
     {
+        final TextView balanceLabel = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
+        final TextView balance = (TextView) rootView.findViewById(R.id.fragmentCardBalanceAmount);
         if (NetworkUtil.isConnected(ctx)) {
             try {
 
-                final TextView balance = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
                 final AsyncTaskCompleteListener<Integer> listener = new AsyncTaskCompleteListener<Integer>() {
                     @Override
                     public void onTaskComplete(final Integer result) {
@@ -142,6 +138,7 @@ public class CardFragment extends Fragment {
                 // get currently selected card
                 Card card = Repository.getSelectedCard(ctx);
                 int currentCard = card.getCard_id();
+                balanceLabel.setText(String.format(getString(R.string.card_fragment_balance), currentCard));
                 balance.setText(String.format(getString(R.string.card_fragment_get_balance), currentCard));
                 new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
 
@@ -152,8 +149,7 @@ public class CardFragment extends Fragment {
         }
 
         else {
-            final TextView balance = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
-            balance.setText(R.string.card_fragment_balance);
+            balance.setText(R.string.card_fragment_see_balance);
         }
     }
 }

@@ -21,6 +21,8 @@
     <color name="background_grey">#515152</color>
     <color name="btn_text_alt">#EB6A0E</color>
     <color name="text_grey">#a051524D</color>
+    <color name="seam_grey">#ff2f2f2f</color>
+    <color name="seam_black">#0f0f0f</color>
 
     <color name="dark_blue">#00273d</color>
     <color name="bright_orange">#eba532</color>

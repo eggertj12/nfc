@@ -83,12 +83,16 @@ public class MainActivity extends FragmentActivity {
 
         NetworkUtil.enableNetworkMonitoring(getApplication());
 
-        pagerAdapter = new CardPagerAdapter(getSupportFragmentManager(), getApplication());
+        pagerAdapter = new CardPagerAdapter(getSupportFragmentManager(), getApplication(), this);
         viewPager = (ViewPager) findViewById(R.id.cardPager);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOnPageChangeListener(pagerAdapter);
         if (Repository.getCardCount(getApplication()) > 0) {
             viewPager.setCurrentItem(Repository.getSelectedCardIndex(getApplication()));
+            String cardName = Repository.getSelectedCard(getApplication()).getCard_name();
+            if (cardName.length() > 0) {
+                setTitle(cardName);
+            }
         }
 
         Typeface icoMoon = Typeface.createFromAsset(getAssets(), "fonts/icomoon.ttf");
@@ -315,8 +319,8 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    /*
-    Fetch the balance of the currentCard
+    /**
+     * Fetch the balance of the currentCard
      */
     private void getCurrentCardBalance()
     {
@@ -330,7 +334,8 @@ public class MainActivity extends FragmentActivity {
                 // No fragment found, have to abort
                 return;
             }
-            final TextView balance = (TextView) page.getView().findViewById(R.id.fragmentCardBalance);
+            final TextView balanceLabel = (TextView) page.getView().findViewById(R.id.fragmentCardBalance);
+            final TextView balance = (TextView) page.getView().findViewById(R.id.fragmentCardBalanceAmount);
             final AsyncTaskCompleteListener<Integer> listener = new AsyncTaskCompleteListener<Integer>() {
                 @Override
                 public void onTaskComplete(final Integer result) {
@@ -341,6 +346,7 @@ public class MainActivity extends FragmentActivity {
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
             int currentCard = card.getCard_id();
+            balanceLabel.setText(getString(R.string.card_fragment_balance));
             balance.setText(getString(R.string.card_fragment_get_balance));
             new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
         }

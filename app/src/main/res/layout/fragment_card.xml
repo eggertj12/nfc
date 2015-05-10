@@ -1,31 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="is.valitor.lokaverkefni.oturgjold.CardFragment"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="is.valitor.lokaverkefni.oturgjold.CardFragment">
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/cardImage"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/rain_blue_creditcard"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentTop="false" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentStart="false"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitEnd"
+        android:adjustViewBounds="true"
+        android:src="@drawable/rain_blue_creditcard" />
 
-        <TextView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true">
+
+        <!-- Drop shadow on card -->
+        <ImageView
+            android:id="@+id/card_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="0dp"
+            android:background="@drawable/card_shadow" />
+
+
+        <!--<TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -37,35 +40,56 @@ tools:context="is.valitor.lokaverkefni.oturgjold.CardFragment"
             android:typeface="serif"
             android:textColor="#ffffffff"
             android:gravity="right"
-            android:paddingRight="@dimen/card_name_right_margin" />
+            android:paddingRight="@dimen/card_name_right_margin" />-->
 
         <TextView
-            android:gravity="center"
+            android:id="@+id/fragmentCardNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="XXXX XXXX XXXX 1234"
-            android:textSize="17dp"
+            android:layout_above="@id/card_shadow"
+            android:layout_marginBottom="@dimen/card_number_bottom_margin"
+            android:gravity="center"
             android:shadowColor="#ff383838"
-            android:shadowRadius="1.5"
             android:shadowDx="1"
             android:shadowDy="1"
-            android:id="@+id/fragmentCardNumber"
-            android:typeface="monospace"
-            android:paddingBottom="@dimen/inputblock_vertical_margin"
+            android:shadowRadius="1.5"
+            android:text="XXXX XXXX XXXX 1234"
             android:textColor="#ffdcdcdc"
             android:textColorHighlight="#ffffffff"
-            android:paddingTop="@dimen/card_number_top_margin" />
+            android:textSize="17dp"
+            android:typeface="monospace" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_alignTop="@id/cardImage"
+        android:layout_marginTop="@dimen/card_balance_top_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:gravity="center|right"
+            android:id="@+id/fragmentCardBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/card_fragment_balance"
-            android:textSize="20dp"
-            android:id="@+id/fragmentCardBalance"
-            android:paddingRight="@dimen/card_balance_right_margin"
-            android:typeface="monospace"
-            android:textColor="@color/white" />
+            android:layout_weight="2"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:gravity="center|right"
+            android:text="@string/card_fragment_see_balance"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:fontFamily="sans-serif" />
+
+        <TextView
+            android:id="@+id/fragmentCardBalanceAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:fontFamily="sans-serif" />
 
     </LinearLayout>
 
