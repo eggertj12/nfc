@@ -6,7 +6,6 @@ import android.text.TextWatcher;
 
 /**
  * Created by dasve_000 on 5/5/2015.
- * From Stackoverflow http://stackoverflow.com/questions/11790102/format-credit-card-in-edit-text-in-android
  */
 public class DigitGrouper implements TextWatcher {
 
