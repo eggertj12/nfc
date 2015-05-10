@@ -20,7 +20,7 @@ import is.valitor.lokaverkefni.oturgjold.repository.Transaction;
  */
 public class TransactionArrayAdapter extends ArrayAdapter {
 
-    List<Transaction> transList = new ArrayList<Transaction>();
+    List<Transaction> transList = new ArrayList<>();
     Context context;
 
 

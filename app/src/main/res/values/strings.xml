@@ -67,11 +67,6 @@
     <string name="payment_enter_pin">Sláðu inn PIN</string>
     <string name="payment_tap_to_pay">Leggðu síma að posa til að greiða</string>
 
-    <!--for testing tokenization-->
-    <string name="device_id">456</string>
-    <string name="usr_id">55</string>
-    <string name="action_reset">Reset</string>
-
     <string name="card_fragment_balance">Staða:</string>
     <string name="card_fragment_see_balance">Sjá stöðu</string>
     <string name="card_fragment_get_balance">Sæki ...</string>
