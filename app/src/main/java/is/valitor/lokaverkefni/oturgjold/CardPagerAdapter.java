@@ -1,16 +1,12 @@
 package is.valitor.lokaverkefni.oturgjold;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.ArrayMap;
-
-import java.util.ArrayList;
-
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 /**
@@ -19,11 +15,13 @@ import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
 
     private Context appContext;
+    private Activity activity;
 
-    public CardPagerAdapter(FragmentManager fm, Context ctx)
+    public CardPagerAdapter(FragmentManager fm, Context ctx, Activity act)
     {
         super(fm);
         this.appContext = ctx;
+        this.activity = act;
     }
 
     @Override
@@ -49,6 +47,12 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     public void onPageSelected(int position)
     {
         Repository.setSelectedCardByIndex(this.appContext, position);
+
+        // Update card name in ActionBar
+        String cardName = Repository.getSelectedCard(appContext).getCard_name();
+        if (cardName.length() > 0) {
+            activity.setTitle(cardName);
+        }
     }
 
     @Override

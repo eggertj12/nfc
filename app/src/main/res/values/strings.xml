@@ -72,8 +72,9 @@
     <string name="usr_id">55</string>
     <string name="action_reset">Reset</string>
 
-    <string name="card_fragment_balance">Sjá stöðu</string>
-    <string name="card_fragment_get_balance">Sæki stöðu</string>
+    <string name="card_fragment_balance">Staða:</string>
+    <string name="card_fragment_see_balance">Sjá stöðu</string>
+    <string name="card_fragment_get_balance">Sæki ...</string>
 
     <!--web service urls-->
     <string name="service_account_url">https://kortagleypir.herokuapp.com/user</string>
