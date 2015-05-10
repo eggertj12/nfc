@@ -3,6 +3,7 @@ package is.valitor.lokaverkefni.oturgjold.service;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -120,7 +122,17 @@ public class RegisterAccountTask extends AsyncTask<String, Void, RegisterResult>
     }
     private String readInput(final InputStream stream, int length)
     {
-        try{
+
+        try {
+            StringWriter result = new StringWriter();
+            IOUtils.copy(stream,result);
+            return  result.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+       /* try{
             Reader reader = null;
             reader = new InputStreamReader(stream, "UTF-8");
             char[] buffer = new char[length];
@@ -129,6 +141,6 @@ public class RegisterAccountTask extends AsyncTask<String, Void, RegisterResult>
         }catch(Exception ex)
         {
             return "";
-        }
+        }*/
     }
 }

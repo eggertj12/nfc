@@ -1,8 +1,10 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -134,6 +136,7 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
                 catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
+
                 }
             }
         else {

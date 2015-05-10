@@ -92,6 +92,7 @@
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-library-1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-integration-1.1" level="project" />
+    <orderEntry type="library" exported="" name="commons-io-2.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-dep-4.10" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.1" level="project" />
