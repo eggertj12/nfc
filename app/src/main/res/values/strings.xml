@@ -71,6 +71,8 @@
     <string name="card_fragment_see_balance">Sjá stöðu</string>
     <string name="card_fragment_get_balance">Sæki ...</string>
 
+    <string name="transactions_no_transaction">Engar færslur</string>
+
     <!--web service urls-->
     <string name="service_account_url">https://kortagleypir.herokuapp.com/user</string>
     <string name="service_card_url">https://kortagleypir.herokuapp.com/card</string>

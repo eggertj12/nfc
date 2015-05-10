@@ -58,18 +58,6 @@ public class TransactionArrayAdapter extends ArrayAdapter {
         priceText.setText(dcf.format(trans.getPrice()) + " kr.");
         dateText.setText(new SimpleDateFormat("dd.MM.yyyy  HH:mm").format(trans.getDate()));
 
-
-        // Zebra the listbrah
-        /*if(position % 2 != 0) {
-            rowView.setBackgroundColor(context.getResources().getColor(R.color.black));
-        }
-        else {
-            rowView.setBackgroundColor(context.getResources().getColor(R.color.grey05));
-        }*/
-
-
-
-
         // Return the filled out view
         return rowView;
     }
