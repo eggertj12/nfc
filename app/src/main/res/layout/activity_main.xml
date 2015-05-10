@@ -1,58 +1,82 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
     android:background="@drawable/leather_background"
-    android:orientation="vertical"
-    android:weightSum="1"
+    android:gravity="top"
     tools:context=".MainActivity">
 
+    <!-- The card pager layout -->
     <RelativeLayout
+        android:id="@+id/card_pager_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:padding="0dp">
 
-        <!-- Two lines of seam -->
-        <ImageView
-            android:id="@+id/cardPagerSeamBottom"
+        <!-- Card fragment pager -->
+        <view
+            class="is.valitor.lokaverkefni.oturgjold.CardPager"
+            android:id="@+id/cardPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layerType="software"
-            android:src="@drawable/leather_seam_bottom" />
+            android:layout_alignParentTop="true"
+            android:padding="0dp" />
 
+        <!-- Two lines of seam -->
         <ImageView
             android:id="@+id/cardPagerSeamTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/cardPagerSeamBottom"
+            android:layout_below="@id/cardPager"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layerType="software"
             android:src="@drawable/leather_seam_top" />
 
-        <!-- Card fragment pager
-         -->
-        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/cardPager"
+        <ImageView
+            android:id="@+id/cardPagerSeamBottom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/cardPagerSeamTop"
-            android:layout_alignParentTop="true"
-            android:padding="0dp"
-            android:visibility="invisible" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardPagerSeamTop"
+            android:layerType="software"
+            android:src="@drawable/leather_seam_bottom" />
+
 
     </RelativeLayout>
 
+    <!-- Layout containing Pay button for normal use case -->
+    <LinearLayout
+        android:id="@+id/payment_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/card_pager_layout"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_payment"
+            style="@style/ButtonOrangeCircle"
+            android:clickable="true"
+            android:enabled="true"
+            android:onClick="payment"
+            android:text="\uE600" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/pay" />
+
+    </LinearLayout>
+
     <RelativeLayout
+        android:id="@+id/main_startup_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -68,8 +92,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="30dp"
             android:layout_weight="1"
-            android:src="@drawable/main_logo"
-            android:visibility="invisible" />
+            android:src="@drawable/main_logo" />
 
         <LinearLayout
             android:id="@id/sublayout_register"
@@ -107,29 +130,6 @@
                 android:text="@string/button_register_card" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/sublayout_payment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button_payment"
-                style="@style/ButtonOrangeCircle"
-                android:clickable="true"
-                android:enabled="true"
-                android:onClick="payment"
-                android:text="\uE600" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/pay" />
-
-        </LinearLayout>
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

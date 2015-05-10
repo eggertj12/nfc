@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +15,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
+
+import java.io.StringReader;
+import com.google.gson.stream.JsonReader;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
@@ -122,7 +123,9 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
             //Toast.makeText(this, result.getResultMessage(),Toast.LENGTH_LONG).show();
                 try {
                     Gson gson = new Gson();
-                    User user = gson.fromJson(result.getResultContent().toString(), User.class);
+                    JsonReader rd = new JsonReader(new StringReader(result.getResultContent()));
+                    rd.setLenient(true);
+                    User user = gson.fromJson(rd, User.class);
                     Repository.setUser(getApplication(), user);
 
                     //go back to frontpage
@@ -132,6 +135,8 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
                 }
                 catch (Exception e) {
                     e.printStackTrace();
+                    System.out.println(e.getMessage());
+
                 }
             }
         else {

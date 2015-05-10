@@ -52,6 +52,8 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
         String cardName = Repository.getSelectedCard(appContext).getCard_name();
         if (cardName.length() > 0) {
             activity.setTitle(cardName);
+        } else {
+            activity.setTitle(appContext.getString(R.string.app_name));
         }
     }
 
@@ -65,4 +67,5 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     {
 
     }
+
 }
