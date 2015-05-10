@@ -1,8 +1,10 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -129,7 +131,7 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
                     finish();
                 }
                 catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
         else {
