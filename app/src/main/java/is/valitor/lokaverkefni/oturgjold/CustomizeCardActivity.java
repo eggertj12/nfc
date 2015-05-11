@@ -141,10 +141,4 @@ public class CustomizeCardActivity extends Activity {
             finish();
         }
     }
-
-/*    public void defaultFinish(View view){
-        setResult(RESULT_OK);
-        finish();
-    }
-*/
 }

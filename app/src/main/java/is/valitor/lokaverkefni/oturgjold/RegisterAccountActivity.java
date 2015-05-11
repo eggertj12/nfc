@@ -23,6 +23,7 @@ import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterAccountTask;
+import is.valitor.lokaverkefni.oturgjold.service.RegisterTask;
 import is.valitor.lokaverkefni.oturgjold.utils.DigitGrouper;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterResult;

@@ -36,6 +36,7 @@ import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterResult;
+import is.valitor.lokaverkefni.oturgjold.service.RegisterTask;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
