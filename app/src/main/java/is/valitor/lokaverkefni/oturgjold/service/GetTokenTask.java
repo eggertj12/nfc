@@ -21,8 +21,6 @@ import is.valitor.lokaverkefni.oturgjold.R;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
 
-import static android.provider.Settings.Global.getString;
-
 /**
  * Created by kla on 23.3.2015.
  */

@@ -9,41 +9,43 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 
 
 /**
  * Created by kla on 20.4.2015.
  */
-public class GetBalanceTask extends AsyncTask <String, Void, Integer> {
+public class GetBalanceTask extends AsyncTask <String, Void, AsyncTaskResult<Integer>> {
 
-    private AsyncTaskCompleteListener<Integer> listener;
+    private AsyncTaskCompleteListener<AsyncTaskResult<Integer>> listener;
 
-    public GetBalanceTask( AsyncTaskCompleteListener <Integer> listener)
+    public GetBalanceTask( AsyncTaskCompleteListener <AsyncTaskResult<Integer>> listener)
     {
         this.listener = listener;
     }
     private Exception exception;
 
     @Override
-    protected void onPostExecute(Integer balance) {
+    protected void onPostExecute(AsyncTaskResult<Integer> balance) {
         super.onPostExecute(balance);
         listener.onTaskComplete(balance);
     }
 
     @Override
-    protected Integer doInBackground(String... params) {
+    protected AsyncTaskResult<Integer> doInBackground(String... params) {
         try {
             // params comes from the execute() call: params[0] is the url.
 
             Integer balance = getUrl(params[0]);
 
-            return balance;
-        } catch (IOException e) {
-            return -2;
+            if (balance < 0) {
+                throw new RuntimeException("Error parsing result");
+            }
+
+            return new AsyncTaskResult<Integer>(balance);
         } catch (Exception e) {
-            this.exception = e;
+            return new AsyncTaskResult<Integer>(e);
         }
-        return -1;
     }
     private Integer getUrl(String serviceURL) throws IOException {
         InputStream is = null;
@@ -79,18 +81,19 @@ public class GetBalanceTask extends AsyncTask <String, Void, Integer> {
             // Convert the InputStream into a string
             is = conn.getInputStream();
             //System.out.println(is.available());
-          return readBalance(is, conn.getContentLength());
+            return readBalance(is, conn.getContentLength());
 
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-           e.printStackTrace();
+            e.printStackTrace();
+            throw e;
         } finally {
             if (is != null) {
                 is.close();
             }
         }
-        return -3;
+//        return -3;
     }
 
     // Reads an InputStream and converts it to a JSONObject.

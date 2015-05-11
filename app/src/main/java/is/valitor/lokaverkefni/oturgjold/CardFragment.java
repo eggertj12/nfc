@@ -17,6 +17,7 @@ import java.text.DecimalFormat;
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
+import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.GetBalanceTask;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
@@ -125,27 +126,26 @@ public class CardFragment extends Fragment {
         final TextView balanceLabel = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
         final TextView balance = (TextView) rootView.findViewById(R.id.fragmentCardBalanceAmount);
         if (NetworkUtil.isConnected(ctx)) {
-            try {
-
-                final AsyncTaskCompleteListener<Integer> listener = new AsyncTaskCompleteListener<Integer>() {
-                    @Override
-                    public void onTaskComplete(final Integer result) {
+            final AsyncTaskCompleteListener<AsyncTaskResult<Integer>> listener = new AsyncTaskCompleteListener<AsyncTaskResult<Integer>>() {
+                @Override
+                public void onTaskComplete(final AsyncTaskResult<Integer> result) {
+                    if (result.getError() != null) {
+                        balanceLabel.setText(getString(R.string.card_fragment_see_balance));
+                        balance.setText("");
+                        Toast.makeText(ctx, getString(R.string.error_general_network), Toast.LENGTH_LONG).show();
+                    } else {
                         DecimalFormat fmt = new DecimalFormat("###,###.##");
-                        balance.setText(fmt.format(result));
+                        balance.setText(fmt.format(result.getResult()));
                     }
-                };
+                }
+            };
 
-                // get currently selected card
-                Card card = Repository.getSelectedCard(ctx);
-                int currentCard = card.getCard_id();
-                balanceLabel.setText(String.format(getString(R.string.card_fragment_balance), currentCard));
-                balance.setText(String.format(getString(R.string.card_fragment_get_balance), currentCard));
-                new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
-
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+            // get currently selected card
+            Card card = Repository.getSelectedCard(ctx);
+            int currentCard = card.getCard_id();
+            balanceLabel.setText(String.format(getString(R.string.card_fragment_balance), currentCard));
+            balance.setText(String.format(getString(R.string.card_fragment_get_balance), currentCard));
+            new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
         }
 
         else {
