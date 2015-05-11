@@ -87,15 +87,12 @@ public class RegisterAccountTask extends AsyncTask<String, Void, RegisterResult>
             OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
 
             osw.write(msg.toString());
-            System.out.println(msg.toString());
             osw.flush();
             osw.close();
             // The service will respond with a JSON string of its own.
             int response = conn.getResponseCode();
             //Log.d( "The response is: " + response);
-            System.out.println("The response code is: " + response);
             String responseMessage = conn.getResponseMessage();
-            System.out.println("The response message is: " + responseMessage);
 
             //handle the result
             result.setResultCode(conn.getResponseCode());

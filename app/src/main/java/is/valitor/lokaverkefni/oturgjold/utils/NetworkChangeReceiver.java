@@ -30,10 +30,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
             User theUser = Repository.getUser(ctx);
 
             for (Card card : cards) {
-                System.out.println("Checking card: " + card.getCard_id() + ", " + card.getCard_name());
                 if (Repository.getTokenCount(ctx, card.getCard_id()) < 3) {
-
-                    System.out.println("Card is missing tokens.");
                     Token token = new Token();
                     token.setUsr_id(theUser.getUsr_id());
                     token.setDevice_id(theUser.getDevice_id());

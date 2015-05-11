@@ -238,7 +238,6 @@ public class Repository {
                 String cardJson = new String(buffer, "UTF-8");
                 cards = gson.fromJson(cardJson, new TypeToken<ArrayList<Card>>() {
                 }.getType());
-                System.out.println(cards.size());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -258,7 +257,6 @@ public class Repository {
             fos = ctx.openFileOutput(CARD_FILE_NAME, Context.MODE_PRIVATE);
 
             String nCardJson = gson.toJson(cards);
-            System.out.println(nCardJson);
             fos.write(nCardJson.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
