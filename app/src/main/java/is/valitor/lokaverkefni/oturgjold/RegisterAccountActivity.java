@@ -136,7 +136,6 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
                 catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
-
                 }
             }
         else {

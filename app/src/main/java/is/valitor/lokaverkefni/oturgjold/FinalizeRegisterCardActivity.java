@@ -73,9 +73,6 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         String cardPin = intent.getStringExtra(CustomizeCardActivity.MSG_CARDPIN);
         String nickName = intent.getStringExtra(CustomizeCardActivity.MSG_NICKNAME);
 
-
-//        System.out.println(cardNumber);
-
         // Having registered a card, you are now happy to return to main view
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
         defaultFinishButton.setVisibility(View.INVISIBLE);

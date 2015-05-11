@@ -71,14 +71,11 @@ public class GetBalanceTask extends AsyncTask <String, Void, Integer> {
             // The service will respond with a JSON string of its own.
             int response = conn.getResponseCode();
             //Log.d( "The response is: " + response);
-            System.out.println("The response code is: " + response);
             String responseMessage = conn.getResponseMessage();
-            System.out.println("The response message is: " + responseMessage);
 
 
             // Convert the InputStream into a string
             is = conn.getInputStream();
-            //System.out.println(is.available());
           return readBalance(is, conn.getContentLength());
 
         }

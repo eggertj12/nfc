@@ -112,11 +112,9 @@ public class CardService extends HostApduService {
 
             // Get the last input PIN
             String pin = getPin();
-            System.out.println("HCE HAS BEEN INITIATED!!!");
-            System.out.println("PINS IS: " + pin);
+
             if(pin.contentEquals("used") || pin.length() != 4 ) {
                 // PIN is not ready, just be quiet - payment activity was launched from getPIN()
-                System.out.println("NOTHING TO SEE HERE");
                 return null;
             }
 

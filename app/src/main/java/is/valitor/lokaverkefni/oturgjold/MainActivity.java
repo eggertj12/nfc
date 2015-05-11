@@ -66,7 +66,6 @@ public class MainActivity extends FragmentActivity {
             // Extra layer of insulation:
             if(getIntent().getStringExtra("MSG_REQUEST_PIN").contentEquals("true")) {
                 // Clear last entered pin shared preference
-                System.out.println("MAIN ACTIVITY BEING CALLED AFTER HCE");
                 SharedPreferences.Editor clearPin = PreferenceManager.getDefaultSharedPreferences(this).edit();
                 clearPin.putString("lastPIN", "");
                 clearPin.commit();
