@@ -3,8 +3,11 @@ package is.valitor.lokaverkefni.oturgjold.service;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONObject;
 
@@ -14,151 +17,72 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.StringReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
 import is.valitor.lokaverkefni.oturgjold.R;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
+import is.valitor.lokaverkefni.oturgjold.repository.Transaction;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
 
 /**
  * Created by kla on 23.3.2015.
  */
-public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
-    private Exception exception;
+public class GetTokenTask extends RequestTask {
     final private Context appContext;
 
     public GetTokenTask(Context appContext) {
+        super("POST", "application/json", "application/json");
         this.appContext = appContext;
     }
 
     @Override
-    protected JSONObject doInBackground(String... params) {
-        try {
-            // params comes from the execute() call: params[0] is the url.
-            return postUrl(params[0], params[1]);
-        } catch (IOException e) {
-            return null;
-        } catch (Exception e) {
-            this.exception = e;
-        }
-        return null;
-    }
+    protected void onPostExecute(RequestResult result) {
 
-    // onPostExecute runs after the AsyncTask finishes.
-    @Override
-    protected void onPostExecute(JSONObject result) {
-        //textView.setText(result);
-
-        // TODO: Handle failed connections attempts somehow more elegantly than ignoring them
-        if (result == null) {
+        // Network error
+        if (result.getException() instanceof IOException) {
+            Toast.makeText(appContext, appContext.getString(R.string.error_network_token), Toast.LENGTH_LONG).show();
             return;
         }
 
-        int rCode = result.optInt("responseCode");
-
-        if (rCode == 200) {
-            try {
-                Gson gson = new Gson();
-                Token token  = gson.fromJson(result.toString(), Token.class);
-                Log.d("response",result.toString());
-
-                int currentCard = token.getCard_id();
-                Repository.addToken(this.appContext, currentCard, token);
-
-                // Sequentially fill upp token limit
-                // Could this be solved more elegantly?
-                if (Repository.getTokenCount(this.appContext, currentCard) < 3) {
-
-                    // Clear token data, but reuse rest
-                    token.setTokenitem("");
-                    String tokenJson = gson.toJson(token, Token.class);
-                    new GetTokenTask(this.appContext)
-                            .execute(this.appContext.getString(R.string.service_token_url), tokenJson);
-                }
-
-            } catch (Exception e) {
-
-            }
-        } else {
-            //editAccountName.setText("Misheppnuð skráning ahahahah!");
+        if (result.getResultCode() != 200) {
+            Toast.makeText(appContext, appContext.getString(R.string.error_general), Toast.LENGTH_LONG).show();
+            return;
         }
 
-    }
+        try{
+            //Retrieve the content from the response and add to repository
+            Gson gson = new Gson();
+            JsonReader jsonReader = new JsonReader(new StringReader(result.getResultContent()));
+            jsonReader.setLenient(true);
+            Token token = gson.fromJson(jsonReader, Token.class);
 
-    private JSONObject postUrl(String serviceURL, String json_accountInfo) throws IOException {
-        InputStream is = null;
+            Toast.makeText(appContext, "Sótti tóken", Toast.LENGTH_LONG).show();
 
-        // Remake json-string into json object.
-        // There has to be a smarter way to do this, but I cant pass a string and json object
-        JSONObject msg = new JSONObject();
-        JSONObject ret = null;
-        try {
-            msg = new JSONObject(json_accountInfo);
-        } catch (Exception e) {
+            int currentCard = token.getCard_id();
+            Repository.addToken(this.appContext, currentCard, token);
+
+            // Sequentially fill upp token limit
+            // Could this be solved more elegantly?
+            if (Repository.getTokenCount(this.appContext, currentCard) < 3) {
+
+                // Clear token data, but reuse rest
+                token.setTokenitem("");
+                String tokenJson = gson.toJson(token, Token.class);
+                new GetTokenTask(this.appContext)
+                        .execute(this.appContext.getString(R.string.service_token_url), tokenJson);
+            }
+
+        } catch (Exception e){
             e.printStackTrace();
+            Toast.makeText(appContext, appContext.getString(R.string.error_general), Toast.LENGTH_LONG).show();
+            return;
         }
-
-        try {
-            URL url = new URL(serviceURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setUseCaches(false);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            // Establish connection
-            conn.connect();
-            // Get ready to write data
-            OutputStream os = conn.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-
-            osw.write(msg.toString());
-            osw.flush();
-            osw.close();
-            // The service will respond with a JSON string of its own.
-            int response = conn.getResponseCode();
-            //Log.d( "The response is: " + response);
-            String responseMessage = conn.getResponseMessage();
-
-
-            // Convert the InputStream into a string
-            is = conn.getInputStream();
-            ret = readJSON(is, 5000);
-            try {
-                ret.put("responseCode", response);
-                ret.put("sentMessage", msg);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
-        return ret;
-    }
-
-    // Reads an InputStream and converts it to a JSONObject.
-    public JSONObject readJSON(InputStream stream, int len) throws IOException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-
-        String msg = new String(buffer);
-        JSONObject ret = new JSONObject();
-        try {
-            ret = new JSONObject(msg);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("GETTOKEN", "Error reading token " + msg);
-        }
-        return ret;
     }
 }

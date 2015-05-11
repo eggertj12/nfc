@@ -51,6 +51,7 @@
     <string name="error_invalid_ssn">Rangt form á kennitölu</string>
     <string name="error_no_network">Nettenging ekki virk</string>
     <string name="error_general_network">Villa í nettengingu, reyndu aftur</string>
+    <string name="error_network_token">Gat ekki sótt lykla fyrir Oturgjöld. Reyndu að aftengjast neti og tengjast aftur. Hafðu samband við þjónustudeild ef vandamál er viðvarandi.</string>
     <string name="error_general">Óþekkt villa, hafðu samband við þjónustudeild</string>
     <string name="error_register_card">Villa í innslætti. Kort var ekki skráð</string>
     <string name="error_customize_pin_length">PIN þarf að vera fjórir stafir.</string>
