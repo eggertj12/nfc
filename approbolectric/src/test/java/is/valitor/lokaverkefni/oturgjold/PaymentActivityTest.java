@@ -43,11 +43,19 @@ public class PaymentActivityTest {
     public void TestInputButton()
     {
         Button btn_1 = (Button) activity.findViewById(R.id.button_pin_1);
-        TextView stars = (TextView) activity.findViewById(R.id.pin_stars);
         assertTrue(btn_1 != null);
-        assertTrue(stars != null);
         btn_1.performClick();
-        assertEquals(3, stars.getText().length());
+
+        TextView star;
+        int starColor;
+        star = (TextView) activity.findViewById(R.id.pin_stars_1);
+        assertTrue(star != null);
+        starColor = star.getCurrentTextColor();
+        assertEquals(activity.getResources().getColor(R.color.bright_orange), starColor);
+
+        TextView star2 = (TextView) activity.findViewById(R.id.pin_stars_2);
+        int star2Color = star2.getCurrentTextColor();
+        assertEquals(activity.getResources().getColor(R.color.dark_blue), star2Color);
     }
 
     @Test
@@ -55,11 +63,16 @@ public class PaymentActivityTest {
     {
         Button btn_1 = (Button) activity.findViewById(R.id.button_pin_1);
         Button btn_bs = (Button) activity.findViewById(R.id.button_pin_back);
-        TextView stars = (TextView) activity.findViewById(R.id.pin_stars);
+        TextView star = (TextView) activity.findViewById(R.id.pin_stars_1);
         assertTrue(btn_1 != null);
-        assertTrue(stars != null);
+        assertTrue(star != null);
+
+        // Enter one number and delete
         btn_1.performClick();
         btn_bs.performClick();
-        assertEquals(0, stars.getText().length());
+
+        // First point should be not selected (Dark_blue)
+        int starColor = star.getCurrentTextColor();
+        assertEquals(activity.getResources().getColor(R.color.dark_blue), starColor);
     }
 }

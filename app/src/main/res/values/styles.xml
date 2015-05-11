@@ -7,6 +7,7 @@
 
         <!-- Styles for individual elements. -->
         <item name="android:actionBarStyle">@style/ActionBarHeader</item>
+        <item name="android:dividerVertical">@null</item>
         <item name="android:editTextBackground">@drawable/edittextcolors_edit_text_holo_dark</item>
         <item name="android:editTextColor">@color/text_white</item>
         <item name="android:actionMenuTextColor">@android:color/holo_blue_bright</item>

@@ -1,6 +1,5 @@
 package is.valitor.lokaverkefni.oturgjold;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -9,7 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class MainActivity extends FragmentActivity {
     public static final String prefsFile = "oturgjoldPrefs";
 
     CardPagerAdapter pagerAdapter;
-    ViewPager viewPager;
+    CardPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +81,7 @@ public class MainActivity extends FragmentActivity {
         NetworkUtil.enableNetworkMonitoring(getApplication());
 
         pagerAdapter = new CardPagerAdapter(getSupportFragmentManager(), getApplication(), this);
-        viewPager = (ViewPager) findViewById(R.id.cardPager);
+        viewPager = (CardPager) findViewById(R.id.cardPager);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOnPageChangeListener(pagerAdapter);
         if (Repository.getCardCount(getApplication()) > 0) {
@@ -261,60 +259,50 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void enableRegistrationUI() {
-        //Force the menu to reload
+        //Force the menu to reload and thereby update options
         invalidateOptionsMenu();
+
         // Check if there is a user and disable buttons if not
         User user = Repository.getUser(getApplication());
         ArrayList<Card> cards = Repository.getCards(getApplication());
 
 
-        Button registerUserButton = (Button) findViewById(R.id.main_register_account);
-        Button paymentButton = (Button) findViewById(R.id.button_payment);
-
-        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
+        View cardPagerLayout = findViewById(R.id.card_pager_layout);
+        View paymentLayout = findViewById(R.id.payment_button_layout);
         View registerLayout = findViewById(R.id.sublayout_register);
         View addCardLayout = findViewById(R.id.sublayout_add_card);
-        View paymentLayout = findViewById(R.id.sublayout_payment);
 
-        ViewPager vp = (ViewPager) findViewById(R.id.cardPager);
         ImageView startLogo = (ImageView) findViewById(R.id.startLogo);
-
-//        paymentButton.setVisibility(View.INVISIBLE);
-//        registerUserButton.setVisibility(View.VISIBLE);
 
         if (user == null) {
             getActionBar().hide();
 
+            cardPagerLayout.setVisibility(View.INVISIBLE);
             paymentLayout.setVisibility(View.INVISIBLE);
             addCardLayout.setVisibility(View.INVISIBLE);
             registerLayout.setVisibility(View.VISIBLE);
 
-            vp.setVisibility(View.INVISIBLE);
             startLogo.setVisibility(View.VISIBLE);
-            mainLayout.setWeightSum(1);
 
         } else if(cards.size() == 0){
             getActionBar().show();
 
-            // Should never happen, but just in case
+            cardPagerLayout.setVisibility(View.INVISIBLE);
             paymentLayout.setVisibility(View.INVISIBLE);
             addCardLayout.setVisibility(View.VISIBLE);
             registerLayout.setVisibility(View.INVISIBLE);
 
-            vp.setVisibility(View.INVISIBLE);
             startLogo.setVisibility(View.VISIBLE);
-            mainLayout.setWeightSum(1);
         }
         else {
             getActionBar().show();
 
+            cardPagerLayout.setVisibility(View.VISIBLE);
             paymentLayout.setVisibility(View.VISIBLE);
             addCardLayout.setVisibility(View.INVISIBLE);
             registerLayout.setVisibility(View.INVISIBLE);
 
-            vp.setVisibility(View.VISIBLE);
             startLogo.setVisibility(View.INVISIBLE);
-            mainLayout.setWeightSum(2);
         }
     }
 
