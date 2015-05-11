@@ -14,8 +14,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.FragmentTestUtil;
+import org.robolectric.util.SupportFragmentTestUtil;
 
 import javax.xml.soap.Text;
 
@@ -57,7 +59,8 @@ public class MainActivityTest {
     @Test
     public void NoCardTest()
     {
-        Context ctx = Robolectric.getShadowApplication().getApplicationContext();
+        Context ctx = RuntimeEnvironment.application;
+//        Context ctx = Robolectric.getShadowApplication().getApplicationContext();
 
         User user = new User();
         Repository.setUser(ctx, user);
@@ -78,7 +81,8 @@ public class MainActivityTest {
     @Test
     public void HasCardTest()
     {
-        Context ctx = Robolectric.getShadowApplication().getApplicationContext();
+        Context ctx = RuntimeEnvironment.application;
+//        Context ctx = Robolectric.getShadowApplication().getApplicationContext();
 
         User user = new User();
         Repository.setUser(ctx, user);
@@ -121,7 +125,7 @@ public class MainActivityTest {
 
         // Get the fragment and verify last 4
         Fragment fragment = ad.getItem(pager.getCurrentItem());
-        FragmentTestUtil.startFragment(fragment);
+        SupportFragmentTestUtil.startFragment(fragment);
         TextView cn = (TextView) fragment.getView().findViewById(R.id.fragmentCardNumber);
         assertEquals(true, cn instanceof TextView);
         assertEquals("XXXX XXXX XXXX 4444", ((TextView) cn).getText());
