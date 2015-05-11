@@ -150,18 +150,22 @@ public class CardService extends HostApduService {
 
             // Make JSON
             Token ct = Repository.getToken(getApplication(), card.getCard_id());
-            if(ct.getTokenitem() == null)
+            int i = Repository.getTokenCount(getApplication(),card.getCard_id());
+            Log.d(TAG,String.valueOf(i));
+
+            /*if(ct.getTokenitem() == null)
             {
                 Toast toast = Toast.makeText(this, "No token for " + card.getCard_id(), Toast.LENGTH_LONG);
                 toast.show();
                 return null;
-            }
+            }*/
             if (ct != null) {
                 tokenParam = ct.getTokenitem();
                 deviceParam = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             }
 
             // Get a new token if there is connectivity
+
 
             Context ctx = getApplication();
             if (NetworkUtil.isConnected(ctx)) {
