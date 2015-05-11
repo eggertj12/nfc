@@ -35,7 +35,7 @@ import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 public class MainActivity extends FragmentActivity {
     public static final int RESULT_ADD_CARD = 1;
-    public static final int RESULT_NETWORK_ERROR = 1;
+    public static final int RESULT_NETWORK_ERROR = 25;
 
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;

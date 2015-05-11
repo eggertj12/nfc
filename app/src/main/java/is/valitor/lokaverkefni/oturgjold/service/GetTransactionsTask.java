@@ -21,121 +21,57 @@ import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Transaction;
+import is.valitor.lokaverkefni.oturgjold.repository.User;
 
 /**
  * Created by kla on 27.4.2015.
  */
-public class GetTransactionsTask extends AsyncTask<String, Void, List<Transaction> >{
+public class GetTransactionsTask extends RequestTask {
 
-    private static final String TAG = "GETTRANSACTIONS";
+    private AsyncTaskCompleteListener<AsyncTaskResult<List<Transaction>>> listener;
 
-    private Context context;
-    private AsyncTaskCompleteListener<List<Transaction>> listener;
+    public GetTransactionsTask(AsyncTaskCompleteListener<AsyncTaskResult<List<Transaction>>> listener) {
+        super("GET", "application/json", "application/json");
 
-    public GetTransactionsTask(Context ctx, AsyncTaskCompleteListener<List<Transaction>> listener)
-    {
-        this.context = ctx;
         this.listener = listener;
     }
 
-    protected void onPreExecute()
-    {
-        super.onPreExecute();
-    }
-
     @Override
-    protected List<Transaction> doInBackground(String... params)
-    {
-        try {
-            // params comes from the execute() call: params[0] is the url.
-            Log.d(TAG, "Loading url "+params[0]);
-            return postUrl(params[0]);
+    protected void onPostExecute(RequestResult result) {
 
-        } catch (Exception e) {
-            return new ArrayList<Transaction>();
-        }
-    }
-
-    @Override
-    protected void onPostExecute(List<Transaction> result)
-    {
-        super.onPostExecute(result);
-        listener.onTaskComplete(result);
-    }
-
-    private List<Transaction> postUrl(String serviceURL) throws IOException {
-        InputStream is = null;
-
-        try {
-            URL url = new URL(serviceURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            conn.setDoOutput(false);
-            conn.setUseCaches(false);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            // Establish connection
-            conn.connect();
-
-
-            // The service will respond with a JSON string of its own.
-            int response = conn.getResponseCode();
-
-
-           // Log.d( "The response is: " + response);
-            String responseMessage = conn.getResponseMessage();
-
-            // Convert the InputStream into a string
-            is = conn.getInputStream();
-            //System.out.println(is.available());
-            return  readJSON(is, conn.getContentLength());
-
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
-        }catch(Exception ex){
-            Log.e(TAG,"Error getting transactions",ex);
-            return new ArrayList<Transaction>();
-        } finally {
-            if (is != null) {
-                is.close();
-            }
+        // Network error
+        if (result.getException() instanceof IOException) {
+            listener.onTaskComplete(new AsyncTaskResult<List<Transaction>>(result.getException()));
+            return;
         }
 
-    }
-
-    // Reads an InputStream and converts it to a List of Transactions.
-    public List<Transaction> readJSON(InputStream stream, int len) throws IOException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        int pos=0;
-        int readChars = reader.read(buffer, pos, len);
-        pos+=readChars;
-        while(readChars>0)
-        {
-            readChars = reader.read(buffer, pos, len-pos);
-            pos+=readChars;
+        if (result.getResultCode() != 200) {
+            InvalidParameterException e = new InvalidParameterException(result.getResultContent());
+            listener.onTaskComplete(new AsyncTaskResult<List<Transaction>>(e));
         }
-        Log.d(TAG,""+pos+readChars);
-        reader.close();
 
-        buffer = Arrays.copyOf(buffer,pos+1);
+        List<Transaction> transactions;
+        try{
+            //Retrieve the content from the response and add to repository
+            Gson gson = new Gson();
+            JsonReader jsonReader = new JsonReader(new StringReader(result.getResultContent()));
+            jsonReader.setLenient(true);
+            final Type listType = new TypeToken<ArrayList<Transaction>>() {}.getType();
+            transactions = getGson().fromJson(jsonReader, listType);
+        } catch (Exception e){
+            e.printStackTrace();
+            listener.onTaskComplete(new AsyncTaskResult<List<Transaction>>(e));
+            return;
+        }
 
-        String responseText = new String(buffer);
-        JsonReader jsonReader = new JsonReader(new StringReader(responseText));
-        jsonReader.setLenient(true);
-
-        final Type listType = new TypeToken<ArrayList<Transaction>>() {}.getType();
-        return getGson().fromJson(jsonReader, listType);
+        listener.onTaskComplete(new AsyncTaskResult<List<Transaction>>(transactions));
     }
 
     private Gson getGson()

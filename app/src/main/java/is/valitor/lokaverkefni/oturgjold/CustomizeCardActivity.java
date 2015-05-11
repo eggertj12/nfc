@@ -137,11 +137,12 @@ public class CustomizeCardActivity extends Activity {
 
         if (reqCode == REQUEST_REGISTER_CARD) {
             // If returning as a result of network error do nothing
-            if (resCode != MainActivity.RESULT_NETWORK_ERROR) {
-                // Otherwise pass the result code down the stack
-                setResult(resCode);
-                finish();
+            if (resCode == MainActivity.RESULT_NETWORK_ERROR) {
+                return;
             }
+            // Otherwise pass the result code down the stack
+            setResult(resCode);
+            finish();
         }
     }
 }
