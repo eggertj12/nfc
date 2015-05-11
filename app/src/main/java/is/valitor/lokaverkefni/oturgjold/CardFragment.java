@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
@@ -129,14 +130,17 @@ public class CardFragment extends Fragment {
             final AsyncTaskCompleteListener<AsyncTaskResult<Integer>> listener = new AsyncTaskCompleteListener<AsyncTaskResult<Integer>>() {
                 @Override
                 public void onTaskComplete(final AsyncTaskResult<Integer> result) {
-                    if (result.getError() != null) {
-                        balanceLabel.setText(getString(R.string.card_fragment_see_balance));
-                        balance.setText("");
-                        Toast.makeText(ctx, getString(R.string.error_general_network), Toast.LENGTH_LONG).show();
-                    } else {
+                    if (result.getError() == null) {
                         DecimalFormat fmt = new DecimalFormat("###,###.##");
                         balance.setText(fmt.format(result.getResult()));
+                        return;
+                    } else if (result.getError() instanceof IOException) {
+                        Toast.makeText(ctx, getString(R.string.error_general_network), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(ctx, getString(R.string.error_general), Toast.LENGTH_LONG).show();
                     }
+                    balanceLabel.setText(getString(R.string.card_fragment_see_balance));
+                    balance.setText("");
                 }
             };
 

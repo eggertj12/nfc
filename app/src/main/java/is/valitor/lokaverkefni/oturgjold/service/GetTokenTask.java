@@ -59,7 +59,6 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
 
         if (rCode == 200) {
             try {
-                System.out.println(result.toString());
                 Gson gson = new Gson();
                 Token token  = gson.fromJson(result.toString(), Token.class);
                 Log.d("response",result.toString());
@@ -118,20 +117,16 @@ public class GetTokenTask extends AsyncTask <String, Void, JSONObject> {
             OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
 
             osw.write(msg.toString());
-            System.out.println(msg.toString());
             osw.flush();
             osw.close();
             // The service will respond with a JSON string of its own.
             int response = conn.getResponseCode();
             //Log.d( "The response is: " + response);
-            System.out.println("The response code is: " + response);
             String responseMessage = conn.getResponseMessage();
-            System.out.println("The response message is: " + responseMessage);
 
 
             // Convert the InputStream into a string
             is = conn.getInputStream();
-            //System.out.println(is.available());
             ret = readJSON(is, 5000);
             try {
                 ret.put("responseCode", response);

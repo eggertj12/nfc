@@ -1,20 +1,12 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 //import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +18,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.security.InvalidParameterException;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
@@ -35,11 +28,11 @@ import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
-import is.valitor.lokaverkefni.oturgjold.service.RegisterResult;
+import is.valitor.lokaverkefni.oturgjold.service.RequestResult;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
-public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskCompleteListener<RegisterResult>{
+public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskCompleteListener<AsyncTaskResult<Card>>{
 
     private TextView responseDisplay;
     private TextView nextActionPrompt;
@@ -73,9 +66,6 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         String cardPin = intent.getStringExtra(CustomizeCardActivity.MSG_CARDPIN);
         String nickName = intent.getStringExtra(CustomizeCardActivity.MSG_NICKNAME);
 
-
-//        System.out.println(cardNumber);
-
         // Having registered a card, you are now happy to return to main view
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
         defaultFinishButton.setVisibility(View.INVISIBLE);
@@ -83,8 +73,6 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         //Register new card (another card)
         continueRegisterCard = (Button)findViewById(R.id.reg_new_card);
         continueRegisterCard.setVisibility(View.INVISIBLE);
-
-
 
         // Communicate with the service:
         try {
@@ -101,8 +89,7 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
 
             // Ensure connection
             if (NetworkUtil.isConnected(getApplication())) {
-                // Communicate with service
-                new RegisterCardTask(getApplication(),this)
+                new RegisterCardTask(this)
                         .execute(getString(R.string.service_card_url), outMsg.toString());
             }
             else {
@@ -136,7 +123,7 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
 
     // onTaskComplete is called once the task has completed.
     @Override
-    public void onTaskComplete(RegisterResult result) {
+    public void onTaskComplete(AsyncTaskResult<Card> result) {
 
         sendRequest.setVisibility(View.INVISIBLE);
         loadingThings.setVisibility(View.INVISIBLE);
@@ -144,17 +131,13 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         continueRegisterCard.setVisibility(View.VISIBLE);
 
         //Registration was succsessful
-        if(result.getResultCode()==200)
+        if(result.getError() == null)
         {
             responseDisplay.setVisibility(View.VISIBLE);
             nextActionPrompt.setVisibility(View.VISIBLE);
             try{
 
-                //Retrieve the content from the response and add to repository
-                Gson gson = new Gson();
-                JsonReader jr = new JsonReader(new StringReader(result.getResultContent()));
-                jr.setLenient(true);
-                Card c = gson.fromJson(jr, Card.class);
+                Card c = result.getResult();
 
                 c.setCard_name(getIntent().getStringExtra(CustomizeCardActivity.MSG_NICKNAME));
                 c.setCard_image(getIntent().getStringExtra(CustomizeCardActivity.MSG_CARDIMAGE));
@@ -170,18 +153,27 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
                 token.setDevice_id(theUser.getDevice_id());
                 token.setCard_id(c.getCard_id());
 
+                Gson gson = new Gson();
                 String tokenJson = gson.toJson(token, Token.class);
+
+                // The get token task will fetch 3 tokens
                 new GetTokenTask(getApplicationContext()).execute(getString(R.string.service_token_url), tokenJson);
 
-
-            }catch (Exception e){
+            } catch (Exception e){
                 e.printStackTrace();
             }
 
-        }else{
-            Toast.makeText(this,result.getResultContent(),Toast.LENGTH_LONG).show();
+        } else if (result.getError() instanceof IOException) {
+            Toast.makeText(this, getString(R.string.error_general_network), Toast.LENGTH_LONG).show();
+            // Return to previous activity on network error
+            setResult(MainActivity.RESULT_NETWORK_ERROR);
+            finish();
+        } else  if (result.getError() instanceof InvalidParameterException) {
+            Toast.makeText(this, result.getError().getMessage(), Toast.LENGTH_LONG).show();
+            // Close current activity and return to previous on invalid input error
             finish();
         }
+
 
     }
 }

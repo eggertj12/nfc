@@ -3,11 +3,18 @@ package is.valitor.lokaverkefni.oturgjold.service;
 /**
  * Created by kla on 8.5.2015.
  */
-public class RegisterResult {
+public class RequestResult {
 
     private int resultCode;
     private String resultMessage;
     private String resultContent;
+    private Exception exception = null;
+
+    public RequestResult() {}
+
+    public RequestResult(Exception e) {
+        this.exception = e;
+    }
 
     public String getResultContent() {
         return resultContent;
@@ -31,5 +38,13 @@ public class RegisterResult {
 
     public void setResultMessage(String resultMessage) {
         this.resultMessage = resultMessage;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception e) {
+        this.exception = e;
     }
 }

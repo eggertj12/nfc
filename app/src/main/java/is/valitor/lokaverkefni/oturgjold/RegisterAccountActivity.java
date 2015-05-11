@@ -1,7 +1,6 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.Settings;
 
@@ -16,24 +15,29 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.StringReader;
+import java.security.InvalidParameterException;
+
 import com.google.gson.stream.JsonReader;
 
+import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
+import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterAccountTask;
+import is.valitor.lokaverkefni.oturgjold.service.RequestResult;
 import is.valitor.lokaverkefni.oturgjold.utils.DigitGrouper;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
-import is.valitor.lokaverkefni.oturgjold.service.RegisterResult;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
 
-public class RegisterAccountActivity extends Activity implements AsyncTaskCompleteListener<RegisterResult>{
+public class RegisterAccountActivity extends Activity implements AsyncTaskCompleteListener<AsyncTaskResult<User>> {
 
     private TextView editAccountName;
     private ProgressBar loadingThings;
-    private RegisterResult requestResult;
+    private RequestResult requestResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,47 +111,44 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
             registerAccountButton.setEnabled(false);
 
             // fetch data
-            new RegisterAccountTask(getApplicationContext(),this)
+            new RegisterAccountTask(this)
                     .execute(getString(R.string.service_account_url), jsonAccountObject.toString());
         }
     }
 
 
-        // onTaskComplete is called once the task has completed.
+    // onTaskComplete is called once the task has completed.
 
     @Override
-    public void onTaskComplete(RegisterResult result) {
+    public void onTaskComplete(AsyncTaskResult<User> result) {
 
-        if(result.getResultCode() == 200)
+        //Registration was succsessful
+        if(result.getError() == null)
         {
-            //Toast.makeText(this, result.getResultMessage(),Toast.LENGTH_LONG).show();
-                try {
-                    Gson gson = new Gson();
-                    JsonReader rd = new JsonReader(new StringReader(result.getResultContent()));
-                    rd.setLenient(true);
-                    User user = gson.fromJson(rd, User.class);
-                    Repository.setUser(getApplication(), user);
+            try {
+                User user = result.getResult();
+                Repository.setUser(getApplication(), user);
 
-                    //go back to frontpage
-                    // Set result to trigger action in mainActivity
-                    setResult(RESULT_OK);
-                    finish();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e.getMessage());
-
-                }
+                // go back to frontpage
+                // Set result to trigger action in mainActivity
+                setResult(RESULT_OK);
+                finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+                return;
             }
-        else {
-            Toast.makeText(this,result.getResultContent(),Toast.LENGTH_LONG).show();
-            loadingThings.setVisibility(View.INVISIBLE);
-            Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
-            registerAccountButton.setClickable(true);
-            registerAccountButton.setEnabled(true);
-            editAccountName.requestFocus();
+        } else if (result.getError() instanceof IOException) {
+            Toast.makeText(this, getString(R.string.error_general_network), Toast.LENGTH_LONG).show();
+        } else  if (result.getError() instanceof InvalidParameterException) {
+            Toast.makeText(this, result.getError().getMessage(), Toast.LENGTH_LONG).show();
         }
-     }
+        loadingThings.setVisibility(View.INVISIBLE);
+        Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
+        registerAccountButton.setClickable(true);
+        registerAccountButton.setEnabled(true);
+        editAccountName.requestFocus();
+    }
 }
 
 

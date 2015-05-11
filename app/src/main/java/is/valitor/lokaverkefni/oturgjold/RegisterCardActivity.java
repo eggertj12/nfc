@@ -181,7 +181,6 @@ public class RegisterCardActivity extends Activity {
 
         cardNumber = (EditText) findViewById(R.id.editCardNumber);
         String cn = cardNumber.getText().toString().replace(String.valueOf(DigitGrouper.space), "");
-        System.out.println(cardNumber);
 
         String cardType = "";
         //if (!(cardType == "visa" ||cardType == "mastercard" )) {

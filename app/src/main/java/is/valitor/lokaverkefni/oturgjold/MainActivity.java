@@ -35,6 +35,7 @@ import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 public class MainActivity extends FragmentActivity {
     public static final int RESULT_ADD_CARD = 1;
+    public static final int RESULT_NETWORK_ERROR = 1;
 
     private static final int REQUEST_REGISTER_USER = 1;
     private static final int REQUEST_REGISTER_CARD = 2;
@@ -69,7 +70,6 @@ public class MainActivity extends FragmentActivity {
             // Extra layer of insulation:
             if(getIntent().getStringExtra("MSG_REQUEST_PIN").contentEquals("true")) {
                 // Clear last entered pin shared preference
-                System.out.println("MAIN ACTIVITY BEING CALLED AFTER HCE");
                 SharedPreferences.Editor clearPin = PreferenceManager.getDefaultSharedPreferences(this).edit();
                 clearPin.putString("lastPIN", "");
                 clearPin.commit();
@@ -223,18 +223,26 @@ public class MainActivity extends FragmentActivity {
                 startActivityForResult(newIntent, REQUEST_REGISTER_CARD);
             }
         }
+
         if(reqCode == REQUEST_REGISTER_CARD) {
             enableRegistrationUI();
         }
 
         if (reqCode == REQUEST_REGISTER_CARD) {
             pagerAdapter.notifyDataSetChanged();
-            viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
             if(resCode == RESULT_ADD_CARD) {
                 registerCard(null);
             }
-        }
 
+            if (Repository.getCardCount(getApplication()) > 0) {
+                viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+                String cardName = Repository.getSelectedCard(getApplication()).getCard_name();
+                if (cardName.length() > 0) {
+                    setTitle(cardName);
+                }
+            }
+
+        }
         if (reqCode == REQUEST_CHANGE_SELECTED_CARD) {
             new android.os.Handler().postDelayed(
                     new Runnable() {
