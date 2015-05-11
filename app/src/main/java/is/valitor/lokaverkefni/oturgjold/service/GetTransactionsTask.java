@@ -87,8 +87,6 @@ public class GetTransactionsTask extends AsyncTask<String, Void, List<Transactio
             conn.connect();
 
 
-
-
             // The service will respond with a JSON string of its own.
             int response = conn.getResponseCode();
 

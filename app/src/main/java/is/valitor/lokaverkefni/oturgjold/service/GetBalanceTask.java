@@ -64,10 +64,6 @@ public class GetBalanceTask extends AsyncTask <String, Void, Integer> {
             // Establish connection
             conn.connect();
             // Get ready to write data
-           /* OutputStream os = conn.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-            osw.flush();
-            osw.close();*/
             // The service will respond with a JSON string of its own.
             int response = conn.getResponseCode();
             //Log.d( "The response is: " + response);

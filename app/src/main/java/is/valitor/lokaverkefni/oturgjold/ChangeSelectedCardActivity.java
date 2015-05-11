@@ -39,11 +39,11 @@ public class ChangeSelectedCardActivity extends Activity implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
         Context context = getApplicationContext();
         List<Card> cards = Repository.getCards(context);
 
         Card card = cards.get(position);
-//      Toast.makeText(this,card.getCard_name(),Toast.LENGTH_LONG).show();
         Repository.setSelectedCard(context,card);
 
         finish();
