@@ -120,9 +120,9 @@ public class CardService extends HostApduService {
 
             String toSend = toSend();
             //Letting the user know token was sent
-            Toast.makeText(this, "Greiðslubeiðni hefur verið send yfir í posa",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.info_payment_sent,Toast.LENGTH_LONG).show();
             if (toSend == null) {
-                Toast toast = Toast.makeText(this, "No token", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(this, R.string.info_no_token_available, Toast.LENGTH_LONG);
                 toast.show();
                 return UNKNOWN_CMD_SW;
             }
@@ -151,19 +151,12 @@ public class CardService extends HostApduService {
             int i = Repository.getTokenCount(getApplication(),card.getCard_id());
             Log.d(TAG,String.valueOf(i));
 
-            /*if(ct.getTokenitem() == null)
-            {
-                Toast toast = Toast.makeText(this, "No token for " + card.getCard_id(), Toast.LENGTH_LONG);
-                toast.show();
-                return null;
-            }*/
             if (ct != null) {
                 tokenParam = ct.getTokenitem();
                 deviceParam = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             }
 
-            // Get a new token if there is connectivity
-
+            // Get a new token if there is a network connection
 
             Context ctx = getApplication();
             if (NetworkUtil.isConnected(ctx)) {

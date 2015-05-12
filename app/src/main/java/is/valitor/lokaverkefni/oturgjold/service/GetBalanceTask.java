@@ -50,7 +50,6 @@ public class GetBalanceTask extends RequestTask {
         Integer balance = 0;
         try {
             balance = Integer.parseInt(result.getResultContent());
-            System.out.println("Balance is: " + balance);
         } catch (Exception e){
             e.printStackTrace();
             listener.onTaskComplete(new AsyncTaskResult<Integer>(e));

@@ -135,7 +135,6 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
                 finish();
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println(e.getMessage());
                 return;
             }
         } else if (result.getError() instanceof IOException) {

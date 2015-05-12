@@ -1,6 +1,5 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
-import android.content.Context;
 import android.os.AsyncTask;
 
 import org.apache.commons.io.IOUtils;

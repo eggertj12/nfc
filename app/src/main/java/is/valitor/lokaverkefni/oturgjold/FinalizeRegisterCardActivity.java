@@ -12,12 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.security.InvalidParameterException;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
@@ -94,8 +92,7 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
             }
             else {
                 // display error
-                CharSequence message = "Nettenging ekki virk.";
-                Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(this, R.string.error_no_network, Toast.LENGTH_LONG);
                 toast.show();
 
                 setResult(RESULT_CANCELED);

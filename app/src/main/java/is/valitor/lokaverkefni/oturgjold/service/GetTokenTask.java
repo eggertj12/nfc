@@ -63,7 +63,8 @@ public class GetTokenTask extends RequestTask {
             jsonReader.setLenient(true);
             Token token = gson.fromJson(jsonReader, Token.class);
 
-            Toast.makeText(appContext, "Sótti tóken", Toast.LENGTH_LONG).show();
+            // Keeping this line in, in case we ever want to notify user of this
+            //Toast.makeText(appContext, "Sótti tóken", Toast.LENGTH_LONG).show();
 
             int currentCard = token.getCard_id();
             Repository.addToken(this.appContext, currentCard, token);

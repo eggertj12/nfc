@@ -102,6 +102,10 @@
     <string name="info_finalize_service_response">Kort hefur verið skráð</string>
     <string name="info_finalize_prompt_next_action">Skrá annað kort?</string>
 
+    <!-- Payment / Card Service-->
+    <string name="info_payment_sent">Greiðslubeiðni hefur verið send yfir í posa</string>
+    <string name="info_no_token_available">Vantar færslulykla. Athuga netsamband</string>
+
     <!-- For espresso -->
     <string name="espresso_1_string">1</string>
 
