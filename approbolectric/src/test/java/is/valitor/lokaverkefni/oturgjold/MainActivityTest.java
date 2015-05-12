@@ -6,18 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.FragmentTestUtil;
-
-import javax.xml.soap.Text;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
@@ -126,7 +122,7 @@ public class MainActivityTest {
         FragmentTestUtil.startFragment(fragment);
         TextView cn = (TextView) fragment.getView().findViewById(R.id.fragmentCardNumber);
         assertEquals(true, cn instanceof TextView);
-        assertEquals("XXXX XXXX XXXX 4444", ((TextView) cn).getText());
+        assertEquals("XXXX XXXX XXXX 4444", cn.getText());
     }
 
 }

@@ -39,13 +39,13 @@
             android:inputType="textPersonName"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/titleEditName"
+            android:layout_below="@id/titleEditName"
             android:layout_alignParentRight="true"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kennitala"
+            android:text="@string/ssn"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentStart="true"
             android:id="@+id/titleEditSSN"

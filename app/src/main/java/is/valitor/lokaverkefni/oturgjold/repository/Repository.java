@@ -279,6 +279,7 @@ public class Repository {
         File tokenFile = new File(TOKEN_FILE_NAME);
 
         try {
+            // Ignore results
             userFile.delete();
             cardFile.delete();
             tokenFile.delete();
@@ -508,7 +509,7 @@ public class Repository {
 
         int cardId = card.getCard_id();
         editor.putInt("selectedCardId", cardId);
-        editor.commit();
+        editor.apply();
     }
 
     /**

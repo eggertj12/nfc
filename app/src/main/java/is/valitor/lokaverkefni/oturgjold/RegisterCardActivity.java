@@ -3,9 +3,7 @@ package is.valitor.lokaverkefni.oturgjold;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -48,7 +46,6 @@ public class RegisterCardActivity extends Activity {
     // To handle the rogue first selection event
     private boolean firstSpM;
     private boolean firstSpY;
-    private boolean firstCardN;
 
 
     @Override
@@ -57,7 +54,7 @@ public class RegisterCardActivity extends Activity {
         setContentView(R.layout.activity_register_card);
 
         User user = Repository.getUser(getApplication());
-        cardholder = user.getName().toString();
+        cardholder = user.getName();
         final TextView name = (TextView)findViewById(R.id.cardholderName);
         name.setText(cardholder);
         // Populate spinner for selection of month
@@ -104,7 +101,6 @@ public class RegisterCardActivity extends Activity {
     public void onStart() {
         super.onStart();
         // These booleans needed to ignore first selection, an android kink
-        firstCardN = true;
         firstSpM = true;
         firstSpY = true;
 
@@ -123,7 +119,7 @@ public class RegisterCardActivity extends Activity {
         spM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(firstSpM == true) {
+                if(firstSpM) {
                     firstSpM = false;
                     return;
                 }
@@ -138,7 +134,7 @@ public class RegisterCardActivity extends Activity {
         spY.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(firstSpY == true) {
+                if(firstSpY) {
                     firstSpY = false;
                     return;
                 }

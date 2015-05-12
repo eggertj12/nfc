@@ -11,6 +11,7 @@
         android:layout_alignParentBottom="true"
         android:scaleType="fitEnd"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/cardimage_description"
         android:src="@drawable/rain_blue_creditcard" />
 
     <RelativeLayout
@@ -25,22 +26,8 @@
             android:layout_height="10dp"
             android:layout_alignParentBottom="true"
             android:layout_margin="0dp"
-            android:background="@drawable/card_shadow" />
-
-
-        <!--<TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Nafn korts"
-            android:id="@+id/fragmentCardName"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="@dimen/card_name_top_margin"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:textColor="#ffffffff"
-            android:gravity="right"
-            android:paddingRight="@dimen/card_name_right_margin" />-->
+            android:background="@drawable/card_shadow"
+            android:contentDescription="@string/cardimage_shadow"/>
 
         <TextView
             android:id="@+id/fragmentCardNumber"
@@ -53,7 +40,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="1.5"
-            android:text="XXXX XXXX XXXX 1234"
+            android:text="@string/card_fragment_base"
             android:textColor="#ffdcdcdc"
             android:textColorHighlight="#ffffffff"
             android:textSize="17dp"

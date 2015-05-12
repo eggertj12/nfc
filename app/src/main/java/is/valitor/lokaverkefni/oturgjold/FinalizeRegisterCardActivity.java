@@ -26,7 +26,6 @@ import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 import is.valitor.lokaverkefni.oturgjold.service.RegisterCardTask;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
-import is.valitor.lokaverkefni.oturgjold.service.RequestResult;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
@@ -41,7 +40,6 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
     private static final int REQUEST_REGISTER_CARD = 2;
 
     private Card card = null;
-    //private String cardName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +55,10 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
         // Lets get get the card data, temporary storage only ofc
         String cardNumber = intent.getStringExtra(CustomizeCardActivity.MSG_CARDNUMBER);
         String cardHolder = intent.getStringExtra(CustomizeCardActivity.MSG_CARDHOLDER);
-        String cardType = intent.getStringExtra(CustomizeCardActivity.MSG_CARDTYPE);
         String cardCvv = intent.getStringExtra(CustomizeCardActivity.MSG_CARDCVV);
         String cardMonth = intent.getStringExtra(CustomizeCardActivity.MSG_CARDMONTH);
         String cardYear = intent.getStringExtra(CustomizeCardActivity.MSG_CARDYEAR);
         String cardPin = intent.getStringExtra(CustomizeCardActivity.MSG_CARDPIN);
-        String nickName = intent.getStringExtra(CustomizeCardActivity.MSG_NICKNAME);
 
         // Having registered a card, you are now happy to return to main view
         defaultFinishButton = (Button) findViewById(R.id.button_finish_default_card);
@@ -159,7 +155,6 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
             } catch (Exception e){
                 e.printStackTrace();
             }
-
         } else if (result.getError() instanceof IOException) {
             Toast.makeText(this, getString(R.string.error_general_network), Toast.LENGTH_LONG).show();
             // Return to previous activity on network error
@@ -170,7 +165,5 @@ public class FinalizeRegisterCardActivity extends Activity implements AsyncTaskC
             // Close current activity and return to previous on invalid input error
             finish();
         }
-
-
     }
 }

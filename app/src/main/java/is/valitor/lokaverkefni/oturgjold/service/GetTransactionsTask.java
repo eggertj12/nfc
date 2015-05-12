@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Transaction;
-import is.valitor.lokaverkefni.oturgjold.repository.User;
 
 /**
  * Created by kla on 27.4.2015.
@@ -50,7 +49,6 @@ public class GetTransactionsTask extends RequestTask {
         List<Transaction> transactions;
         try{
             //Retrieve the content from the response and add to repository
-            Gson gson = new Gson();
             JsonReader jsonReader = new JsonReader(new StringReader(result.getResultContent()));
             jsonReader.setLenient(true);
             final Type listType = new TypeToken<ArrayList<Transaction>>() {}.getType();
@@ -76,8 +74,6 @@ public class GetTransactionsTask extends RequestTask {
             }
         });
 
-        Gson gson = builder.create();
-
-        return gson;
+        return builder.create();
     }
 }

@@ -1,24 +1,8 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
-import android.content.Context;
-import android.os.AsyncTask;
-
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import java.io.Reader;
-import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.InvalidParameterException;
-import java.text.ParseException;
-
-import is.valitor.lokaverkefni.oturgjold.repository.Card;
-
 
 /**
  * Created by kla on 20.4.2015.
@@ -47,7 +31,7 @@ public class GetBalanceTask extends RequestTask {
             listener.onTaskComplete(new AsyncTaskResult<Integer>(e));
         }
 
-        Integer balance = 0;
+        Integer balance;
         try {
             balance = Integer.parseInt(result.getResultContent());
         } catch (Exception e){

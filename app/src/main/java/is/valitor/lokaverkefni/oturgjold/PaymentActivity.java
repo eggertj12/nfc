@@ -7,8 +7,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -154,8 +152,6 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
 
     private void showStars() {
-        String entered = "";
-
         for (int i = 0; i < pin.length(); i++) {
             stars[i].setTextColor(getResources().getColor(R.color.bright_orange));
         }
@@ -163,7 +159,6 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
         for (int i = pin.length(); i < 4; i++) {
             stars[i].setTextColor(getResources().getColor(R.color.dark_blue));
         }
-
     }
 
     private void clickToPin(int x) {
@@ -214,7 +209,7 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
     private void close() {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString("lastPIN", "");
-        editor.commit();
+        editor.apply();
 
         finish();
     }

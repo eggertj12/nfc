@@ -1,12 +1,8 @@
 package is.valitor.lokaverkefni.oturgjold;
 
-import android.app.Application;
-import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ApplicationTestCase;
-import android.test.FlakyTest;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.inputmethod.EditorInfo;
 

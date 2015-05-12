@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="151dp"
             android:layout_height="28dp"
-            android:text="date"
+            android:text="@string/date"
             android:id="@+id/date"
             />
     </LinearLayout>
@@ -21,11 +21,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/stuff"
         android:layout_below="@id/time"
-        android:paddingLeft="6dp">
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp">
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Vendor"
+            android:text="@string/vendor"
             android:id="@+id/vendor"
             android:gravity="start"
             android:maxLines="1"
@@ -33,7 +34,7 @@
             android:textSize="18sp"
             android:textColor="@color/bright_orange"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="price"

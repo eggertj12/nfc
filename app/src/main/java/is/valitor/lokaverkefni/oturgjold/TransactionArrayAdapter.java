@@ -1,7 +1,6 @@
 package is.valitor.lokaverkefni.oturgjold;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +55,7 @@ public class TransactionArrayAdapter extends ArrayAdapter {
         vendorText.setText(trans.getVendor());
         DecimalFormat dcf = new DecimalFormat("###,###");
         priceText.setText(dcf.format(trans.getPrice()) + " kr.");
+        // American date format is for the weak
         dateText.setText(new SimpleDateFormat("dd.MM.yyyy  HH:mm").format(trans.getDate()));
 
         // Return the filled out view

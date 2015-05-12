@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/finalize_bottom_margin"
-        android:text="Sendi fyrirspurn"
+        android:text="@string/info_finalize_request_sent"
         android:id="@+id/serviceRequest"
         android:textSize="22sp"
         android:fontFamily="sans-serif-light"

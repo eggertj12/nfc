@@ -24,7 +24,6 @@
             android:id="@+id/card_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card_name"
             android:layout_marginStart="20dp"
             android:text=""
             android:textSize="20sp" />
@@ -38,7 +37,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="\uE600"
+        android:text="@string/card_icon"
         android:textColor="@color/bright_orange"
         android:textSize="25dp" />
 

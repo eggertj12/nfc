@@ -1,7 +1,5 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -9,7 +7,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.security.InvalidParameterException;
 
-import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 
 /**
@@ -39,7 +36,7 @@ public class RegisterAccountTask extends RequestTask {
             listener.onTaskComplete(new AsyncTaskResult<User>(e));
         }
 
-        User user = null;
+        User user;
         try{
             //Retrieve the content from the response and add to repository
             Gson gson = new Gson();

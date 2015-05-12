@@ -13,10 +13,7 @@ public class Validator {
      * Only checks for non-empty string.
      */
     public boolean validateCardholderName(String name) {
-        if (name.length() == 0) {
-            return false;
-        }
-        return true;
+        return name.length() != 0;
     }
 
     /**
@@ -73,10 +70,7 @@ public class Validator {
         // No earlier year
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int suppliedYear = Integer.decode(year);
-        if (suppliedYear < currentYear) {
-            return false;
-        }
-        return true;
+        return suppliedYear >= currentYear;
     }
 
     /**
@@ -91,10 +85,7 @@ public class Validator {
             return false;
         }
         int suppliedMonth = Integer.decode(month);
-        if (suppliedMonth < 1 || suppliedMonth > 12) {
-            return false;
-        }
-        return true;
+        return !(suppliedMonth < 1 || suppliedMonth > 12);
     }
 
     /**

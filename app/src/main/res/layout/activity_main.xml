@@ -33,7 +33,8 @@
             android:layout_below="@id/cardPager"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layerType="software"
-            android:src="@drawable/leather_seam_top" />
+            android:src="@drawable/leather_seam_top"
+            android:contentDescription="@string/empty"/>
 
         <ImageView
             android:id="@+id/cardPagerSeamBottom"
@@ -41,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cardPagerSeamTop"
             android:layerType="software"
-            android:src="@drawable/leather_seam_bottom" />
+            android:src="@drawable/leather_seam_bottom"
+            android:contentDescription="@string/empty" />
 
 
     </RelativeLayout>
@@ -62,7 +64,7 @@
             android:clickable="true"
             android:enabled="true"
             android:onClick="payment"
-            android:text="\uE600" />
+            android:text="@string/card_icon" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,15 +93,14 @@
             android:layout_above="@+id/sublayout_register"
             android:layout_alignParentTop="true"
             android:layout_margin="30dp"
-            android:layout_weight="1"
-            android:src="@drawable/main_logo" />
+            android:src="@drawable/main_logo"
+            android:contentDescription="@string/cardimage_description"/>
 
         <LinearLayout
             android:id="@id/sublayout_register"
             android:layout_width="match_parent"
             android:layout_height="96dp"
             android:layout_alignParentBottom="true"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -117,7 +118,6 @@
             android:layout_width="match_parent"
             android:layout_height="96dp"
             android:layout_alignParentBottom="true"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 

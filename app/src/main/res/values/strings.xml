@@ -7,8 +7,7 @@
 
 
     <!-- Texts on buttons -->
-    <string name="button_register_card">Skrá kort</string>
-    <string name="button_register_account">Nýskráning</string>
+
 
     <!-- Activity titles -->
     <string name="title_activity_register_card">Skrá kort</string>
@@ -26,6 +25,8 @@
     <string name="app_name">Oturgjöld</string>
     <string name="action_settings">Stillingar</string>
 
+
+    <!-- Button and input field labels -->
     <string name="label_name">Nafn</string>
     <string name="label_cardholder_name">Fullt nafn korthafa</string>
     <string name="label_card_number">Kortanúmer</string>
@@ -40,7 +41,8 @@
     <string name="label_customize_nick">Kenninafn</string>
     <string name="label_yes_caps">JÁ</string>
     <string name="label_no_caps">NEI</string>
-
+    <string name="button_register_card">Skrá kort</string>
+    <string name="button_register_account">Nýskráning</string>
 
     <!-- Error messages -->
     <string name="error_invalid_cardholder_name">Sláðu inn nafn korthafa</string>
@@ -101,13 +103,36 @@
     <!-- FinalizeRegisterCard -->
     <string name="info_finalize_service_response">Kort hefur verið skráð</string>
     <string name="info_finalize_prompt_next_action">Skrá annað kort?</string>
+    <string name="info_finalize_request_sent">Sendi fyrirspurn</string>
 
     <!-- Payment / Card Service-->
     <string name="info_payment_sent">Greiðslubeiðni hefur verið send yfir í posa</string>
     <string name="info_no_token_available">Vantar færslulykla. Athuga netsamband</string>
 
-    <!-- For espresso -->
-    <string name="espresso_1_string">1</string>
 
+    <string name="medium_text">Medium Text</string>
+    <string name="date">Date</string>
+    <string name="vendor">Vendor</string>
+    <string name="card_icon">\uE600</string>
+    <string name="ssn">Kennitala</string>
+    <string name="radio_button">\uea56</string>
+    <string name="card_fragment_base">XXXX XXXX XXXX 1234</string>
+
+    <string name="pin_1">1</string>
+    <string name="pin_2">2</string>
+    <string name="pin_3">3</string>
+    <string name="pin_4">4</string>
+    <string name="pin_5">5</string>
+    <string name="pin_6">6</string>
+    <string name="pin_7">7</string>
+    <string name="pin_8">8</string>
+    <string name="pin_9">9</string>
+    <string name="pin_0">0</string>
+
+    <string name="pin_erase">\uE602</string>
+    <string name="arrow_up">\uea3c</string>
+    <string name="cardimage_description">Mynd fyrir kort.</string>
+    <string name="cardimage_shadow">Skuggi fyrir kort.</string>
+    <string name="empty"></string>
 
 </resources>

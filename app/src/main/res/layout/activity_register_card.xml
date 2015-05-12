@@ -33,7 +33,7 @@
             android:id="@+id/cardholderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
+            android:text="@string/medium_text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView

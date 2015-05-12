@@ -1,35 +1,17 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.StringReader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
 
 import is.valitor.lokaverkefni.oturgjold.R;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
-import is.valitor.lokaverkefni.oturgjold.repository.Transaction;
-import is.valitor.lokaverkefni.oturgjold.repository.User;
 
 /**
  * Created by kla on 23.3.2015.
@@ -83,7 +65,6 @@ public class GetTokenTask extends RequestTask {
         } catch (Exception e){
             e.printStackTrace();
             Toast.makeText(appContext, appContext.getString(R.string.error_general), Toast.LENGTH_LONG).show();
-            return;
         }
     }
 }

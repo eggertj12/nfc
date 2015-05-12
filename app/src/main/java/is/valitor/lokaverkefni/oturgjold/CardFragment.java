@@ -63,6 +63,7 @@ public class CardFragment extends Fragment {
 
         String name = card.getCard_name();
         if (name.equals("")) {
+            // name should never be empty
             name = String.format("Kort %d", cardIndex + 1);
         }
 
