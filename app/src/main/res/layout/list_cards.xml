@@ -39,7 +39,7 @@
         android:gravity="center"
         android:text="@string/card_icon"
         android:textColor="@color/bright_orange"
-        android:textSize="25dp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@id/radio_Button"
@@ -48,7 +48,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="\uea56" />
+        android:text="@string/radio_button" />
 
 
 </RelativeLayout>
