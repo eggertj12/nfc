@@ -102,5 +102,8 @@
     <string name="info_finalize_service_response">Kort hefur verið skráð</string>
     <string name="info_finalize_prompt_next_action">Skrá annað kort?</string>
 
+    <!-- For espresso -->
+    <string name="espresso_1_string">1</string>
+
 
 </resources>

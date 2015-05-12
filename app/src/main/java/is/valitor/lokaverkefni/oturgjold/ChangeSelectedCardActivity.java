@@ -44,7 +44,7 @@ public class ChangeSelectedCardActivity extends Activity implements AdapterView.
         List<Card> cards = Repository.getCards(context);
 
         Card card = cards.get(position);
-        Repository.setSelectedCard(context,card);
+        Repository.setSelectedCard(context, card);
 
         finish();
     }
