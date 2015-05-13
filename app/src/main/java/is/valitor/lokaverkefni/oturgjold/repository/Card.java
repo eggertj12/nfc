@@ -32,6 +32,7 @@ public class Card {
     public void setCard_balance(int card_balance) {
         this.card_balance = card_balance;
     }
+
     public int getCard_id() {
         return card_id;
     }

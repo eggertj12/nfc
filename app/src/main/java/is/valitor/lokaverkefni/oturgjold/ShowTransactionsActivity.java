@@ -19,10 +19,11 @@ import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskCompleteListener;
 import is.valitor.lokaverkefni.oturgjold.service.AsyncTaskResult;
 import is.valitor.lokaverkefni.oturgjold.service.GetTransactionsTask;
 
+/**
+ * Display list of transactions for a card
+ */
+public class ShowTransactionsActivity extends Activity implements AsyncTaskCompleteListener<AsyncTaskResult<List<Transaction>>> {
 
-public class ShowTransactionsActivity extends Activity implements AsyncTaskCompleteListener<AsyncTaskResult<List<Transaction>>>{
-
-    static final String TAG = "Show transactions";
     private ProgressBar loadingThings;
 
     @Override
@@ -37,6 +38,7 @@ public class ShowTransactionsActivity extends Activity implements AsyncTaskCompl
     protected void onResume() {
         super.onResume();
 
+        // Get transactions for currently selected card
         Card card = Repository.getSelectedCard(getApplication());
         int currentCard = card.getCard_id();
         new GetTransactionsTask(this).execute("https://kortagleypir.herokuapp.com/transaction/all/" + currentCard);
@@ -55,6 +57,7 @@ public class ShowTransactionsActivity extends Activity implements AsyncTaskCompl
             Toast.makeText(this, getString(R.string.error_general), Toast.LENGTH_LONG).show();
         } else {
 
+            // Display list
             if (result.getResult().size() > 0) {
                 ListAdapter transList;
                 transList = new TransactionArrayAdapter(result.getResult(), this);
@@ -66,5 +69,4 @@ public class ShowTransactionsActivity extends Activity implements AsyncTaskCompl
             }
         }
     }
-
 }

@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
+/**
+ * The second view in registering a card
+ * User selectable options for card
+ */
 public class CustomizeCardActivity extends Activity {
 
     private static final int REQUEST_REGISTER_CARD = 1;
@@ -19,9 +23,9 @@ public class CustomizeCardActivity extends Activity {
     public static final String MSG_CARDCVV = "is.valitor.oturgjold.MSG_CARDCVV";
     public static final String MSG_CARDMONTH = "is.valitor.oturgjold.MSG_CARDMONTH";
     public static final String MSG_CARDYEAR = "is.valitor.oturgjold.MSG_CARDYEAR";
-    public static final String MSG_CARDPIN ="is.valitor.oturgjold.MSG_CARDPIN";
-    public static final String MSG_CARDIMAGE ="is.valitor.oturgjold.MSG_CARDIMAGE";
-    public static final String MSG_NICKNAME ="is.valitor.oturgjold.MSG_CARDNICKNAME";
+    public static final String MSG_CARDPIN = "is.valitor.oturgjold.MSG_CARDPIN";
+    public static final String MSG_CARDIMAGE = "is.valitor.oturgjold.MSG_CARDIMAGE";
+    public static final String MSG_NICKNAME = "is.valitor.oturgjold.MSG_CARDNICKNAME";
 
     private static final int thumbs[] = {
             R.id.ibAbsBrown,
@@ -39,6 +43,7 @@ public class CustomizeCardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize_card);
 
+        // Shade all but the first card image buttons
         ImageButton button;
         for (int i = 1; i <= 5; i++) {
             button = (ImageButton) findViewById(thumbs[i]);
@@ -47,32 +52,47 @@ public class CustomizeCardActivity extends Activity {
         findViewById(R.id.customize_pin_inputfield).requestFocus();
     }
 
-
+    /**
+     * Read the user selected pin input
+     *
+     * @return string PIN
+     */
     private String getCustomizePin() {
-
         EditText pin = (EditText) findViewById(R.id.customize_pin_inputfield);
 
         return pin.getText().toString();
     }
 
+    /**
+     * Read the card nick inputbox
+     *
+     * @return user selected nickname or default sequential nick if none given
+     */
     private String getCustomizeNick() {
         EditText getNick = (EditText) findViewById(R.id.customize_nick_input);
         String nick = getNick.getText().toString();
-        if(nick == null || nick.trim().equals("")) {
-           int size = Repository.getCardCount(this);
-            nick = "Kort " + String.valueOf(size+1);
+        if (nick == null || nick.trim().equals("")) {
+            int size = Repository.getCardCount(this);
+            nick = "Kort " + String.valueOf(size + 1);
         }
 
         return nick;
     }
 
+    /**
+     * Handler for clicks on card look imagebuttons
+     * Shades all the other buttons
+     *
+     * This really is a dirty workaround for something that a radiobutton should solve
+     * @param v the view that the event originates from
+     */
     public void onSelectCardImage(View v) {
         // This should be handled by a radioGroup but it has serious layout deficiencies
         // F.ex. no possibility for wrapping buttons in a group
 
         ImageButton button;
 
-        for (int id: thumbs) {
+        for (int id : thumbs) {
             button = (ImageButton) findViewById(id);
             button.setColorFilter(R.color.grey05trans);
         }
@@ -102,13 +122,21 @@ public class CustomizeCardActivity extends Activity {
         }
     }
 
+    /**
+     * Verify valid pin input and trigger transaction to register card
+     *
+     * @param view
+     */
     public void finalizeCard(View view) {
 
+        // Need the intent sent to start this activty to get previous data
         Intent oldIntent = getIntent();
+
+        // And create a new one to start
         Intent intent = new Intent(this, FinalizeRegisterCardActivity.class);
 
         // Validate app PIN
-        if(getCustomizePin().length() != 4) {
+        if (getCustomizePin().length() != 4) {
             CharSequence message = getResources().getString(R.string.error_customize_pin_length);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
@@ -116,6 +144,7 @@ public class CustomizeCardActivity extends Activity {
             return;
         }
 
+        // Send data to finalize
         intent.putExtra(MSG_CARDNUMBER, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDNUMBER));
         intent.putExtra(MSG_CARDTYPE, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDTYPE));
         intent.putExtra(MSG_CARDHOLDER, oldIntent.getStringExtra(RegisterCardActivity.MSG_CARDHOLDER));
@@ -129,16 +158,24 @@ public class CustomizeCardActivity extends Activity {
         startActivityForResult(intent, REQUEST_REGISTER_CARD);
     }
 
+    /**
+     * Handle returning from next activity on stack (FinalizeCard)
+     *
+     * @param reqCode request identifier
+     * @param resCode activity result code
+     * @param intent
+     */
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {
         super.onActivityResult(reqCode, resCode, intent);
 
         if (reqCode == REQUEST_REGISTER_CARD) {
             // If returning as a result of network error do nothing
+            // That way the user has opportunity to try again
             if (resCode == MainActivity.RESULT_NETWORK_ERROR) {
                 return;
             }
-            // Otherwise pass the result code down the stack
+            // Otherwise close and pass the result code down the stack
             setResult(resCode);
             finish();
         }

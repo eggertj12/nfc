@@ -20,7 +20,6 @@ public class Token {
     }
 
 
-
     public String getDevice_id() {
         return device_id;
     }

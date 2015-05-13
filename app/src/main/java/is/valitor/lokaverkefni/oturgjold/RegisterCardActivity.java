@@ -22,8 +22,11 @@ import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.utils.DigitGrouper;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
-
+/**
+ * View class for registering a card
+ */
 public class RegisterCardActivity extends Activity {
+    // Id constants for intent
     public final static String MSG_CARDHOLDER = "is.valitor.oturgjold.MSG_CARDHOLDER";
     public final static String MSG_CARDTYPE = "is.valitor.oturgjold.MSG_CARDTYPE";
     public final static String MSG_CARDNUMBER = "is.valitor.oturgjold.MSG_CARDNUMBER";
@@ -34,66 +37,58 @@ public class RegisterCardActivity extends Activity {
     private static final int REQUEST_REGISTER_CARD = 1;
 
     private String cardholder;
-
     private EditText cardNumber;
     private EditText editCvv;
-
     private Spinner spM;
     private Spinner spY;
-
     private Button nb;
 
     // To handle the rogue first selection event
     private boolean firstSpM;
     private boolean firstSpY;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_card);
 
+        // Load required data
         User user = Repository.getUser(getApplication());
         cardholder = user.getName();
-        final TextView name = (TextView)findViewById(R.id.cardholderName);
+        final TextView name = (TextView) findViewById(R.id.cardholderName);
         name.setText(cardholder);
+
         // Populate spinner for selection of month
         final Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerValidityMonth);
         spM = spinnerMonth;
-
         ArrayList<String> arrayMonths = new ArrayList<>();
-        for (int i = 1; i <= 12; i++)
-        {
+        for (int i = 1; i <= 12; i++) {
             arrayMonths.add(Integer.toString(i));
         }
 
         ArrayAdapter<String> adapterMonth = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayMonths);
         adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerMonth.setAdapter(adapterMonth);
 
         // Populate spinner for selection of year
         final Spinner spinnerYear = (Spinner) findViewById(R.id.spinnerValidityYear);
         spY = spinnerYear;
-
         ArrayList<String> arrayYear = new ArrayList<>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 0; i <= 8; i++)
-        {
+        for (int i = 0; i <= 8; i++) {
             arrayYear.add(Integer.toString(i + currentYear));
         }
 
         ArrayAdapter<String> adapterYear = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayYear);
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerYear.setAdapter(adapterYear);
 
-
+        // UI view handles
         cardNumber = (EditText) findViewById(R.id.editCardNumber);
         editCvv = (EditText) findViewById(R.id.editCardCvv);
         nb = (Button) findViewById(R.id.button_register_card_next);
 
-        // Keep credit card number format to groups of four digits
+        // Keep credit card number formatted to groups of four digits
         cardNumber.addTextChangedListener(new DigitGrouper(4));
     }
 
@@ -108,7 +103,7 @@ public class RegisterCardActivity extends Activity {
         cardNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_NEXT) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     spM.performClick();
                     editCvv.setCursorVisible(false);
                 }
@@ -119,12 +114,13 @@ public class RegisterCardActivity extends Activity {
         spM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(firstSpM) {
+                if (firstSpM) {
                     firstSpM = false;
                     return;
                 }
                 spY.performClick();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Nothing
@@ -134,7 +130,7 @@ public class RegisterCardActivity extends Activity {
         spY.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(firstSpY) {
+                if (firstSpY) {
                     firstSpY = false;
                     return;
                 }
@@ -158,7 +154,7 @@ public class RegisterCardActivity extends Activity {
         editCvv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
                     nb.requestFocus();
                 }
                 return false;
@@ -167,20 +163,22 @@ public class RegisterCardActivity extends Activity {
     }
 
 
-
-    /** Called when the user clicks the Next button */
+    /**
+     * Called when the user clicks the Next button
+     */
     public void createCardNext(View view) {
         // Start by validation
         Validator v = new Validator();
-        // get currently selected card
-
 
         cardNumber = (EditText) findViewById(R.id.editCardNumber);
+
+        // Strip grouping separator
         String cn = cardNumber.getText().toString().replace(String.valueOf(DigitGrouper.space), "");
 
         String cardType = "";
-        //if (!(cardType == "visa" ||cardType == "mastercard" )) {
-        if(cn.length() != 16){
+        // String cardType = v.validateCardNumber(cn);
+        // if (!(cardType == "visa" || cardType == "mastercard" )) {
+        if (cn.length() != 16) {
             CharSequence message = getResources().getString(R.string.error_invalid_cardnumber);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();

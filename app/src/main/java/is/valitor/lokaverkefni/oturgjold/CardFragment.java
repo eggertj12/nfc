@@ -54,25 +54,20 @@ public class CardFragment extends Fragment {
         return rootView;
     }
 
-    public void refreshUI() {
-        drawUI();
-    }
-
+    /**
+     * Helper to update the card UI
+     */
     private void drawUI() {
         Card card = Repository.getCardByIndex(ctx, cardIndex);
 
-        String name = card.getCard_name();
-        if (name.equals("")) {
-            // name should never be empty
-            name = String.format("Kort %d", cardIndex + 1);
-        }
-
+        // Set default card image path
         String image = card.getCard_image();
         if (image.equals("")) {
             image = "abs_brown_creditcard";
         }
+        int resId = R.drawable.abs_brown_creditcard;
 
-        int resId = R.drawable.abs_blue_creditcard;
+        // Find selected image if valid
         switch (image) {
             case "abs_blue_creditcard":
                 resId = R.drawable.abs_blue_creditcard;
@@ -97,37 +92,33 @@ public class CardFragment extends Fragment {
         Resources res = getResources();
         ((ImageView) rootView.findViewById(R.id.cardImage)).setImageDrawable(res.getDrawable(resId));
 
-//        ((TextView) rootView.findViewById(R.id.fragmentCardName)).setText(name);
         ((TextView) rootView.findViewById(R.id.fragmentCardNumber)).setText("XXXX XXXX XXXX " + card.getLast_four());
 
+        // Set up handler to get card balance
         TextView balanceLabel = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
         balanceLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (NetworkUtil.isConnected(ctx)) {
                     getCurrentBalance();
-                }
-
-                else {
+                } else {
                     Toast toast = Toast.makeText(ctx, getString(R.string.error_no_network), Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
         });
 
-        // Auto load balance of card
-        // Disabled, it's a resource hog
-        // getCurrentBalance();
     }
 
-    /*
-    Fetch the balance of the currentCard
+    /**
+     * Fetch the balance of the current card
      */
-    public void getCurrentBalance()
-    {
+    public void getCurrentBalance() {
         final TextView balanceLabel = (TextView) rootView.findViewById(R.id.fragmentCardBalance);
         final TextView balance = (TextView) rootView.findViewById(R.id.fragmentCardBalanceAmount);
         if (NetworkUtil.isConnected(ctx)) {
+
+            // Create listener to update on network result
             final AsyncTaskCompleteListener<AsyncTaskResult<Integer>> listener = new AsyncTaskCompleteListener<AsyncTaskResult<Integer>>() {
                 @Override
                 public void onTaskComplete(final AsyncTaskResult<Integer> result) {
@@ -153,6 +144,7 @@ public class CardFragment extends Fragment {
             new GetBalanceTask(listener).execute(getString(R.string.service_balance_url) + currentCard);
         }
 
+        // No network
         else {
             balance.setText(R.string.card_fragment_see_balance);
         }

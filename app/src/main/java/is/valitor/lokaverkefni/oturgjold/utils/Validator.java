@@ -99,4 +99,13 @@ public class Validator {
         return cvv.matches(match);
     }
 
+    /**
+     * Validate icelandic SSN
+     *
+     * Quite limited check for now
+     */
+    public boolean validateSsn(String ssn) {
+        return ssn.length() == 10 && (ssn.endsWith("9") || ssn.endsWith("0"));
+    }
+
 }

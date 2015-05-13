@@ -32,7 +32,6 @@ public class NetworkUtil {
      * @param ctx - provided context
      */
     public static void enableNetworkMonitoring(Context ctx) {
-        Log.d("Netw. util", "Enable monitoring");
         ComponentName receiver = new ComponentName(ctx, NetworkChangeReceiver.class);
 
         PackageManager pm = ctx.getPackageManager();
@@ -49,7 +48,6 @@ public class NetworkUtil {
      * @param ctx - provided context
      */
     public static void disableNetworkMonitoring(Context ctx) {
-        Log.d("Netw. util", "Disable monitoring");
         ComponentName receiver = new ComponentName(ctx, NetworkChangeReceiver.class);
 
         PackageManager pm = ctx.getPackageManager();

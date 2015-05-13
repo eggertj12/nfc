@@ -26,7 +26,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     public void onReceive(Context ctx, Intent intent) {
 
         if (NetworkUtil.isConnected(ctx)) {
-            Log.d("Netw. monitor", "We just got a connection.");
+
+            // Check all cards for missing tokens when we get connectivity
             ArrayList<Card> cards = Repository.getCards(ctx);
             User theUser = Repository.getUser(ctx);
 
@@ -44,10 +45,11 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
             }
 
             // Now all cards should have full token count, no need to waste resources by monitoring network
+            // For some reason this keeps failing in different ways. Disabled for now
 //            NetworkUtil.disableNetworkMonitoring(ctx);
 
         } else {
-            Log.d("Netw. monitor", "Lost network connection. Bummer!");
+            NetworkUtil.enableNetworkMonitoring(ctx);
         }
     }
 }

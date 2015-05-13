@@ -7,7 +7,7 @@ import android.view.View;
 
 /**
  * Created by eggert on 10/05/15.
- *
+ * <p/>
  * This class overrides the on measure method to be able to use wrap_content for height
  */
 public class CardPager extends ViewPager {
@@ -25,7 +25,7 @@ public class CardPager extends ViewPager {
      * Constructor
      *
      * @param context the context
-     * @param attrs the attribute set
+     * @param attrs   the attribute set
      */
     public CardPager(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -35,12 +35,13 @@ public class CardPager extends ViewPager {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
+        // Loop the children to find the tallest
         int height = 0;
-        for(int i = 0; i < getChildCount(); i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             int h = child.getMeasuredHeight();
-            if(h > height) height = h;
+            if (h > height) height = h;
         }
 
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);

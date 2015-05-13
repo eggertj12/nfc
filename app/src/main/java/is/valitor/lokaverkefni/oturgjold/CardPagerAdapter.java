@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 /**
@@ -18,16 +19,21 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     private final Context appContext;
     private final Activity activity;
 
-    public CardPagerAdapter(FragmentManager fm, Context ctx, Activity act)
-    {
+    /**
+     * Constructor
+     *
+     * @param fm fragment manager that handles the fragments
+     * @param ctx application context of the parent activity
+     * @param act the parent activity, used for updating title
+     */
+    public CardPagerAdapter(FragmentManager fm, Context ctx, Activity act) {
         super(fm);
         this.appContext = ctx;
         this.activity = act;
     }
 
     @Override
-    public Fragment getItem(int i)
-    {
+    public Fragment getItem(int i) {
         Fragment fragment = new CardFragment();
         Bundle args = new Bundle();
 
@@ -39,14 +45,12 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return Repository.getCardCount(this.appContext);
     }
 
     @Override
-    public void onPageSelected(int position)
-    {
+    public void onPageSelected(int position) {
         Repository.setSelectedCardByIndex(this.appContext, position);
 
         // Update card name in ActionBar
@@ -59,13 +63,11 @@ public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
-    {
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
     }
 
     @Override
-    public void onPageScrollStateChanged(int state)
-    {
+    public void onPageScrollStateChanged(int state) {
 
     }
 

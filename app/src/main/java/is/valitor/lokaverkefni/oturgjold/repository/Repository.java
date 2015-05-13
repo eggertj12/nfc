@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * Created by eggert on 09/03/15.
- *
+ * <p/>
  * This static class handles persisting data
  * Stores all data in private files on local storage
  */
@@ -33,7 +33,8 @@ public class Repository {
     /**
      * Set the current user object of the app.
      * There can be only one user, it will be overwritten if called again
-     * @param ctx application context that the file data is saved for   Application context
+     *
+     * @param ctx  application context that the file data is saved for   Application context
      * @param user new user object
      */
     public static void setUser(Context ctx, User user) {
@@ -105,7 +106,8 @@ public class Repository {
 
     /**
      * Add a token to the current token queue.
-     * @param ctx application context that the file data is saved for
+     *
+     * @param ctx   application context that the file data is saved for
      * @param token the new token to save
      */
     public static void addToken(Context ctx, int card_id, Token token) {
@@ -116,6 +118,7 @@ public class Repository {
 
     /**
      * Get the next token from token queue
+     *
      * @param ctx application context that the file data is saved for
      * @return Token or null if empty
      */
@@ -130,8 +133,9 @@ public class Repository {
 
     /**
      * Get the number of available tokens in the queue
+     *
      * @param ctx application context that the file data is saved for
-     * @return  int number of tokens
+     * @return int number of tokens
      */
     public static int getTokenCount(Context ctx, int card_id) {
         ArrayDeque<Token> tokens = loadQueue(ctx, card_id);
@@ -140,8 +144,9 @@ public class Repository {
 
     /**
      * Load the queue from internal storage
-     * @param ctx application context that the file data is saved for       The application context
-     * @param card_id   Id of card the queue applies to
+     *
+     * @param ctx     application context that the file data is saved for       The application context
+     * @param card_id Id of card the queue applies to
      * @return ArrayDeque of tokens
      */
     private static ArrayDeque<Token> loadQueue(Context ctx, int card_id) {
@@ -165,7 +170,8 @@ public class Repository {
             byte[] buffer = new byte[(int) length];
             int i = fin.read(buffer);
             String cardJson = new String(buffer, "UTF-8");
-            Type tokenDequeType =  new TypeToken<ArrayDeque<Token>>() {}.getType();
+            Type tokenDequeType = new TypeToken<ArrayDeque<Token>>() {
+            }.getType();
 
             // TODO: For some reason this code returns a ArrayDeque<LinkedTreeMap> on some devices
             // (The hacked S3 at least) Need to handle that somehow
@@ -187,9 +193,10 @@ public class Repository {
 
     /**
      * Save the queue to internal storage
-     * @param ctx application context that the file data is saved for       The application context
-     * @param card_id   Id of card the queue applies to
-     * @param tokens    ArrayDeque of tokens to save
+     *
+     * @param ctx     application context that the file data is saved for
+     * @param card_id Id of card the queue applies to
+     * @param tokens  ArrayDeque of tokens to save
      */
     private static void saveQueue(Context ctx, int card_id, ArrayDeque<Token> tokens) {
         FileOutputStream fos = null;
@@ -199,7 +206,8 @@ public class Repository {
         try {
             fos = ctx.openFileOutput(filename, Context.MODE_PRIVATE);
 
-            String nTokenJson = gson.toJson(tokens, new TypeToken<ArrayDeque<Token>>() {}.getType());
+            String nTokenJson = gson.toJson(tokens, new TypeToken<ArrayDeque<Token>>() {
+            }.getType());
 
             fos.write(nTokenJson.getBytes());
         } catch (IOException e) {
@@ -217,8 +225,9 @@ public class Repository {
 
     /**
      * Add a card to the list of available cards
-     * @param ctx application context that the file data is saved for   The application context
-     * @param card  Card to be added
+     *
+     * @param ctx  application context that the file data is saved for   The application context
+     * @param card Card to be added
      */
     public static void addCard(Context ctx, Card card) {
         FileOutputStream fos = null;
@@ -270,6 +279,7 @@ public class Repository {
             }
         }
     }
+
     /**
      * Removes all saved data from the repository
      */
@@ -283,8 +293,7 @@ public class Repository {
             userFile.delete();
             cardFile.delete();
             tokenFile.delete();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -313,7 +322,7 @@ public class Repository {
     /**
      * Removes all saved user info from the repository
      */
-    public static void removeUserInfo(Context ctx){
+    public static void removeUserInfo(Context ctx) {
         FileOutputStream fos = null;
         try {
             fos = ctx.openFileOutput(USER_FILE_NAME, Context.MODE_PRIVATE);
@@ -355,8 +364,9 @@ public class Repository {
 
     /**
      * Get the collection of saved cards
+     *
      * @param ctx application context that the file data is saved for   The application context
-     * @return      ArrayList of stored cards
+     * @return ArrayList of stored cards
      */
     public static ArrayList<Card> getCards(Context ctx) {
         FileInputStream fin = null;
@@ -366,10 +376,9 @@ public class Repository {
             return cards;
         }
 
-        try{
+        try {
             fin = ctx.openFileInput(CARD_FILE_NAME);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         try {
@@ -377,10 +386,10 @@ public class Repository {
             byte[] buffer = new byte[(int) length];
             int i = fin.read(buffer);
             String cardJson = new String(buffer, "UTF-8");
-            Type cardArrayType =  new TypeToken<ArrayList<Card>>() {}.getType();
+            Type cardArrayType = new TypeToken<ArrayList<Card>>() {
+            }.getType();
             cards = gson.fromJson(cardJson, cardArrayType);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -389,6 +398,7 @@ public class Repository {
 
     /**
      * Convenience method for getting the number of saved cards.
+     *
      * @param ctx application context that the file data is saved for
      * @return number of cards registered to account and on device.
      */
@@ -399,7 +409,8 @@ public class Repository {
 
     /**
      * Convenience method for getting a card by index in storage.
-     * @param ctx application context that the file data is saved for
+     *
+     * @param ctx   application context that the file data is saved for
      * @param index index of card to be retrieved.
      * @return card corresponding to provided index
      */
@@ -408,10 +419,17 @@ public class Repository {
         return cards.get(index);
     }
 
+    /**
+     * Convenience method for getting a card by its id
+     *
+     * @param ctx application context that the file data is saved for
+     * @param id  card id of requested card
+     * @return card corresponding to provided index
+     */
     public static Card getCardById(Context ctx, int id) {
         ArrayList<Card> cards = getCards(ctx);
 
-        for(Card c : cards) {
+        for (Card c : cards) {
             if (c.getCard_id() == id) {
                 return c;
             }
@@ -419,10 +437,17 @@ public class Repository {
         return null;
     }
 
+    /**
+     * Convenience method for getting a card by nickname
+     *
+     * @param ctx  application context that the file data is saved for
+     * @param name nickname of card to be retrieved.
+     * @return card corresponding to provided index
+     */
     public static Card getCardByName(Context ctx, String name) {
         ArrayList<Card> cards = getCards(ctx);
 
-        for(Card c : cards) {
+        for (Card c : cards) {
             if (c.getCard_name().contentEquals(name)) {
                 return c;
             }
@@ -430,20 +455,23 @@ public class Repository {
         return null;
     }
 
+    /**
+     * Get the first card in repository
+     *
+     * @param ctx application context that the file data is saved for
+     */
     private static Card getFirstCard(Context ctx) {
         ArrayList<Card> cards = getCards(ctx);
 
         if (cards.size() > 0) {
             return cards.get(0);
         }
-//         for(Card c : cards) {
-//             return c;
-//         }
         return null;
     }
 
     /**
      * Returns the selected default card
+     *
      * @param ctx application context that the file data is saved for
      * @return the currently selected card object
      */
@@ -456,15 +484,14 @@ public class Repository {
         if (cardId == -1) {
             //fallback if there is no selected card_id
             List<Card> cards = getCards(ctx);
-            if(cards.size()> 0)
-            {
+            if (cards.size() > 0) {
                 return cards.get(0);
             }
             return null;
         }
 
         Card rCard = getCardById(ctx, cardId);
-        if(rCard != null) {
+        if (rCard != null) {
             return rCard;
         }
         return getFirstCard(ctx);
@@ -472,6 +499,7 @@ public class Repository {
 
     /**
      * Returns the index of selected default card in cardList
+     *
      * @param ctx application context that the file data is saved for
      * @return the index of selected card in list of stored cards
      */
@@ -488,11 +516,11 @@ public class Repository {
         ArrayList<Card> cards = getCards(ctx);
 
         int index = 0;
-        for(Card c : cards) {
+        for (Card c : cards) {
             if (c.getCard_id() == cardId) {
                 return index;
             }
-            index ++;
+            index++;
         }
 
         // Not found default to 0
@@ -501,7 +529,8 @@ public class Repository {
 
     /**
      * Set the given card as default card
-     * @param ctx application context that the file data is saved for
+     *
+     * @param ctx  application context that the file data is saved for
      * @param card the card to be selected
      */
     public static void setSelectedCard(Context ctx, Card card) {
@@ -514,7 +543,8 @@ public class Repository {
 
     /**
      * Set the card at given index as default card
-     * @param ctx application context that the file data is saved for
+     *
+     * @param ctx   application context that the file data is saved for
      * @param index index of new selected card in list of stored cards
      */
     public static void setSelectedCardByIndex(Context ctx, int index) {

@@ -26,12 +26,13 @@ import is.valitor.lokaverkefni.oturgjold.utils.DigitGrouper;
 import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 import is.valitor.lokaverkefni.oturgjold.utils.Validator;
 
-
+/**
+ * View for new account / user registration
+ */
 public class RegisterAccountActivity extends Activity implements AsyncTaskCompleteListener<AsyncTaskResult<User>> {
 
     private TextView editAccountName;
     private ProgressBar loadingThings;
-    private RequestResult requestResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +47,11 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
         editSsn.addTextChangedListener(new DigitGrouper(6));
     }
 
-
-    // Confirm and return to main view
-    public void confirmAccountRegister(View view) {
-        finish();
-    }
-
     public void registerAccount(View view) {
 
-        // This has some limitations and bugs, apparently. Too bad I´m a newbie.
-        // For now, call this the device id.
-        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        // Get the unique device ID. This might have some limitation but is the best available option
+        String android_id = Settings.Secure
+                .getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         // Lets have the support of the validator, if only to validate account name.
         Validator v = new Validator();
@@ -73,11 +68,11 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
             return;
         }
 
+        // User SSN
         EditText editAccountSSN = (EditText) findViewById(R.id.editAccountSSN);
         String ssn = editAccountSSN.getText().toString().replace(String.valueOf(DigitGrouper.space), "");
 
-        // Proper validation might be in order
-        if (!((ssn.length() != 10 && !(ssn.endsWith("9"))) || !ssn.endsWith("0"))) {
+        if (!v.validateSsn(ssn)) {
             CharSequence message = getString(R.string.error_invalid_ssn);
             Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             toast.show();
@@ -85,8 +80,8 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
             return;
         }
 
+        // Build service request object
         JSONObject jsonAccountObject = new JSONObject();
-
         try {
             jsonAccountObject.put("name", name);
             jsonAccountObject.put("ssn", ssn);
@@ -111,7 +106,11 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
     }
 
 
-    // onTaskComplete is called once the task has completed.
+    /**
+     * onTaskComplete is called once the task has completed.
+     *
+     * @param result The resulting object from the AsyncTask.
+     */
 
     @Override
     public void onTaskComplete(AsyncTaskResult<User> result) {
@@ -136,6 +135,8 @@ public class RegisterAccountActivity extends Activity implements AsyncTaskComple
         } else  if (result.getError() instanceof InvalidParameterException) {
             Toast.makeText(this, result.getError().getMessage(), Toast.LENGTH_LONG).show();
         }
+
+        // Stop spinner and update UI
         loadingThings.setVisibility(View.INVISIBLE);
         Button registerAccountButton = (Button) findViewById(R.id.button_register_account);
         registerAccountButton.setClickable(true);

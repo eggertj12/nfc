@@ -23,13 +23,10 @@ public class TransactionArrayAdapter extends ArrayAdapter {
     private List<Transaction> transList = new ArrayList<>();
     private Context context;
 
-
-    public TransactionArrayAdapter(List<Transaction> t, Context ctx)
-    {
-        super(ctx,R.layout.list_transactions,t);
-        transList = t;
+    public TransactionArrayAdapter(List<Transaction> transactions, Context ctx) {
+        super(ctx, R.layout.list_transactions, transactions);
+        transList = transactions;
         context = ctx;
-
     }
 
     @Override
@@ -45,17 +42,15 @@ public class TransactionArrayAdapter extends ArrayAdapter {
         View rowView = inflater.inflate(R.layout.list_transactions, parent, false);
 
         // Get handle of text boxes
-
         TextView vendorText = (TextView) rowView.findViewById(R.id.vendor);
         TextView priceText = (TextView) rowView.findViewById(R.id.price);
-        TextView dateText = (TextView)rowView.findViewById(R.id.date);
-
-
+        TextView dateText = (TextView) rowView.findViewById(R.id.date);
 
         // Set values to text boxes from transaction row
         vendorText.setText(trans.getVendor());
         DecimalFormat dcf = new DecimalFormat("###,###");
         priceText.setText(dcf.format(trans.getPrice()) + " kr.");
+
         // American date format is for the weak
         dateText.setText(new SimpleDateFormat("dd.MM.yyyy  HH:mm").format(trans.getDate()));
 

@@ -125,13 +125,13 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
                 clickToBack();
             }
         });
-        cancel.setOnClickListener(new View.OnClickListener() {
+/*        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 close();
             }
         });
-
+*/
         if(savedInstanceState != null) {
             pin = savedInstanceState.getString("enteredPin");
             for(int i = 0; i < savedInstanceState.getInt("pinLength"); i++) {
@@ -205,14 +205,14 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
 
     /**
      * Need to clear pin when this activity closes.
-     */
+     *
     private void close() {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString("lastPIN", "");
         editor.apply();
 
         finish();
-    }
+    }*/
 
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
 
@@ -221,7 +221,7 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
             editor.putString("lastPIN", "");
             editor.commit();
-            close();
+            finish();
         }
     }
 }
