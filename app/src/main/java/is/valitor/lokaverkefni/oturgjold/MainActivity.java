@@ -326,9 +326,13 @@ public class MainActivity extends FragmentActivity {
 
             startLogo.setVisibility(View.VISIBLE);
 
-        // No cards, logo and register card buttons visible
-        } else if (cards.size() == 0) {
-            getActionBar().hide();
+        } else if(cards.size() == 0){
+            try {
+                getActionBar().hide();
+            }
+            catch (NullPointerException e) {
+                // The app is not designed to function in such a case, but it need not crash
+            }
 
             cardPagerLayout.setVisibility(View.INVISIBLE);
             paymentLayout.setVisibility(View.INVISIBLE);
@@ -339,13 +343,17 @@ public class MainActivity extends FragmentActivity {
 
         // Normal view. Logo hidden, card pager and payment button visible
         } else {
-            getActionBar().show();
+            try {
+                getActionBar().show();
+            }
+            catch (NullPointerException e) {
+                // The app is not designed to function in such a case, but it need not crash
+            }
 
             cardPagerLayout.setVisibility(View.VISIBLE);
             paymentLayout.setVisibility(View.VISIBLE);
             addCardLayout.setVisibility(View.INVISIBLE);
             registerLayout.setVisibility(View.INVISIBLE);
-
             startLogo.setVisibility(View.INVISIBLE);
         }
     }

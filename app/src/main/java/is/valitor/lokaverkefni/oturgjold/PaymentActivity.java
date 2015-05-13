@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -144,7 +145,7 @@ public class PaymentActivity extends Activity implements SharedPreferences.OnSha
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         savedInstanceState.putString("enteredPin", pin);
         savedInstanceState.putInt("pinLength", pin.length());
     }

@@ -12,6 +12,7 @@ import java.io.IOException;
  * Created by eggert on 24/03/15.
  */
 
+@SuppressWarnings("FieldCanBeLocal")
 @Implements(RegisterAccountTask.class)
 public class ShadowRegisterAccountTask extends ShadowAsyncTask {
 
