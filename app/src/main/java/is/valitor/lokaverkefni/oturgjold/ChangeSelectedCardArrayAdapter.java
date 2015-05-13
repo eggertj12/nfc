@@ -13,12 +13,13 @@ import is.valitor.lokaverkefni.oturgjold.repository.Card;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 /**
+ * For conforming cards to display in rows on ChangeSelectedCardActivity
  * Created by kla on 30.4.2015.
  */
 public class ChangeSelectedCardArrayAdapter extends ArrayAdapter {
 
-    List<Card> cards = new ArrayList<Card>();
-    Context context;
+    private List<Card> cards = new ArrayList<>();
+    private final Context context;
 
     public ChangeSelectedCardArrayAdapter(List<Card> c, Context ctx) {
         super(ctx, R.layout.list_cards, c);
@@ -52,7 +53,6 @@ public class ChangeSelectedCardArrayAdapter extends ArrayAdapter {
         //Get the selected card
         Card c =  Repository.getSelectedCard(context);
 
-
         if(card.getCard_id()== c.getCard_id())
         {
             radioButton.setText(context.getResources().getString(R.string.selected_card));
@@ -64,7 +64,6 @@ public class ChangeSelectedCardArrayAdapter extends ArrayAdapter {
 
         cardNameText.setText(card.getCard_name());
         lastFour.setText(context.getResources().getString(R.string.card_number_xes) + card.getLast_four());
-
 
         // Return the filled out view
         return rowView;

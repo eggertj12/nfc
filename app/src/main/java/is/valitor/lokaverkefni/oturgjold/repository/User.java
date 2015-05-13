@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold.repository;
 
 /**
+ * POJO for software representation of account owner.
  * Created by eggert on 09/03/15.
  */
 public class User {

@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
 /**
+ * For unified handling of results from AsyncTasks
  * Created by eggert on 21/03/15.
  */
 public class AsyncTaskResult<T> {

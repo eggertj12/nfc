@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
 /**
+ * Super class for handling data coming from web service, to be inherited from in other result handlers.
  * Created by kla on 8.5.2015.
  */
 public class RequestResult {

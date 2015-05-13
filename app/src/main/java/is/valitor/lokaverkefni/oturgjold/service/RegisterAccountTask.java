@@ -10,6 +10,7 @@ import java.security.InvalidParameterException;
 import is.valitor.lokaverkefni.oturgjold.repository.User;
 
 /**
+ * For registering user account on web service.
  * Created by eggert on 20/03/15.
  */
 public class RegisterAccountTask extends RequestTask {

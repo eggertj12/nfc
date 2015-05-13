@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold.repository;
 
 /**
+ * POJO for credit card tokens
  * Created by kla on 12.3.2015.
  */
 public class Token {

@@ -14,6 +14,7 @@ import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 import is.valitor.lokaverkefni.oturgjold.repository.Token;
 
 /**
+ * For retrieving tokens from web service.
  * Created by kla on 23.3.2015.
  */
 public class GetTokenTask extends RequestTask {

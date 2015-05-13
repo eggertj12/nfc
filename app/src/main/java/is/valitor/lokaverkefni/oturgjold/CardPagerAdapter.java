@@ -10,12 +10,13 @@ import android.support.v4.view.ViewPager;
 import is.valitor.lokaverkefni.oturgjold.repository.Repository;
 
 /**
+ * For conforming cards for display in fragment on MainActivity
  * Created by eggert on 18/04/15.
  */
 public class CardPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
 
-    private Context appContext;
-    private Activity activity;
+    private final Context appContext;
+    private final Activity activity;
 
     public CardPagerAdapter(FragmentManager fm, Context ctx, Activity act)
     {

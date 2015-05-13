@@ -17,6 +17,7 @@ import is.valitor.lokaverkefni.oturgjold.repository.User;
 import is.valitor.lokaverkefni.oturgjold.service.GetTokenTask;
 
 /**
+ * For monitoring network connection and initiating retrieval of tokens on network status change
  * Created by eggert on 10/04/15.
  */
 public class NetworkChangeReceiver extends BroadcastReceiver {

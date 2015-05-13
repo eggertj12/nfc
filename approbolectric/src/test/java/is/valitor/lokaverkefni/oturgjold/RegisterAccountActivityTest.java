@@ -15,10 +15,6 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowToast;
 
-import java.net.URI;
-
-import is.valitor.lokaverkefni.oturgjold.service.ShadowRegisterAccountTask;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThat;

@@ -15,12 +15,13 @@ import java.util.List;
 import is.valitor.lokaverkefni.oturgjold.repository.Transaction;
 
 /**
+ * For conforming payment transactions to display in row view of ShowTransactionsActivity
  * Created by kla on 29.4.2015.
  */
 public class TransactionArrayAdapter extends ArrayAdapter {
 
-    List<Transaction> transList = new ArrayList<>();
-    Context context;
+    private List<Transaction> transList = new ArrayList<>();
+    private Context context;
 
 
     public TransactionArrayAdapter(List<Transaction> t, Context ctx)

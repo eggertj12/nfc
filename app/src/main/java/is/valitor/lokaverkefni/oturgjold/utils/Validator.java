@@ -96,10 +96,7 @@ public class Validator {
     public boolean validateCvv(String cvv) {
         String match = "[0-9]{3,4}";
 
-        if (!cvv.matches(match)) {
-            return false;
-        }
-        return true;
+        return cvv.matches(match);
     }
 
 }

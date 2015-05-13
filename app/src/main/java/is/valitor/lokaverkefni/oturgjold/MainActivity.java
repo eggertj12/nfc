@@ -41,8 +41,8 @@ public class MainActivity extends FragmentActivity {
     SharedPreferences sharedPreferences;
     public static final String prefsFile = "oturgjoldPrefs";
 
-    CardPagerAdapter pagerAdapter;
-    CardPager viewPager;
+    private CardPagerAdapter pagerAdapter;
+    private CardPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +108,8 @@ public class MainActivity extends FragmentActivity {
      * Draws menu each time menu button is pressed
      * All items set invisible by default, only set to true
      * when certain requirements are met
-     * @param menu
-     * @return
+     * @param menu - activity menu
+     * @return - the boolean is discarded and ignored here :)
      */
     @Override
     public boolean onPrepareOptionsMenu (Menu menu)
@@ -173,7 +173,7 @@ public class MainActivity extends FragmentActivity {
     /**
      * Called when user clicks changeSelectedCard button in settings
      * Stars a new activity to change the selected card
-     * @param view
+     * @param view - triggering view object, android architecture thing
      */
     public void changeSelectedCard(View view)
     {
@@ -183,7 +183,7 @@ public class MainActivity extends FragmentActivity {
     /**
      * Called when user clicks showtransaction button in settings
      * Stars a new activity to show the transactions for selected card
-     * @param view
+     * @param view - triggering view object, android architecture thing
      */
     public void getTransactions(View view)
     {

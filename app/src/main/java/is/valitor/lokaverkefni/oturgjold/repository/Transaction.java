@@ -3,6 +3,7 @@ package is.valitor.lokaverkefni.oturgjold.repository;
 import java.util.Date;
 
 /**
+ * POJO for payment transactions.
  * Created by kla on 26.4.2015.
  */
 public class Transaction {

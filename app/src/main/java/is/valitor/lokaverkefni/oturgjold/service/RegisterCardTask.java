@@ -10,6 +10,7 @@ import java.security.InvalidParameterException;
 import is.valitor.lokaverkefni.oturgjold.repository.Card;
 
 /**
+ * For registering a new card with the web service.
  * Created by eggert on 27/03/15.
  */
 public class RegisterCardTask extends RequestTask {

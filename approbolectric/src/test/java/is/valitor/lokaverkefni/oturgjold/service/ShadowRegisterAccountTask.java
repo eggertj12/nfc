@@ -26,7 +26,7 @@ public class ShadowRegisterAccountTask extends ShadowAsyncTask {
 
     protected void onPostExecute(AsyncTaskResult<JSONObject> myPojo)
     {
-        AsyncTaskResult<JSONObject> res = new AsyncTaskResult<JSONObject>(new IOException("Test error"));
+        AsyncTaskResult<JSONObject> res = new AsyncTaskResult<>(new IOException("Test error"));
         listener.onTaskComplete(res);
     }
 }

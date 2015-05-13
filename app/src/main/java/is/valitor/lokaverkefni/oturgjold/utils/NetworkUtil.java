@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 /**
+ * For controlling examination of network status.
  * Created by eggert on 10/04/15.
  */
 public class NetworkUtil {
@@ -15,24 +16,20 @@ public class NetworkUtil {
     /**
      * Check if the device has network connectivity
      *
-     * @param ctx
+     * @param ctx - provided context
      * @return boolean, true if device has network connection
      */
     public static boolean isConnected(Context ctx) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
+        return networkInfo.isConnected();
     }
 
     /**
      * Enable the listener that monitor changes in connectivity
      *
-     * @param ctx
+     * @param ctx - provided context
      */
     public static void enableNetworkMonitoring(Context ctx) {
         Log.d("Netw. util", "Enable monitoring");
@@ -49,7 +46,7 @@ public class NetworkUtil {
     /**
      * Disable the listener that monitor changes in connectivity
      *
-     * @param ctx
+     * @param ctx - provided context
      */
     public static void disableNetworkMonitoring(Context ctx) {
         Log.d("Netw. util", "Disable monitoring");

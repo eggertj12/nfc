@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 
 /**
+ * For retrieving card balance information from web service.
  * Created by kla on 20.4.2015.
  */
 public class GetBalanceTask extends RequestTask {

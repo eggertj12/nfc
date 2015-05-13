@@ -38,25 +38,12 @@ import is.valitor.lokaverkefni.oturgjold.utils.NetworkUtil;
 
 
 /**
- * This is a sample APDU Service which demonstrates how to interface with the card emulation support
- * added in Android 4.4, KitKat.
- *
- * <p>This sample replies to any requests sent with the string "Hello World". In real-world
- * situations, you would need to modify this code to implement your desired communication
- * protocol.
- *
- * <p>This sample will be invoked for any terminals selecting AIDs of 0xF11111111, 0xF22222222, or
- * 0xF33333333. See src/main/res/xml/aid_list.xml for more details.
- *
- * <p class="note">Note: This is a low-level interface. Unlike the NdefMessage many developers
- * are familiar with for implementing Android Beam in apps, card emulation only provides a
- * byte-array based communication channel. It is left to developers to implement higher level
- * protocol support as needed.
+*
  */
 public class CardService extends HostApduService {
     private static final String TAG = "CardService";
-    // AID for our loyalty card service.
-    private static final String SAMPLE_LOYALTY_CARD_AID = "F222222222";
+    // AID for our payment service.
+    private static final String OTURGJOLD_AID = "F222222222";
     // ISO-DEP command HEADER for selecting an AID.
     // Format: [Class | Instruction | Parameter 1 | Parameter 2]
     private static final String SELECT_APDU_HEADER = "00A40400";
@@ -64,7 +51,7 @@ public class CardService extends HostApduService {
     private static final byte[] SELECT_OK_SW = HexStringToByteArray("9000");
     // "UNKNOWN" status word sent in response to invalid APDU command (0x0000)
     private static final byte[] UNKNOWN_CMD_SW = HexStringToByteArray("0000");
-    private static final byte[] SELECT_APDU = BuildSelectApdu(SAMPLE_LOYALTY_CARD_AID);
+    private static final byte[] SELECT_APDU = BuildSelectApdu(OTURGJOLD_AID);
 
     /**
      * Called if the connection to the NFC card is lost, in order to let the application know the
@@ -95,12 +82,10 @@ public class CardService extends HostApduService {
      * @return a byte-array containing the response APDU, or null if no response APDU can be sent
      * at this point.
      */
-    // BEGIN_INCLUDE(processCommandApdu)
     @Override
     public byte[] processCommandApdu(byte[] commandApdu, Bundle extras) {
         Log.i(TAG, "Received APDU: " + ByteArrayToHexString(commandApdu));
-        // If the APDU matches the SELECT AID command for this service,
-        // send the loyalty card account number, followed by a SELECT_OK status trailer (0x9000).
+        // Triggered when the APDU matches the SELECT AID command for this service.
         if (Arrays.equals(SELECT_APDU, commandApdu)) {
 
             // Get the last input PIN
@@ -134,7 +119,7 @@ public class CardService extends HostApduService {
         String tokenParam = null;
         String deviceParam = null;
 
-        // Communicate with the service:enP
+        // Communicate with the service
         try {
             // get currently selected card
             Card card = Repository.getSelectedCard(getApplication());
@@ -181,7 +166,7 @@ public class CardService extends HostApduService {
      * @param aid Application ID (AID) to select
      * @return APDU for SELECT AID command
      */
-    public static byte[] BuildSelectApdu(String aid) {
+    private static byte[] BuildSelectApdu(String aid) {
         // Format: [CLASS | INSTRUCTION | PARAMETER 1 | PARAMETER 2 | LENGTH | DATA]
         return HexStringToByteArray(SELECT_APDU_HEADER + String.format("%02X",
                 aid.length() / 2) + aid);
@@ -193,7 +178,7 @@ public class CardService extends HostApduService {
      * @param bytes Bytes to convert
      * @return String, containing hexadecimal representation.
      */
-    public static String ByteArrayToHexString(byte[] bytes) {
+    private static String ByteArrayToHexString(byte[] bytes) {
         final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
         char[] hexChars = new char[bytes.length * 2]; // Each byte has two hex characters (nibbles)
         int v;
@@ -214,7 +199,7 @@ public class CardService extends HostApduService {
      * @return Byte array generated from input
      * @throws java.lang.IllegalArgumentException if input length is incorrect
      */
-    public static byte[] HexStringToByteArray(String s) throws IllegalArgumentException {
+    private static byte[] HexStringToByteArray(String s) throws IllegalArgumentException {
         int len = s.length();
         if (len % 2 == 1) {
             throw new IllegalArgumentException("Hex string must have even number of characters");
@@ -234,7 +219,7 @@ public class CardService extends HostApduService {
      * @param rest Any remaining arrays
      * @return Concatenated copy of input arrays
      */
-    public static byte[] ConcatArrays(byte[] first, byte[]... rest) {
+    private static byte[] ConcatArrays(byte[] first, byte[]... rest) {
         int totalLength = first.length;
         for (byte[] array : rest) {
             totalLength += array.length;

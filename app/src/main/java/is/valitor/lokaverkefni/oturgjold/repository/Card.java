@@ -1,6 +1,7 @@
 package is.valitor.lokaverkefni.oturgjold.repository;
 
 /**
+ * POJO for representing a credit card
  * Created by dasve_000 on 3/13/2015.
  */
 public class Card {

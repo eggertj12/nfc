@@ -5,14 +5,15 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 
 /**
+ * TextWatcher extension to handle grouping of digits for credit cards and ssn
  * Created by dasve_000 on 5/5/2015.
  */
 public class DigitGrouper implements TextWatcher {
 
     public static final char space = ' ';
 
-    private int digitModulus;
-    private int digitBlock;
+    private final int digitModulus;
+    private final int digitBlock;
 
     public DigitGrouper(int size) {
         this.digitModulus = size + 1;

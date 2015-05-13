@@ -20,6 +20,7 @@ import java.util.List;
 import is.valitor.lokaverkefni.oturgjold.repository.Transaction;
 
 /**
+ * For retrieving payment transactions of a credit card from web service.
  * Created by kla on 27.4.2015.
  */
 public class GetTransactionsTask extends RequestTask {

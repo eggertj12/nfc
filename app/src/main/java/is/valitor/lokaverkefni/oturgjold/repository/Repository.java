@@ -370,7 +370,7 @@ public class Repository {
             fin = ctx.openFileInput(CARD_FILE_NAME);
         }
         catch (IOException e) {
-
+            e.printStackTrace();
         }
         try {
             long length = new File(ctx.getFilesDir().getAbsolutePath() + "/" + CARD_FILE_NAME).length();
@@ -390,7 +390,7 @@ public class Repository {
     /**
      * Convenience method for getting the number of saved cards.
      * @param ctx application context that the file data is saved for
-     * @return
+     * @return number of cards registered to account and on device.
      */
     public static int getCardCount(Context ctx) {
         ArrayList<Card> cards = getCards(ctx);
@@ -400,8 +400,8 @@ public class Repository {
     /**
      * Convenience method for getting a card by index in storage.
      * @param ctx application context that the file data is saved for
-     * @param index
-     * @return
+     * @param index index of card to be retrieved.
+     * @return card corresponding to provided index
      */
     public static Card getCardByIndex(Context ctx, int index) {
         ArrayList<Card> cards = getCards(ctx);
