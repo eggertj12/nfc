@@ -2,7 +2,6 @@ package is.valitor.lokaverkefni.oturgjold;
 
 import android.app.Activity;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -11,11 +10,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowToast;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**

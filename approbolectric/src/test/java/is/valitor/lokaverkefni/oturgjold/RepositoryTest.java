@@ -142,8 +142,6 @@ public class RepositoryTest {
         card.setLast_four("1234");
         Repository.addCard(ctx, card);
 
-        card = null;
-
         card = Repository.getCardByName(ctx, "Card1");
         assertTrue(card != null);
         assertEquals(card.getLast_four(), "1234");

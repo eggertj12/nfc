@@ -292,7 +292,12 @@ public class MainActivity extends FragmentActivity {
             startLogo.setVisibility(View.VISIBLE);
 
         } else if(cards.size() == 0){
-            getActionBar().show();
+            try {
+                getActionBar().show();
+            }
+            catch (NullPointerException e) {
+                // The app is not designed to function in such a case, but it need not crash
+            }
 
             cardPagerLayout.setVisibility(View.INVISIBLE);
             paymentLayout.setVisibility(View.INVISIBLE);
@@ -308,7 +313,6 @@ public class MainActivity extends FragmentActivity {
             paymentLayout.setVisibility(View.VISIBLE);
             addCardLayout.setVisibility(View.INVISIBLE);
             registerLayout.setVisibility(View.INVISIBLE);
-
             startLogo.setVisibility(View.INVISIBLE);
         }
     }
