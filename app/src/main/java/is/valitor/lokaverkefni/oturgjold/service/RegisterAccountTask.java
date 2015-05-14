@@ -32,6 +32,7 @@ public class RegisterAccountTask extends RequestTask {
             return;
         }
 
+        // Invalid request or server error
         if (result.getResultCode() != 200) {
             InvalidParameterException e = new InvalidParameterException(result.getResultContent());
             listener.onTaskComplete(new AsyncTaskResult<User>(e));
@@ -50,7 +51,7 @@ public class RegisterAccountTask extends RequestTask {
             return;
         }
 
-        listener.onTaskComplete(new AsyncTaskResult<User>(user));
+        listener.onTaskComplete(new AsyncTaskResult<>(user));
     }
 
 }

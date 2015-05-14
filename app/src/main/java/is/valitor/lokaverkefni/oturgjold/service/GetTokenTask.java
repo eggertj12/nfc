@@ -18,8 +18,14 @@ import is.valitor.lokaverkefni.oturgjold.repository.Token;
  * Created by kla on 23.3.2015.
  */
 public class GetTokenTask extends RequestTask {
+
     final private Context appContext;
 
+    /**
+     * Constructor requires a context since some UI notifications are sent from this class
+     *
+     * @param appContext The application context to send notifications to
+     */
     public GetTokenTask(Context appContext) {
         super("POST", "application/json", "application/json");
         this.appContext = appContext;
@@ -34,12 +40,14 @@ public class GetTokenTask extends RequestTask {
             return;
         }
 
+        // Invalid request or server error
         if (result.getResultCode() != 200) {
             Toast.makeText(appContext, appContext.getString(R.string.error_general), Toast.LENGTH_LONG).show();
             return;
         }
 
-        try{
+        // Convert JSON response to Token
+        try {
             //Retrieve the content from the response and add to repository
             Gson gson = new Gson();
             JsonReader jsonReader = new JsonReader(new StringReader(result.getResultContent()));
@@ -47,7 +55,7 @@ public class GetTokenTask extends RequestTask {
             Token token = gson.fromJson(jsonReader, Token.class);
 
             // Keeping this line in, in case we ever want to notify user of this
-            //Toast.makeText(appContext, "Sótti tóken", Toast.LENGTH_LONG).show();
+            // Toast.makeText(appContext, "Sótti tóken", Toast.LENGTH_LONG).show();
 
             int currentCard = token.getCard_id();
             Repository.addToken(this.appContext, currentCard, token);
@@ -63,7 +71,7 @@ public class GetTokenTask extends RequestTask {
                         .execute(this.appContext.getString(R.string.service_token_url), tokenJson);
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(appContext, appContext.getString(R.string.error_general), Toast.LENGTH_LONG).show();
         }

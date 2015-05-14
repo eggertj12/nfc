@@ -27,15 +27,17 @@ public class GetBalanceTask extends RequestTask {
             return;
         }
 
+        // Bad request error
         if (result.getResultCode() != 200) {
             InvalidParameterException e = new InvalidParameterException(result.getResultContent());
             listener.onTaskComplete(new AsyncTaskResult<Integer>(e));
         }
 
+        // Balance service returns plain text integer, parse it
         Integer balance;
         try {
             balance = Integer.parseInt(result.getResultContent());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             listener.onTaskComplete(new AsyncTaskResult<Integer>(e));
             return;

@@ -32,25 +32,26 @@ public class RegisterCardTask extends RequestTask {
             return;
         }
 
+        // Invalid request or server error
         if (result.getResultCode() != 200) {
             InvalidParameterException e = new InvalidParameterException(result.getResultContent());
             listener.onTaskComplete(new AsyncTaskResult<Card>(e));
         }
 
         Card card;
-        try{
-            //Retrieve the content from the response and add to repository
+        try {
+            // Parse Card from response
             Gson gson = new Gson();
             JsonReader jr = new JsonReader(new StringReader(result.getResultContent()));
             jr.setLenient(true);
             card = gson.fromJson(jr, Card.class);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             listener.onTaskComplete(new AsyncTaskResult<Card>(e));
             return;
         }
 
-        listener.onTaskComplete(new AsyncTaskResult<Card>(card));
+        listener.onTaskComplete(new AsyncTaskResult<>(card));
     }
 
 }

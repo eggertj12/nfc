@@ -25,20 +25,18 @@ public class RequestTask extends AsyncTask<String, Void, RequestResult> {
     private String hdrContentType;
     private String hdrAccept;
 
-    public RequestTask(String m, String ct, String a) {
-        this.method = m;
-        this.hdrContentType = ct;
-        this.hdrAccept = a;
-    }
-
-    protected void onPreExecute() {
-        super.onPreExecute();
+    public RequestTask(String httpMethod, String contentType, String accept) {
+        this.method = httpMethod;
+        this.hdrContentType = contentType;
+        this.hdrAccept = accept;
     }
 
     @Override
     protected RequestResult doInBackground(String... params) {
         try {
-            // params comes from the execute() call: params[0] is the url.
+            // params comes from the execute() call:
+            // params[0] is the url
+            // params[1] contains request data if present
             if (params.length == 2) {
                 return postUrl(params[0], params[1]);
             } else if (params.length == 1) {
@@ -47,25 +45,30 @@ public class RequestTask extends AsyncTask<String, Void, RequestResult> {
                 throw new InvalidParameterException("Invalid number of parameters to execute()");
             }
         } catch (Exception e) {
-            // All exceptions are caught and returned to be handled by caller
+            // All exceptions are caught, wrapped and returned to be handled by caller
             e.printStackTrace();
             return new RequestResult(e);
         }
     }
 
-    @Override
-    protected void onPostExecute(RequestResult result) {
-        super.onPostExecute(result);
-    }
-
+    /**
+     * Setup and execute the request
+     *
+     * @param serviceURL  Requested URL
+     * @param requestData Request data, should be null if not present
+     * @return The result of the request wrapped in RequestResult instance
+     * @throws IOException
+     */
     private RequestResult postUrl(String serviceURL, String requestData) throws IOException {
         InputStream is = null;
 
-        // Remake json-string into json object. There has to be a smarter way to do this, but I cant pass a string and json object
+        // Remake json-string into json object. There has to be a smarter way to do this,
+        // but I cant pass a string and json object
         JSONObject msg = new JSONObject();
 
         RequestResult result = new RequestResult();
 
+        // Check if request data is present and prepare it
         boolean doOutput = false;
         if (requestData != null) {
             try {
@@ -79,20 +82,23 @@ public class RequestTask extends AsyncTask<String, Void, RequestResult> {
         try {
             URL url = new URL(serviceURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
+
+            // Timeout values in milliseconds
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
             conn.setRequestMethod(this.method);
             conn.setDoInput(true);
             conn.setDoOutput(doOutput);
             conn.setUseCaches(false);
             conn.setRequestProperty("Content-Type", this.hdrContentType);
             conn.setRequestProperty("Accept", this.hdrAccept);
+
             // Establish connection
             conn.connect();
 
             // Need to write request data?
             if (doOutput) {
-                // Get ready to write data
+                // Prepare writer
                 OutputStream os = conn.getOutputStream();
                 OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
 
@@ -101,10 +107,7 @@ public class RequestTask extends AsyncTask<String, Void, RequestResult> {
                 osw.close();
             }
 
-            // The service will respond with a string of its own.
-            int response = conn.getResponseCode();
-
-            //handle the result
+            // Handle the result
             result.setResultCode(conn.getResponseCode());
             result.setResultMessage(conn.getResponseMessage());
 
@@ -113,22 +116,25 @@ public class RequestTask extends AsyncTask<String, Void, RequestResult> {
             } else {
                 is = conn.getErrorStream();
             }
-            result.setResultContent(readInput(is, conn.getContentLength()));
+            result.setResultContent(readInput(is));
         } finally {
             if (is != null) {
                 is.close();
             }
         }
         return result;
-
     }
 
-    private String readInput(final InputStream stream, int length) throws IOException {
-
+    /**
+     * Read the connection response from stream
+     *
+     * @param stream The inputstream to read from
+     * @return Read response
+     * @throws IOException
+     */
+    private String readInput(final InputStream stream) throws IOException {
         StringWriter result = new StringWriter();
         IOUtils.copy(stream, result);
         return result.toString();
-
     }
-
 }

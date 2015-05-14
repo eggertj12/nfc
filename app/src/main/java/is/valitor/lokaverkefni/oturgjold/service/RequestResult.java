@@ -1,7 +1,8 @@
 package is.valitor.lokaverkefni.oturgjold.service;
 
 /**
- * Super class for handling data coming from web service, to be inherited from in other result handlers.
+ * A POJO for passing the raw result of network request from RequestTask to its subclasses
+ * <p/>
  * Created by kla on 8.5.2015.
  */
 public class RequestResult {
@@ -11,7 +12,8 @@ public class RequestResult {
     private String resultContent;
     private Exception exception = null;
 
-    public RequestResult() {}
+    public RequestResult() {
+    }
 
     public RequestResult(Exception e) {
         this.exception = e;

@@ -42,36 +42,44 @@ public class GetTransactionsTask extends RequestTask {
             return;
         }
 
+        // Invalid request or server error
         if (result.getResultCode() != 200) {
             InvalidParameterException e = new InvalidParameterException(result.getResultContent());
             listener.onTaskComplete(new AsyncTaskResult<List<Transaction>>(e));
         }
 
+        // Convert JSON response to a list of Transactions
         List<Transaction> transactions;
-        try{
-            //Retrieve the content from the response and add to repository
+        try {
             JsonReader jsonReader = new JsonReader(new StringReader(result.getResultContent()));
             jsonReader.setLenient(true);
-            final Type listType = new TypeToken<ArrayList<Transaction>>() {}.getType();
+            final Type listType = new TypeToken<ArrayList<Transaction>>() {
+            }.getType();
             transactions = getGson().fromJson(jsonReader, listType);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             listener.onTaskComplete(new AsyncTaskResult<List<Transaction>>(e));
             return;
         }
 
-        listener.onTaskComplete(new AsyncTaskResult<List<Transaction>>(transactions));
+        listener.onTaskComplete(new AsyncTaskResult<>(transactions));
     }
 
-    private Gson getGson()
-    {
+    /**
+     * Helper to configure Gson for correct date handling
+     *
+     * @return Gson The configured gson instance
+     */
+    private Gson getGson() {
         GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Date.class,new JsonDeserializer<Date>() {
+        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
             @Override
             public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 try {
                     return new Date(json.getAsJsonPrimitive().getAsLong());
-                }catch (Exception ex){return  null;}
+                } catch (Exception ex) {
+                    return null;
+                }
             }
         });
 
